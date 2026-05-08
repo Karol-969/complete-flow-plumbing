@@ -1,0 +1,260 @@
+You are an expert SEO strategist + conversion-focused web designer + plumbing-industry copywriter. Build a complete, production-ready plumbing services website named:
+
+“Complete Flow Plumbing”
+
+CRITICAL: I will upload real images (team, van, jobs, before/after, tools, logos). You MUST use my uploaded images throughout the site (hero, service sections, gallery, blog, location pages). Do not use stock images unless I explicitly approve. If an image is missing for a section, use a placeholder block labeled “UPLOAD IMAGE HERE” and describe what image is needed.
+
+PRIMARY GOAL
+Create an SEO-optimized plumbing website that ranks organically for high-intent searches like “plumber near me”, “24 7 plumber”, and the full keyword list below, plus suburb/location pages for the suburbs I provide (also below). Build dedicated pages + supporting local articles to increase traffic and visibility. The site must be fast, mobile-first, and built for phone-call conversions.
+
+BUSINESS POSITIONING
+- Brand: Complete Flow Plumbing
+- Tone: professional, trustworthy, local, licensed, friendly, direct
+- Emphasize: emergency response, same-day service, transparent pricing, workmanship guarantee, licensed/insured, modern equipment (CCTV, hydro jetting, relining), clean & respectful service.
+
+CONVERSION REQUIREMENTS
+- Sticky “Call Now” + “Get Quote” buttons on mobile
+- Prominent phone number + service hours in header + footer (use placeholders if not provided)
+- Booking form + quote form (Name, Phone, Suburb, Service Needed, Urgency, Photos upload)
+- Trust signals: licenses, insurance, reviews, guarantees, service badges
+- Strong CTAs on every page
+- Clear emergency pathway: “Emergency Plumber – Call 24/7”
+
+SITE ARCHITECTURE (PAGES YOU MUST CREATE)
+1) Home
+2) About
+3) Services hub page
+4) Individual Service Pages (SEO-focused):
+   - Emergency Plumber Sydney (24/7)
+   - Blocked Drains / Drain Cleaning
+   - Hydro Jetting
+   - CCTV Drain Camera Inspection
+   - Pipe Relining
+   - Sewer Line Repair / Sewer Excavation
+   - Unblock Toilet
+   - Stormwater Drain Repair
+   - Tree Root Removal (Pipes)
+   - Hot Water Systems (Repair + Install)
+     - Gas Hot Water
+     - Electric Hot Water
+     - Solar Hot Water
+     - Heat Pump Hot Water
+     - Rheem Hot Water Service
+     - Rinnai Hot Water Repair
+     - Hot Water Tank Replacement
+   - Gas Fitting / Gas Plumbing
+     - Gas Leak Detection
+     - Gas Bayonet Installation
+     - Gas Heater Service
+     - LPG Gas Plumber
+     - Gas Appliance Installation
+     - Gas Pipe Repair
+     - Carbon Monoxide Testing
+   - Leak Detection & Maintenance
+     - Water Leak Detection
+     - Leaking Tap Repair
+     - Burst Pipe Emergency
+     - Shower Leak Repair
+     - Toilet Repair
+     - Leaking Toilet Fix
+     - Water Pressure Adjustment
+     - Backflow Prevention Testing
+     - Thermostatic Mixing Valve Testing
+     - Roof Leak Repair
+5) Locations / Areas We Service hub page
+6) Dedicated Location Pages (one page per suburb listed below; unique content per page)
+7) Blog / Advice hub
+8) DIY Home Tutorials section INSIDE the site (articles that teach safe basic troubleshooting, with disclaimers and “call a licensed plumber” prompts)
+9) Reviews / Testimonials
+10) Contact (with map embed + service area notes + forms)
+
+LOCAL SEO: DEDICATED SUBURB PAGES (MUST CREATE ALL)
+Create a unique page for each of these target suburbs/locations:
+Run-O-Waters
+Brisbane Grove
+Marulan
+Towrang
+Boxers Creek
+Bungonia
+Tallong
+Brayton
+Wingello
+Penrose
+Bundanoon
+Exeter
+Sutton Forest
+Berrima
+New Berrima
+Moss Vale
+Renwick
+Burradoo
+Bowral
+East Bowral
+Mittagong
+Welby
+Balaclava
+Braemar
+Willow Vale
+Colo Vale
+Hill Top
+Yerrinbool
+Alpine
+Robertson
+Avoca
+Kangaloon
+East Kangaloon
+Burrawang
+Wildes Meadow
+Knight’s Hill
+Upper Kangaroo River
+Balmoral
+Couridjah
+Tahmoor
+Thirlmere
+Buxton
+Picton
+Lakesland
+
+Each suburb page MUST include:
+- SEO Title + Meta Description + URL slug (clean, keyword-led)
+- 800–1,300 words of UNIQUE locally-relevant copy (no duplication across pages)
+- “Plumber in [Suburb]” H1
+- Service highlights + emergency availability + same-day options
+- Localized FAQs (5–8)
+- Internal links to relevant service pages + nearby suburbs
+- Review snippets + a call-to-action block
+- A small “Common plumbing issues in [Suburb] homes” section
+- Schema markup: LocalBusiness + Service (JSON-LD)
+- Image section using my uploaded job photos (or placeholders)
+
+SYDNEY METRO SUBURB KEYWORD PAGES (CREATE TARGETED LANDING PAGES OR INCLUDE AS SEO SECTIONS)
+Create dedicated SEO landing pages OR location sections to target these:
+plumber Parramatta, plumber Blacktown, plumber Penrith, plumber Castle Hill, plumber Liverpool, plumber Campbelltown, plumber Bondi, plumber Randwick, plumber Marrickville, plumber Newtown, plumber Chatswood, plumber Hornsby, plumber Cronulla, plumber Manly, plumber Ryde, plumber Bankstown, plumber Hurstville, plumber Baulkham Hills, plumber Kellyville.
+(Each should have unique content, FAQs, and internal links—do not stuff keywords.)
+
+KEYWORDS TO TARGET (MUST NOT MISS ANY)
+General & Intent-Based
+- plumber Sydney
+- local plumber near me
+- emergency plumber Sydney
+- 24 hour plumber Sydney
+- same day plumber
+- best rated plumbers Sydney
+- licensed plumber Sydney
+- professional plumbing services
+- affordable plumber Sydney
+- urgent plumber near me
+- after hours plumber Sydney
+- cheap plumber Sydney
+- no call out fee plumber
+
+Drainage & Sewer
+- blocked drains Sydney
+- drain cleaning service
+- hydro jetting Sydney
+- CCTV drain camera inspection
+- pipe relining Sydney
+- sewer line repair
+- unblock toilet Sydney
+- stormwater drain repair
+- sewer excavation
+- tree root removal pipes
+- drain clearing Sydney
+
+Hot Water Systems
+- no hot water Sydney
+- hot water system repair
+- hot water installation Sydney
+- gas hot water service
+- electric hot water repair
+- solar hot water Sydney
+- heat pump hot water
+- Rheem hot water service
+- Rinnai hot water repair
+- hot water tank replacement
+
+Gas Fitting & Gas Plumbing
+- gas fitter Sydney
+- gas leak detection
+- gas bayonet installation
+- gas heater service Sydney
+- LPG gas plumber
+- gas appliance installation
+- gas pipe repair
+- carbon monoxide testing
+
+Leak Detection & Maintenance
+- water leak detection Sydney
+- leaking tap repair
+- burst pipe emergency
+- shower leak repair
+- toilet repair Sydney
+- leaking toilet fix
+- water pressure adjustment
+- backflow prevention testing
+- thermostatic mixing valve testing
+- roof leak repair Sydney
+
+CONTENT STRATEGY (BLOG + DIY TUTORIALS)
+Create two content categories:
+A) Local SEO articles (to support suburb pages): “Plumbing tips for [Suburb]”, “Blocked drains in [Suburb]: causes + fixes”, “Hot water issues in [Suburb]”
+B) DIY Home Tutorials (safe, homeowner-friendly, step-by-step, with safety disclaimers + “when to call a licensed plumber”)
+Minimum DIY tutorial topics to create (at least 12):
+- How to shut off water at the mains (step-by-step)
+- What to do if you have a burst pipe (emergency checklist)
+- How to plunge a blocked toilet correctly
+- How to clear a slow drain safely (without damaging pipes)
+- How to check for hidden leaks (meter test)
+- Why your water pressure is low (quick checks)
+- No hot water troubleshooting (gas/electric basics)
+- Signs of a gas leak and what to do immediately
+- Roof leak first-response checklist (safe inspection)
+- When to book a CCTV drain inspection
+- What pipe relining is (simple explanation + when it’s needed)
+- Preventing tree root damage in pipes (maintenance guide)
+
+SEO RULES (NON-NEGOTIABLE)
+- Each page must have unique Title tag, Meta description, H1, and structured headings (H2/H3).
+- Use natural language; avoid keyword stuffing; include keywords where relevant.
+- Implement internal linking: service pages ↔ suburb pages ↔ blog posts.
+- Add FAQ schema on relevant pages.
+- Add LocalBusiness schema site-wide.
+- Create an HTML sitemap page + ensure robots.txt and XML sitemap are configured.
+- Optimize images: descriptive filenames, alt text, WebP, lazy-load.
+- Core Web Vitals: fast load, minimal scripts, compressed assets.
+
+ON-PAGE STRUCTURE (FOR MAIN PAGES)
+Home page sections:
+- Hero: “Emergency & Same-Day Plumber Sydney” + phone CTA + trust badges
+- Services grid (top 6–9)
+- “Blocked Drains / Hot Water / Gas Fitting / Leak Detection” highlights
+- Suburbs/areas coverage teaser linking to Locations hub
+- Before/After gallery using uploaded images
+- Reviews/testimonials
+- FAQ
+- Final CTA
+
+Design requirements:
+- Clean, modern, trades-friendly
+- Strong contrast, readable typography
+- Mobile-first layout
+- Use my brand colors/logo if provided; otherwise choose a professional blue/neutral palette and mark as “BRAND COLOR PLACEHOLDER”.
+
+COPY REQUIREMENTS
+Write persuasive, human copy with clear benefits, no fluff.
+Include service process steps: “Call → Diagnose → Quote → Fix → Clean up”
+Include guarantees (placeholder if needed): “Workmanship Guarantee: [X months]”
+Include compliance language: licensed/insured (placeholders if needed)
+
+DELIVERABLES
+1) Full sitemap (list all pages) + URL slugs
+2) Page-by-page SEO metadata (Title + Meta description)
+3) Page copy for all core pages + at least 12 DIY tutorials
+4) Content templates for suburb pages (but ensure each suburb page is fully unique)
+5) Schema JSON-LD snippets (LocalBusiness, Service, FAQ)
+6) Image placement plan referencing my uploaded images (and placeholders where needed)
+
+IMPORTANT: Do not invent business details (ABN, license number, address, phone) — use placeholders clearly marked like:
+[PHONE], [EMAIL], [ABN], [LICENCE #], [SERVICE HOURS], [ADDRESS], [GOOGLE REVIEW LINK]
+
+Now build the full site content and structure accordingly.
