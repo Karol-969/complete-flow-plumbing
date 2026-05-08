@@ -43,7 +43,6 @@ export function ProcessSteps() {
               className="relative text-center"
               data-testid={`process-step-${index + 1}`}
             >
-              {/* Connector line */}
               {index < steps.length - 1 && (
                 <div className="hidden lg:block absolute top-10 left-1/2 w-full h-0.5 bg-border" />
               )}

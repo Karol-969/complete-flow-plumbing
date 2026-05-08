@@ -13,7 +13,6 @@ export function generateSitemap(): string {
   const today = new Date().toISOString().split('T')[0];
   
   const urls: SitemapUrl[] = [
-    // Core pages - highest priority
     { loc: "/", lastmod: today, changefreq: "weekly", priority: 1.0 },
     { loc: "/about", lastmod: today, changefreq: "monthly", priority: 0.8 },
     { loc: "/services", lastmod: today, changefreq: "weekly", priority: 0.9 },
@@ -22,7 +21,6 @@ export function generateSitemap(): string {
     { loc: "/blog", lastmod: today, changefreq: "weekly", priority: 0.7 },
   ];
 
-  // Service pages - high priority
   SERVICES.forEach((service) => {
     urls.push({
       loc: `/services/${service.slug}`,
@@ -32,7 +30,6 @@ export function generateSitemap(): string {
     });
   });
 
-  // Location pages - high priority for local SEO
   ALL_LOCATIONS.forEach((location) => {
     urls.push({
       loc: `/locations/${location.slug}`,
@@ -42,7 +39,6 @@ export function generateSitemap(): string {
     });
   });
 
-  // Blog posts - content marketing and keyword targeting
   const blogSlugs = [
     "how-to-shut-off-water-mains",
     "burst-pipe-emergency-checklist",

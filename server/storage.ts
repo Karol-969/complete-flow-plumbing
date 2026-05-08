@@ -1,13 +1,11 @@
 import { type User, type InsertUser, type QuoteRequest, type ContactForm } from "@shared/schema";
 import { randomUUID } from "crypto";
 
-// Quote with ID for storage
 export interface StoredQuote extends QuoteRequest {
   id: string;
   createdAt: Date;
 }
 
-// Contact message with ID for storage
 export interface StoredContact extends ContactForm {
   id: string;
   createdAt: Date;
@@ -17,12 +15,10 @@ export interface IStorage {
   getUser(id: string): Promise<User | undefined>;
   getUserByUsername(username: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
-  
-  // Quote requests
+
   createQuote(quote: QuoteRequest): Promise<StoredQuote>;
   getQuotes(): Promise<StoredQuote[]>;
-  
-  // Contact messages
+
   createContact(contact: ContactForm): Promise<StoredContact>;
   getContacts(): Promise<StoredContact[]>;
 }

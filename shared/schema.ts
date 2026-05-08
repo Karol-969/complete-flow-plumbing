@@ -17,7 +17,7 @@ export const insertUserSchema = createInsertSchema(users).pick({
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
 
-// Quote request schema
+
 export const quoteRequestSchema = z.object({
   name: z.string().min(2, "Name is required"),
   phone: z.string().min(8, "Valid phone number required"),
@@ -30,7 +30,7 @@ export const quoteRequestSchema = z.object({
 
 export type QuoteRequest = z.infer<typeof quoteRequestSchema>;
 
-// Contact form schema
+
 export const contactFormSchema = z.object({
   name: z.string().min(2, "Name is required"),
   phone: z.string().min(8, "Valid phone number required"),
@@ -40,7 +40,7 @@ export const contactFormSchema = z.object({
 
 export type ContactForm = z.infer<typeof contactFormSchema>;
 
-// Service type for frontend
+
 export interface Service {
   id: string;
   slug: string;
@@ -50,7 +50,7 @@ export interface Service {
   category: "drainage" | "hot-water" | "gas" | "leak-detection" | "emergency";
 }
 
-// Location/suburb type
+
 export interface Location {
   id: string;
   slug: string;
@@ -58,7 +58,7 @@ export interface Location {
   region: "southern-highlands" | "sydney-metro";
 }
 
-// Testimonial type
+
 export interface Testimonial {
   id: string;
   name: string;
@@ -68,13 +68,13 @@ export interface Testimonial {
   text: string;
 }
 
-// FAQ type
+
 export interface FAQ {
   question: string;
   answer: string;
 }
 
-// Business info constants
+
 export const BUSINESS_INFO = {
   name: "Complete Flow Plumbing",
   phone: "0468 723 029",
@@ -90,7 +90,7 @@ export const BUSINESS_INFO = {
   guarantee: "Workmanship Guarantee",
 } as const;
 
-// Work portfolio images for gallery
+
 export const WORK_IMAGES = [
   { id: "1", src: "WhatsApp_Image_2025-12-18_at_6.50.35_PM_1766462914108.jpeg", alt: "Rheem hot water system installation", category: "hot-water" },
   { id: "2", src: "WhatsApp_Image_2025-12-18_at_6.50.36_PM_1766462914109.jpeg", alt: "Rinnai gas continuous flow hot water unit", category: "gas" },
@@ -106,7 +106,7 @@ export const WORK_IMAGES = [
   { id: "12", src: "WhatsApp_Image_2025-12-18_at_6.50.32_PM_1766462914112.jpeg", alt: "Bathroom renovation plumbing", category: "emergency" },
 ] as const;
 
-// Services data
+
 export const SERVICES: Service[] = [
   { id: "1", slug: "emergency-plumber-sydney", title: "Emergency Plumber Sydney (24/7)", shortDescription: "Immediate response for urgent plumbing emergencies, available around the clock.", icon: "Siren", category: "emergency" },
   { id: "2", slug: "blocked-drains", title: "Blocked Drains & Drain Cleaning", shortDescription: "Fast, effective drain clearing using the latest equipment.", icon: "PipeSolid", category: "drainage" },
@@ -119,7 +119,7 @@ export const SERVICES: Service[] = [
   { id: "9", slug: "toilet-repair", title: "Toilet Repair & Unblock", shortDescription: "Quick fixes for blocked, running, or leaking toilets.", icon: "Bath", category: "leak-detection" },
 ];
 
-// Southern Highlands suburbs
+
 export const SOUTHERN_HIGHLANDS_SUBURBS: Location[] = [
   { id: "1", slug: "run-o-waters", name: "Run-O-Waters", region: "southern-highlands" },
   { id: "2", slug: "brisbane-grove", name: "Brisbane Grove", region: "southern-highlands" },
@@ -167,7 +167,7 @@ export const SOUTHERN_HIGHLANDS_SUBURBS: Location[] = [
   { id: "44", slug: "lakesland", name: "Lakesland", region: "southern-highlands" },
 ];
 
-// Sydney Metro suburbs
+
 export const SYDNEY_METRO_SUBURBS: Location[] = [
   { id: "s1", slug: "parramatta", name: "Parramatta", region: "sydney-metro" },
   { id: "s2", slug: "blacktown", name: "Blacktown", region: "sydney-metro" },
@@ -216,10 +216,10 @@ export const SYDNEY_METRO_SUBURBS: Location[] = [
   { id: "s45", slug: "blairmount", name: "Blairmount", region: "sydney-metro" },
 ];
 
-// All locations combined
+
 export const ALL_LOCATIONS = [...SOUTHERN_HIGHLANDS_SUBURBS, ...SYDNEY_METRO_SUBURBS];
 
-// Sample testimonials
+
 export const TESTIMONIALS: Testimonial[] = [
   { id: "1", name: "Sarah M.", suburb: "Bowral", service: "Emergency Plumber", rating: 5, text: "Called at 10pm with a burst pipe. Complete Flow arrived within 30 minutes and had it fixed by midnight. Absolute lifesavers!" },
   { id: "2", name: "James T.", suburb: "Mittagong", service: "Hot Water System", rating: 5, text: "Our hot water system died on a cold winter morning. Same-day replacement and the team was professional, clean, and explained everything clearly." },
@@ -229,7 +229,7 @@ export const TESTIMONIALS: Testimonial[] = [
   { id: "6", name: "Robert H.", suburb: "Thirlmere", service: "Toilet Repair", rating: 5, text: "Quick response for a blocked toilet on a Sunday. Fair pricing with no call-out fee. Great local plumbers!" },
 ];
 
-// Home page FAQs
+
 export const HOME_FAQS: FAQ[] = [
   { question: "Do you offer 24/7 emergency plumbing services?", answer: "Yes! Complete Flow Plumbing provides 24/7 emergency plumbing services across Sydney and the Southern Highlands. We understand that plumbing emergencies don't wait for business hours, so neither do we." },
   { question: "How quickly can you respond to an emergency?", answer: "For emergency call-outs, we aim to arrive within 60 minutes in our primary service areas. Our team is strategically located to provide fast response times across all suburbs we service." },

@@ -25,7 +25,6 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-// Generate service-specific FAQs
 const generateServiceFAQs = (serviceTitle: string): FAQ[] => [
   {
     question: `How much does ${serviceTitle.toLowerCase()} cost?`,
@@ -77,7 +76,6 @@ export default function ServiceDetail() {
     { title: "Repair", description: "We complete the work professionally" },
   ];
 
-  // SEO keywords for this service
   const seoKeywords = [
     `${service.title.toLowerCase()} sydney`,
     `${service.title.toLowerCase()} southern highlands`,
@@ -106,7 +104,6 @@ export default function ServiceDetail() {
         { name: service.title, url: `/services/${service.slug}` }
       ]} />
 
-      {/* Hero */}
       <section className="py-16 md:py-20 bg-primary">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
@@ -132,7 +129,6 @@ export default function ServiceDetail() {
         </div>
       </section>
 
-      {/* Emergency CTA */}
       <section className="py-4 bg-emergency">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row items-center justify-center gap-4 text-white">
@@ -149,13 +145,10 @@ export default function ServiceDetail() {
         </div>
       </section>
 
-      {/* Main Content */}
       <section className="py-16 md:py-24 bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
-            {/* Content */}
             <div className="lg:col-span-2 space-y-12">
-              {/* About Service */}
               <div>
                 <h2 className="text-2xl font-bold text-foreground mb-4">
                   About Our {service.title} Service
@@ -175,7 +168,6 @@ export default function ServiceDetail() {
                 </div>
               </div>
 
-              {/* Why Choose Us */}
               <div>
                 <h2 className="text-2xl font-bold text-foreground mb-6">
                   Why Choose Complete Flow for {service.title}?
@@ -199,7 +191,6 @@ export default function ServiceDetail() {
                 </div>
               </div>
 
-              {/* Process */}
               <div>
                 <h2 className="text-2xl font-bold text-foreground mb-6">
                   Our Service Process
@@ -217,7 +208,6 @@ export default function ServiceDetail() {
                 </div>
               </div>
 
-              {/* FAQs */}
               <div>
                 <h2 className="text-2xl font-bold text-foreground mb-6">
                   Frequently Asked Questions
@@ -241,7 +231,6 @@ export default function ServiceDetail() {
                 </Accordion>
               </div>
 
-              {/* Service Areas */}
               <div>
                 <h2 className="text-2xl font-bold text-foreground mb-6">
                   {service.title} in Your Area
@@ -267,7 +256,6 @@ export default function ServiceDetail() {
                 </div>
               </div>
 
-              {/* Related Services */}
               {relatedServices.length > 0 && (
                 <div>
                   <h2 className="text-2xl font-bold text-foreground mb-6">
@@ -293,10 +281,8 @@ export default function ServiceDetail() {
               )}
             </div>
 
-            {/* Sidebar */}
             <div className="lg:col-span-1">
               <div className="sticky top-24 space-y-6">
-                {/* Quick Contact */}
                 <Card className="p-6 bg-primary text-primary-foreground">
                   <h3 className="text-xl font-bold mb-4">
                     Get {service.title} Today
@@ -317,7 +303,6 @@ export default function ServiceDetail() {
                   </Button>
                 </Card>
 
-                {/* Quote Form */}
                 <QuoteForm />
               </div>
             </div>

@@ -8,7 +8,6 @@ import { MapPin, Phone, CheckCircle, ArrowRight } from "lucide-react";
 export default function Locations() {
   return (
     <Layout>
-      {/* Hero */}
       <section className="py-16 md:py-24 bg-primary">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
@@ -35,7 +34,6 @@ export default function Locations() {
         </div>
       </section>
 
-      {/* Southern Highlands */}
       <section className="py-16 md:py-24 bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-12">
@@ -69,7 +67,6 @@ export default function Locations() {
         </div>
       </section>
 
-      {/* Sydney Metro */}
       <section className="py-16 md:py-24 bg-muted/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-12">
@@ -103,7 +100,6 @@ export default function Locations() {
         </div>
       </section>
 
-      {/* Why Choose Us */}
       <section className="py-16 bg-background">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">

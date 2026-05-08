@@ -106,7 +106,6 @@ export function WorkGallery() {
           </p>
         </div>
 
-        {/* Category Tabs */}
         <div className="flex flex-wrap justify-center gap-2 mb-8">
           {CATEGORIES.map(cat => {
             const cfg = CATEGORY_CONFIG[cat];
@@ -132,13 +131,11 @@ export function WorkGallery() {
           })}
         </div>
 
-        {/* Emergency Slider */}
         {isSlider && filtered.length > 0 && (
           <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-emergency/30"
             onMouseEnter={() => setIsAutoPlaying(false)}
             onMouseLeave={() => setIsAutoPlaying(true)}
           >
-            {/* Emergency header bar */}
             <div className="bg-emergency px-6 py-3 flex items-center gap-3">
               <Siren className="h-5 w-5 text-white animate-pulse" />
               <span className="text-white font-bold text-sm tracking-wide uppercase">
@@ -159,7 +156,6 @@ export function WorkGallery() {
               </div>
             </div>
 
-            {/* Slides */}
             <div className="relative aspect-[16/9] md:aspect-[21/9] bg-black overflow-hidden">
               {filtered.map((img, i) => (
                 <div
@@ -175,7 +171,6 @@ export function WorkGallery() {
                     onClick={() => setLightboxImage(img)}
                     data-testid={`emergency-slide-${i}`}
                   />
-                  {/* Caption overlay */}
                   <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent px-6 py-8">
                     <Badge className="bg-emergency text-white mb-3 text-xs font-semibold uppercase tracking-wider">
                       <Zap className="h-3 w-3 mr-1" /> Emergency Job
@@ -187,7 +182,6 @@ export function WorkGallery() {
                 </div>
               ))}
 
-              {/* Prev / Next arrows */}
               <button
                 onClick={() => { prev(); setIsAutoPlaying(false); }}
                 className="absolute left-3 top-1/2 -translate-y-1/2 z-10 bg-black/50 hover:bg-black/80 text-white rounded-full p-2.5 transition-all"
@@ -205,7 +199,6 @@ export function WorkGallery() {
                 <ChevronRight className="h-6 w-6" />
               </button>
 
-              {/* Slide counter */}
               <div className="absolute top-3 right-3 bg-black/60 text-white text-xs font-semibold px-3 py-1 rounded-full">
                 {currentSlide + 1} / {filtered.length}
               </div>
@@ -213,7 +206,6 @@ export function WorkGallery() {
           </div>
         )}
 
-        {/* Grid for other categories */}
         {!isSlider && (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {filtered.map((image) => (
@@ -254,7 +246,6 @@ export function WorkGallery() {
           </div>
         )}
 
-        {/* Lightbox */}
         <Dialog open={!!lightboxImage} onOpenChange={() => setLightboxImage(null)}>
           <DialogContent className="max-w-4xl p-0 bg-black border-0" aria-describedby={undefined}>
             <DialogTitle className="sr-only">
