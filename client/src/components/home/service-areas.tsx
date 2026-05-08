@@ -10,7 +10,6 @@ export function ServiceAreas() {
     <section className="py-16 md:py-24 bg-muted/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          {/* Map placeholder */}
           <div className="relative bg-card rounded-lg border border-border overflow-hidden aspect-square lg:aspect-[4/3]">
             <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-primary/10 flex items-center justify-center">
               <div className="text-center p-8">
@@ -23,7 +22,6 @@ export function ServiceAreas() {
             </div>
           </div>
 
-          {/* Suburbs list */}
           <div>
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
               Areas We Service

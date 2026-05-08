@@ -7,7 +7,6 @@ import { Phone, Mail, MapPin, Clock, Siren } from "lucide-react";
 export default function Contact() {
   return (
     <Layout>
-      {/* Hero */}
       <section className="py-16 md:py-20 bg-primary">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
@@ -19,7 +18,6 @@ export default function Contact() {
         </div>
       </section>
 
-      {/* Emergency Banner */}
       <section className="py-4 bg-emergency">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row items-center justify-center gap-4 text-white">
@@ -39,11 +37,9 @@ export default function Contact() {
         </div>
       </section>
 
-      {/* Contact Content */}
       <section className="py-16 md:py-24 bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
-            {/* Contact Info */}
             <div className="lg:col-span-1">
               <h2 className="text-2xl font-bold text-foreground mb-6">
                 Get In Touch
@@ -112,7 +108,6 @@ export default function Contact() {
               </div>
             </div>
 
-            {/* Quote Form */}
             <div className="lg:col-span-2">
               <QuoteForm />
             </div>
@@ -120,7 +115,6 @@ export default function Contact() {
         </div>
       </section>
 
-      {/* Map placeholder */}
       <section className="h-96 bg-muted relative">
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="text-center">

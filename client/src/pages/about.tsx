@@ -48,7 +48,6 @@ const stats = [
 export default function About() {
   return (
     <Layout>
-      {/* Hero */}
       <section className="py-16 md:py-24 bg-primary">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
@@ -61,7 +60,6 @@ export default function About() {
         </div>
       </section>
 
-      {/* Stats */}
       <section className="py-12 bg-card border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
@@ -75,7 +73,6 @@ export default function About() {
         </div>
       </section>
 
-      {/* Story */}
       <section className="py-16 md:py-24 bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -107,7 +104,6 @@ export default function About() {
               </div>
             </div>
 
-            {/* Team photo */}
             <div className="relative rounded-lg border border-border overflow-hidden">
               <img 
                 src={teamVanImage} 
@@ -120,7 +116,6 @@ export default function About() {
         </div>
       </section>
 
-      {/* Values */}
       <section className="py-16 md:py-24 bg-muted/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
@@ -154,11 +149,9 @@ export default function About() {
         </div>
       </section>
 
-      {/* Why Choose Us */}
       <section className="py-16 md:py-24 bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            {/* Van photo */}
             <div className="relative rounded-lg border border-border overflow-hidden order-2 lg:order-1">
               <img 
                 src={teamVanImage} 

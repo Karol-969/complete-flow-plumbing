@@ -925,7 +925,6 @@ export default function BlogPost() {
             </div>
           </header>
 
-          {/* Hero image */}
           <div className="mb-10 rounded-xl overflow-hidden shadow-lg">
             <img
               src={post.image}

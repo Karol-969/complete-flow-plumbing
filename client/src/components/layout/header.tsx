@@ -86,7 +86,6 @@ export function Header() {
 
   return (
     <>
-      {/* Top bar with emergency message */}
       <div className="bg-primary text-primary-foreground py-2 px-4 text-center text-sm font-medium hidden md:block">
         <div className="max-w-7xl mx-auto flex items-center justify-center gap-6">
           <span className="flex items-center gap-2">
@@ -106,11 +105,9 @@ export function Header() {
         </div>
       </div>
 
-      {/* Main header */}
       <header className="sticky top-0 z-50 bg-background/95 backdrop-blur-md border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
-            {/* Logo */}
             <Link href="/" className="flex items-center gap-3">
               <img 
                 src={logoImage} 
@@ -120,7 +117,6 @@ export function Header() {
               />
             </Link>
 
-            {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center gap-1">
               {mainNavItems.map((item) => (
                 <div key={item.href} className="relative group">
@@ -152,7 +148,6 @@ export function Header() {
                     </Link>
                   )}
 
-                  {/* Services Mega Menu */}
                   {item.hasDropdown && (
                     <div 
                       className={`absolute top-full left-1/2 -translate-x-1/2 pt-2 transition-all duration-200 ${
@@ -197,7 +192,6 @@ export function Header() {
               ))}
             </nav>
 
-            {/* Desktop CTA */}
             <div className="hidden lg:flex items-center gap-3">
               <a href={`tel:${BUSINESS_INFO.phone.replace(/\s/g, '')}`} className="flex items-center gap-2 text-foreground font-bold text-xl">
                 <Phone className="h-5 w-5 text-primary" />
@@ -208,7 +202,6 @@ export function Header() {
               </Button>
             </div>
 
-            {/* Mobile menu trigger */}
             <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
               <SheetTrigger asChild className="lg:hidden">
                 <Button variant="ghost" size="icon" data-testid="mobile-menu-toggle">
@@ -219,7 +212,6 @@ export function Header() {
               <SheetContent side="right" className="w-full sm:w-80 p-0" aria-describedby={undefined}>
                 <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
                 <div className="flex flex-col h-full">
-                  {/* Mobile menu header */}
                   <div className="flex items-center justify-between p-4 border-b border-border">
                     <img 
                       src={logoImage} 
@@ -231,7 +223,6 @@ export function Header() {
                     </Button>
                   </div>
 
-                  {/* Mobile menu items */}
                   <nav className="flex-1 overflow-y-auto p-4">
                     <ul className="space-y-1">
                       {mainNavItems.map((item) => (
@@ -254,7 +245,6 @@ export function Header() {
                     </ul>
                   </nav>
 
-                  {/* Mobile menu footer with CTAs */}
                   <div className="p-4 border-t border-border space-y-3">
                     <Button asChild className="w-full" size="lg" data-testid="mobile-call-now">
                       <a href={`tel:${BUSINESS_INFO.phone.replace(/\s/g, '')}`} className="flex items-center justify-center gap-2">
@@ -275,7 +265,6 @@ export function Header() {
         </div>
       </header>
 
-      {/* Sticky Mobile CTA Bar */}
       <div className="fixed bottom-0 left-0 right-0 z-50 lg:hidden bg-background/95 backdrop-blur-md border-t border-border p-2 flex gap-2">
         <Button asChild className="flex-1 h-14 text-base" data-testid="sticky-call-now">
           <a href={`tel:${BUSINESS_INFO.phone.replace(/\s/g, '')}`} className="flex items-center justify-center gap-2">

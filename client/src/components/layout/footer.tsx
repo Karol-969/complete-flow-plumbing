@@ -33,10 +33,8 @@ export function Footer() {
 
   return (
     <footer className="bg-card border-t border-border text-foreground">
-      {/* Main footer content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
-          {/* Company info */}
           <div className="lg:col-span-1">
             <Link href="/" className="flex items-center gap-3 mb-6">
               <img 
@@ -51,7 +49,6 @@ export function Footer() {
               Available 24/7 for emergency plumbing services.
             </p>
             
-            {/* Trust badges */}
             <div className="flex flex-wrap gap-3">
               <div className="flex items-center gap-1 text-xs text-muted-foreground">
                 <Shield className="h-4 w-4 text-primary" />
@@ -68,7 +65,6 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Quick Links */}
           <div>
             <h3 className="font-semibold text-foreground mb-4">Quick Links</h3>
             <ul className="space-y-2">
@@ -86,7 +82,6 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Services */}
           <div>
             <h3 className="font-semibold text-foreground mb-4">Our Services</h3>
             <ul className="space-y-2">
@@ -112,7 +107,6 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Contact Info */}
           <div>
             <h3 className="font-semibold text-foreground mb-4">Contact Us</h3>
             <ul className="space-y-4">
@@ -146,7 +140,6 @@ export function Footer() {
               </li>
             </ul>
 
-            {/* Social links */}
             <div className="flex gap-3 mt-6">
               <Button 
                 variant="outline" 
@@ -168,7 +161,6 @@ export function Footer() {
           </div>
         </div>
 
-        {/* Service Areas — full list for SEO internal linking */}
         <div className="mt-12 pt-8 border-t border-border">
           <h3 className="font-semibold text-foreground mb-2">Plumber Services Across Sydney & Southern Highlands</h3>
           <p className="text-xs text-muted-foreground mb-4">
@@ -194,7 +186,6 @@ export function Footer() {
           </Link>
         </div>
 
-        {/* Bottom bar */}
         <div className="mt-8 pt-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="text-sm text-muted-foreground text-center md:text-left">
             <p>© {new Date().getFullYear()} {BUSINESS_INFO.name}. All rights reserved.</p>

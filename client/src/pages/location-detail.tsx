@@ -36,7 +36,6 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-// Generate local FAQs for each suburb
 const generateLocalFAQs = (suburbName: string, region: string): FAQ[] => [
   {
     question: `Do you provide emergency plumbing services in ${suburbName}?`,
@@ -72,7 +71,6 @@ const generateLocalFAQs = (suburbName: string, region: string): FAQ[] => [
   },
 ];
 
-// Generate unique suburb content based on location
 const generateSuburbContent = (location: Location): { intro: string; localInfo: string; services: string; pipes: string } => {
   const regionName = location.region === 'southern-highlands' ? 'Southern Highlands' : 'Greater Sydney';
   const isSH = location.region === 'southern-highlands';
@@ -118,13 +116,11 @@ export default function LocationDetail() {
   const suburbContent = generateSuburbContent(location);
   const regionDisplayName = location.region === 'southern-highlands' ? 'Southern Highlands' : 'Sydney';
   
-  // Get nearby suburbs (same region, different from current)
   const allRegionSuburbs = location.region === "southern-highlands" 
     ? SOUTHERN_HIGHLANDS_SUBURBS 
     : SYDNEY_METRO_SUBURBS;
   const nearbySuburbs = allRegionSuburbs.filter(s => s.id !== location.id).slice(0, 6);
 
-  // SEO keywords for this location - comprehensive for all SERP features
   const seoKeywords = [
     `plumber ${location.name}`,
     `plumber in ${location.name}`,
@@ -170,7 +166,6 @@ export default function LocationDetail() {
         { name: location.name, url: `/locations/${location.slug}` }
       ]} />
 
-      {/* Hero */}
       <section className="py-16 md:py-20 bg-primary">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
@@ -197,7 +192,6 @@ export default function LocationDetail() {
         </div>
       </section>
 
-      {/* Emergency Banner */}
       <section className="py-4 bg-emergency">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row items-center justify-center gap-4 text-white">
@@ -214,13 +208,10 @@ export default function LocationDetail() {
         </div>
       </section>
 
-      {/* Main Content */}
       <section className="py-16 md:py-24 bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
-            {/* Content */}
             <div className="lg:col-span-2 space-y-12">
-              {/* Intro - Unique content for SEO */}
               <div>
                 <h2 className="text-2xl font-bold text-foreground mb-4">
                   Your Local Plumber in {location.name}
@@ -238,7 +229,6 @@ export default function LocationDetail() {
                   <p className="text-foreground/80 leading-relaxed">{suburbContent.pipes}</p>
                 </div>
 
-                {/* Why Choose Us - Local trust signals */}
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8">
                   <div className="flex items-center gap-3 p-4 bg-muted/50 rounded-lg">
                     <ShieldCheck className="h-8 w-8 text-primary flex-shrink-0" />
@@ -264,7 +254,6 @@ export default function LocationDetail() {
                 </div>
               </div>
 
-              {/* Services */}
               <div>
                 <h2 className="text-2xl font-bold text-foreground mb-6">
                   Plumbing Services in {location.name}
@@ -301,7 +290,6 @@ export default function LocationDetail() {
                 </div>
               </div>
 
-              {/* Common Issues */}
               <div>
                 <h2 className="text-2xl font-bold text-foreground mb-6">
                   Common Plumbing Issues in {location.name} Homes
@@ -340,7 +328,6 @@ export default function LocationDetail() {
                 </div>
               </div>
 
-              {/* FAQs */}
               <div>
                 <h2 className="text-2xl font-bold text-foreground mb-6">
                   Frequently Asked Questions
@@ -364,7 +351,6 @@ export default function LocationDetail() {
                 </Accordion>
               </div>
 
-              {/* Nearby Suburbs */}
               <div>
                 <h2 className="text-2xl font-bold text-foreground mb-6">
                   Nearby Suburbs We Service
@@ -386,10 +372,8 @@ export default function LocationDetail() {
               </div>
             </div>
 
-            {/* Sidebar */}
             <div className="lg:col-span-1">
               <div className="sticky top-24 space-y-6">
-                {/* Quick Contact */}
                 <Card className="p-6 bg-primary text-primary-foreground">
                   <h3 className="text-xl font-bold mb-4">
                     Need a Plumber in {location.name}?
@@ -410,7 +394,6 @@ export default function LocationDetail() {
                   </Button>
                 </Card>
 
-                {/* Quote Form */}
                 <QuoteForm />
               </div>
             </div>

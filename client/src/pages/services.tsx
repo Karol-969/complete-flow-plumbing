@@ -64,7 +64,6 @@ const serviceCategories = [
 export default function Services() {
   return (
     <Layout>
-      {/* Hero */}
       <section className="py-16 md:py-24 bg-primary">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl">
@@ -91,7 +90,6 @@ export default function Services() {
         </div>
       </section>
 
-      {/* Service Categories */}
       <section className="py-16 md:py-24 bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="space-y-16">
@@ -151,7 +149,6 @@ export default function Services() {
         </div>
       </section>
 
-      {/* CTA */}
       <section className="py-16 bg-muted/50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-4">

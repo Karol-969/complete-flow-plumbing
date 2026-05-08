@@ -9,7 +9,6 @@ export async function registerRoutes(
   httpServer: Server,
   app: Express
 ): Promise<Server> {
-  // Redirect www to non-www for canonical consistency
   app.use((req, res, next) => {
     const host = req.headers.host || "";
     if (host.startsWith("www.")) {
@@ -19,7 +18,6 @@ export async function registerRoutes(
     next();
   });
 
-  // Quote request submission
   app.post("/api/quotes", async (req, res) => {
     try {
       const validatedData = quoteRequestSchema.parse(req.body);
@@ -54,7 +52,6 @@ export async function registerRoutes(
     }
   });
 
-  // Contact form submission
   app.post("/api/contact", async (req, res) => {
     try {
       const validatedData = contactFormSchema.parse(req.body);
@@ -87,7 +84,6 @@ export async function registerRoutes(
     }
   });
 
-  // Get all quotes (for admin purposes)
   app.get("/api/quotes", async (req, res) => {
     try {
       const quotes = await storage.getQuotes();
@@ -98,7 +94,6 @@ export async function registerRoutes(
     }
   });
 
-  // Get all contacts (for admin purposes)
   app.get("/api/contacts", async (req, res) => {
     try {
       const contacts = await storage.getContacts();
@@ -109,7 +104,6 @@ export async function registerRoutes(
     }
   });
 
-  // Sitemap for SEO
   app.get("/sitemap.xml", (req, res) => {
     res.setHeader("Content-Type", "application/xml");
     res.setHeader("Cache-Control", "public, max-age=3600");
