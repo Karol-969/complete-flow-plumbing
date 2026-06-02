@@ -1,41 +1,54 @@
 import { type User, type InsertUser, type QuoteRequest, type ContactForm } from "@shared/schema";
 import { randomUUID } from "crypto";
 
-// Quote with ID for storage
 export interface StoredQuote extends QuoteRequest {
   id: string;
   createdAt: Date;
+  read: boolean;
 }
 
-// Contact message with ID for storage
 export interface StoredContact extends ContactForm {
   id: string;
   createdAt: Date;
+  read: boolean;
+}
+
+export interface TrackingCode {
+  id: string;
+  name: string;
+  type: "ga4" | "gtm" | "google-ads" | "facebook-pixel" | "custom";
+  value: string;
+  enabled: boolean;
 }
 
 export interface IStorage {
   getUser(id: string): Promise<User | undefined>;
   getUserByUsername(username: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
-  
-  // Quote requests
+
   createQuote(quote: QuoteRequest): Promise<StoredQuote>;
   getQuotes(): Promise<StoredQuote[]>;
-  
-  // Contact messages
+  markQuoteRead(id: string): Promise<void>;
+
   createContact(contact: ContactForm): Promise<StoredContact>;
   getContacts(): Promise<StoredContact[]>;
+  markContactRead(id: string): Promise<void>;
+
+  getTrackingCodes(): Promise<TrackingCode[]>;
+  saveTrackingCodes(codes: TrackingCode[]): Promise<void>;
 }
 
 export class MemStorage implements IStorage {
   private users: Map<string, User>;
   private quotes: Map<string, StoredQuote>;
   private contacts: Map<string, StoredContact>;
+  private trackingCodes: TrackingCode[];
 
   constructor() {
     this.users = new Map();
     this.quotes = new Map();
     this.contacts = new Map();
+    this.trackingCodes = [];
   }
 
   async getUser(id: string): Promise<User | undefined> {
@@ -43,9 +56,7 @@ export class MemStorage implements IStorage {
   }
 
   async getUserByUsername(username: string): Promise<User | undefined> {
-    return Array.from(this.users.values()).find(
-      (user) => user.username === username,
-    );
+    return Array.from(this.users.values()).find((u) => u.username === username);
   }
 
   async createUser(insertUser: InsertUser): Promise<User> {
@@ -57,13 +68,9 @@ export class MemStorage implements IStorage {
 
   async createQuote(quote: QuoteRequest): Promise<StoredQuote> {
     const id = randomUUID();
-    const storedQuote: StoredQuote = {
-      ...quote,
-      id,
-      createdAt: new Date(),
-    };
-    this.quotes.set(id, storedQuote);
-    return storedQuote;
+    const stored: StoredQuote = { ...quote, id, createdAt: new Date(), read: false };
+    this.quotes.set(id, stored);
+    return stored;
   }
 
   async getQuotes(): Promise<StoredQuote[]> {
@@ -72,21 +79,35 @@ export class MemStorage implements IStorage {
     );
   }
 
+  async markQuoteRead(id: string): Promise<void> {
+    const q = this.quotes.get(id);
+    if (q) this.quotes.set(id, { ...q, read: true });
+  }
+
   async createContact(contact: ContactForm): Promise<StoredContact> {
     const id = randomUUID();
-    const storedContact: StoredContact = {
-      ...contact,
-      id,
-      createdAt: new Date(),
-    };
-    this.contacts.set(id, storedContact);
-    return storedContact;
+    const stored: StoredContact = { ...contact, id, createdAt: new Date(), read: false };
+    this.contacts.set(id, stored);
+    return stored;
   }
 
   async getContacts(): Promise<StoredContact[]> {
     return Array.from(this.contacts.values()).sort(
       (a, b) => b.createdAt.getTime() - a.createdAt.getTime()
     );
+  }
+
+  async markContactRead(id: string): Promise<void> {
+    const c = this.contacts.get(id);
+    if (c) this.contacts.set(id, { ...c, read: true });
+  }
+
+  async getTrackingCodes(): Promise<TrackingCode[]> {
+    return this.trackingCodes;
+  }
+
+  async saveTrackingCodes(codes: TrackingCode[]): Promise<void> {
+    this.trackingCodes = codes;
   }
 }
 

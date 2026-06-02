@@ -1,15 +1,27 @@
-import type { Express } from "express";
+import type { Express, Request, Response, NextFunction } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { quoteRequestSchema, contactFormSchema } from "@shared/schema";
 import { z } from "zod";
 import { generateSitemap } from "./sitemap";
 
+declare module "express-session" {
+  interface SessionData {
+    isAdmin: boolean;
+  }
+}
+
+const requireAdmin = (req: Request, res: Response, next: NextFunction) => {
+  if (req.session?.isAdmin) return next();
+  res.status(401).json({ success: false, message: "Unauthorised" });
+};
+
 export async function registerRoutes(
   httpServer: Server,
   app: Express
 ): Promise<Server> {
-  // Redirect www to non-www for canonical consistency
+
+  // www → non-www redirect
   app.use((req, res, next) => {
     const host = req.headers.host || "";
     if (host.startsWith("www.")) {
@@ -19,97 +31,142 @@ export async function registerRoutes(
     next();
   });
 
-  // Quote request submission
+  // ─── Public: Quote & Contact Forms ───────────────────────────────────────
+
   app.post("/api/quotes", async (req, res) => {
     try {
-      const validatedData = quoteRequestSchema.parse(req.body);
-      const quote = await storage.createQuote(validatedData);
-      
-      console.log("New quote request received:", {
-        name: quote.name,
-        suburb: quote.suburb,
-        service: quote.serviceType,
-        urgency: quote.urgency,
-      });
-      
-      res.status(201).json({ 
-        success: true, 
-        message: "Quote request submitted successfully",
-        id: quote.id 
-      });
+      const data = quoteRequestSchema.parse(req.body);
+      const quote = await storage.createQuote(data);
+      console.log("New quote:", { name: quote.name, suburb: quote.suburb, service: quote.serviceType });
+      res.status(201).json({ success: true, message: "Quote submitted", id: quote.id });
     } catch (error) {
       if (error instanceof z.ZodError) {
-        res.status(400).json({ 
-          success: false, 
-          message: "Invalid form data",
-          errors: error.errors 
-        });
+        res.status(400).json({ success: false, message: "Invalid form data", errors: error.errors });
       } else {
         console.error("Error creating quote:", error);
-        res.status(500).json({ 
-          success: false, 
-          message: "Failed to submit quote request" 
-        });
+        res.status(500).json({ success: false, message: "Failed to submit quote" });
       }
     }
   });
 
-  // Contact form submission
   app.post("/api/contact", async (req, res) => {
     try {
-      const validatedData = contactFormSchema.parse(req.body);
-      const contact = await storage.createContact(validatedData);
-      
-      console.log("New contact message received:", {
-        name: contact.name,
-        email: contact.email,
-      });
-      
-      res.status(201).json({ 
-        success: true, 
-        message: "Message sent successfully",
-        id: contact.id 
-      });
+      const data = contactFormSchema.parse(req.body);
+      const contact = await storage.createContact(data);
+      console.log("New contact:", { name: contact.name, email: contact.email });
+      res.status(201).json({ success: true, message: "Message sent", id: contact.id });
     } catch (error) {
       if (error instanceof z.ZodError) {
-        res.status(400).json({ 
-          success: false, 
-          message: "Invalid form data",
-          errors: error.errors 
-        });
+        res.status(400).json({ success: false, message: "Invalid form data", errors: error.errors });
       } else {
         console.error("Error creating contact:", error);
-        res.status(500).json({ 
-          success: false, 
-          message: "Failed to send message" 
-        });
+        res.status(500).json({ success: false, message: "Failed to send message" });
       }
     }
   });
 
-  // Get all quotes (for admin purposes)
-  app.get("/api/quotes", async (req, res) => {
+  // ─── Public: Tracking codes (safe read-only for injection) ───────────────
+
+  app.get("/api/tracking", async (req, res) => {
     try {
-      const quotes = await storage.getQuotes();
-      res.json(quotes);
-    } catch (error) {
-      console.error("Error fetching quotes:", error);
-      res.status(500).json({ message: "Failed to fetch quotes" });
+      const codes = await storage.getTrackingCodes();
+      res.json(codes.filter(c => c.enabled));
+    } catch {
+      res.json([]);
     }
   });
 
-  // Get all contacts (for admin purposes)
-  app.get("/api/contacts", async (req, res) => {
-    try {
-      const contacts = await storage.getContacts();
-      res.json(contacts);
-    } catch (error) {
-      console.error("Error fetching contacts:", error);
-      res.status(500).json({ message: "Failed to fetch contacts" });
+  // ─── Admin: Auth ─────────────────────────────────────────────────────────
+
+  app.post("/api/admin/login", (req, res) => {
+    const { password } = req.body;
+    const adminPassword = process.env.ADMIN_PASSWORD || "CompleteFlow2024!";
+    if (password === adminPassword) {
+      req.session.isAdmin = true;
+      res.json({ success: true });
+    } else {
+      res.status(401).json({ success: false, message: "Incorrect password" });
     }
   });
 
-  // Sitemap for SEO
+  app.post("/api/admin/logout", (req, res) => {
+    req.session.destroy(() => {});
+    res.json({ success: true });
+  });
+
+  app.get("/api/admin/me", (req, res) => {
+    res.json({ isAdmin: !!req.session?.isAdmin });
+  });
+
+  // ─── Admin: Leads & Contacts ─────────────────────────────────────────────
+
+  app.get("/api/admin/quotes", requireAdmin, async (req, res) => {
+    try {
+      res.json(await storage.getQuotes());
+    } catch {
+      res.status(500).json({ message: "Failed" });
+    }
+  });
+
+  app.patch("/api/admin/quotes/:id/read", requireAdmin, async (req, res) => {
+    try {
+      await storage.markQuoteRead(req.params.id);
+      res.json({ success: true });
+    } catch {
+      res.status(500).json({ message: "Failed" });
+    }
+  });
+
+  app.get("/api/admin/contacts", requireAdmin, async (req, res) => {
+    try {
+      res.json(await storage.getContacts());
+    } catch {
+      res.status(500).json({ message: "Failed" });
+    }
+  });
+
+  app.patch("/api/admin/contacts/:id/read", requireAdmin, async (req, res) => {
+    try {
+      await storage.markContactRead(req.params.id);
+      res.json({ success: true });
+    } catch {
+      res.status(500).json({ message: "Failed" });
+    }
+  });
+
+  // ─── Admin: Tracking Codes ────────────────────────────────────────────────
+
+  app.get("/api/admin/tracking", requireAdmin, async (req, res) => {
+    try {
+      res.json(await storage.getTrackingCodes());
+    } catch {
+      res.status(500).json({ message: "Failed" });
+    }
+  });
+
+  app.post("/api/admin/tracking", requireAdmin, async (req, res) => {
+    try {
+      const codes = req.body;
+      if (!Array.isArray(codes)) return res.status(400).json({ message: "Expected array" });
+      await storage.saveTrackingCodes(codes);
+      res.json({ success: true });
+    } catch {
+      res.status(500).json({ message: "Failed" });
+    }
+  });
+
+  // ─── Legacy public admin endpoints (kept for backward compat) ────────────
+
+  app.get("/api/quotes", requireAdmin, async (req, res) => {
+    try { res.json(await storage.getQuotes()); } catch { res.status(500).json({ message: "Failed" }); }
+  });
+
+  app.get("/api/contacts", requireAdmin, async (req, res) => {
+    try { res.json(await storage.getContacts()); } catch { res.status(500).json({ message: "Failed" }); }
+  });
+
+  // ─── Sitemap ─────────────────────────────────────────────────────────────
+
   app.get("/sitemap.xml", (req, res) => {
     res.setHeader("Content-Type", "application/xml");
     res.setHeader("Cache-Control", "public, max-age=3600");
