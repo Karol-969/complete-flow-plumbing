@@ -1,40 +1,34 @@
-import { Button } from "@/components/ui/button";
 import { BUSINESS_INFO } from "@shared/schema";
-import { Phone, Siren, Clock } from "lucide-react";
+import { Phone, Zap } from "lucide-react";
 
+const phoneTel = BUSINESS_INFO.phone.replace(/\s/g, "");
+
+/**
+ * Slim, high-urgency emergency strip.
+ *
+ * Designed to sit above the header as a top strip and is also reused as a
+ * recurring emergency CTA elsewhere on the page. Uses the `emergency` token
+ * sparingly per the design system. Click-to-call on the whole strip.
+ */
 export function EmergencyBanner() {
   return (
-    <section className="py-12 bg-emergency">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
-          <div className="flex items-center gap-4 text-center lg:text-left">
-            <div className="flex items-center justify-center w-16 h-16 rounded-full bg-white/20 flex-shrink-0">
-              <Siren className="h-8 w-8 text-white" />
-            </div>
-            <div>
-              <h2 className="text-2xl md:text-3xl font-bold text-white">
-                Plumbing Emergency?
-              </h2>
-              <p className="text-white/90 mt-1 flex items-center justify-center lg:justify-start gap-2">
-                <Clock className="h-4 w-4" />
-                We're available 24 hours a day, 7 days a week
-              </p>
-            </div>
-          </div>
-
-          <Button 
-            asChild 
-            size="lg"
-            className="h-14 px-8 text-lg bg-white text-emergency hover:bg-white/90 font-bold"
-            data-testid="button-emergency-call"
-          >
-            <a href={`tel:${BUSINESS_INFO.phone}`} className="flex items-center gap-2" data-testid="link-emergency-phone">
-              <Phone className="h-5 w-5" />
-              Call Now: {BUSINESS_INFO.phone}
-            </a>
-          </Button>
-        </div>
-      </div>
-    </section>
+    <div className="w-full bg-emergency text-emergency-foreground">
+      <a
+        href={`tel:${phoneTel}`}
+        className="group flex items-center justify-center gap-x-2 gap-y-1 flex-wrap px-4 py-2 text-center text-xs sm:text-sm font-semibold tracking-wide"
+        data-testid="link-emergency-phone"
+        aria-label={`24/7 emergency plumber, same-day service, call ${BUSINESS_INFO.phone}`}
+      >
+        <Zap className="h-4 w-4 flex-shrink-0 fill-current" aria-hidden="true" />
+        <span>24/7 Emergency Plumber</span>
+        <span className="opacity-50" aria-hidden="true">·</span>
+        <span className="hidden xs:inline sm:inline">Same-Day Service</span>
+        <span className="hidden sm:inline opacity-50" aria-hidden="true">·</span>
+        <span className="inline-flex items-center gap-1.5 font-bold underline-offset-4 group-hover:underline">
+          <Phone className="h-3.5 w-3.5 flex-shrink-0" aria-hidden="true" />
+          Call {BUSINESS_INFO.phone}
+        </span>
+      </a>
+    </div>
   );
 }

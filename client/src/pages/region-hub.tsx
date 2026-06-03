@@ -1,7 +1,6 @@
 import { Layout } from "@/components/layout/layout";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Link, useParams } from "wouter";
 import { QuoteForm } from "@/components/forms/quote-form";
 import { SEOHead } from "@/components/seo/seo-head";
@@ -11,6 +10,7 @@ import {
   BreadcrumbSchema,
 } from "@/components/seo/structured-data";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
+import { iconMap } from "@/components/home/services-grid";
 import {
   REGIONS,
   SERVICES,
@@ -32,12 +32,22 @@ import {
   Users,
   ArrowRight,
 } from "lucide-react";
+import { motion } from "framer-motion";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 20 },
+  show: (i: number = 0) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.4, delay: i * 0.05 },
+  }),
+};
 
 // Generate region-specific FAQs from the region's local angle and common issues
 const generateRegionFAQs = (
@@ -95,7 +105,10 @@ export default function RegionHub() {
           <p className="text-muted-foreground mb-8">
             The service region you're looking for doesn't exist.
           </p>
-          <Button asChild>
+          <Button
+            asChild
+            className="bg-primary text-primary-foreground rounded-full px-6 py-3 font-bold shadow-glow hover:brightness-110 transition"
+          >
             <Link href="/locations">View All Locations</Link>
           </Button>
         </div>
@@ -196,30 +209,58 @@ export default function RegionHub() {
       <Breadcrumbs items={breadcrumbItems} />
 
       {/* Hero */}
-      <section className="py-16 md:py-20 bg-primary">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            Your Local {region.displayName} Plumber
-          </h1>
-          <p className="text-xl text-white/90 max-w-3xl mb-6">{region.blurb}</p>
-          <div className="flex flex-wrap gap-3">
-            <Badge className="bg-white/20 text-white border-white/30 px-4 py-2">
-              <Siren className="h-4 w-4 mr-2" />
-              24/7 Emergency
-            </Badge>
-            <Badge className="bg-white/20 text-white border-white/30 px-4 py-2">
-              <Clock className="h-4 w-4 mr-2" />
-              Same-Day Service
-            </Badge>
-            <Badge className="bg-white/20 text-white border-white/30 px-4 py-2">
-              <MapPin className="h-4 w-4 mr-2" />
-              {suburbs.length} Suburbs Covered
-            </Badge>
-            <Badge className="bg-white/20 text-white border-white/30 px-4 py-2">
-              <CheckCircle className="h-4 w-4 mr-2" />
-              Licensed & Insured
-            </Badge>
-          </div>
+      <section className="relative overflow-hidden bg-background py-16 md:py-24">
+        <div className="pointer-events-none absolute -top-24 left-1/2 -translate-x-1/2 w-[40rem] h-[40rem] bg-primary/10 blur-3xl rounded-full" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div initial="hidden" animate="show" variants={fadeUp} className="max-w-3xl">
+            <p className="text-primary text-sm font-semibold tracking-widest uppercase mb-3">
+              {region.displayName} · NSW
+            </p>
+            <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground mb-4">
+              Your Local {region.displayName} Plumber
+            </h1>
+            <p className="text-xl text-muted-foreground max-w-3xl mb-6">{region.blurb}</p>
+            <div className="flex flex-wrap gap-3 mb-8">
+              <span className="inline-flex items-center gap-2 rounded-full bg-primary/10 ring-1 ring-primary/20 text-primary px-4 py-2 text-sm font-semibold">
+                <Siren className="h-4 w-4" />
+                24/7 Emergency
+              </span>
+              <span className="inline-flex items-center gap-2 rounded-full bg-primary/10 ring-1 ring-primary/20 text-primary px-4 py-2 text-sm font-semibold">
+                <Clock className="h-4 w-4" />
+                Same-Day Service
+              </span>
+              <span className="inline-flex items-center gap-2 rounded-full bg-primary/10 ring-1 ring-primary/20 text-primary px-4 py-2 text-sm font-semibold">
+                <MapPin className="h-4 w-4" />
+                {suburbs.length} Suburbs Covered
+              </span>
+              <span className="inline-flex items-center gap-2 rounded-full bg-primary/10 ring-1 ring-primary/20 text-primary px-4 py-2 text-sm font-semibold">
+                <ShieldCheck className="h-4 w-4" />
+                Licensed & Insured
+              </span>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <Button
+                asChild
+                size="lg"
+                className="bg-primary text-primary-foreground rounded-full px-6 py-3 font-bold shadow-glow hover:brightness-110 transition"
+                data-testid="region-hero-call"
+              >
+                <a href={`tel:${BUSINESS_INFO.phoneTel}`} className="flex items-center justify-center gap-2">
+                  <Phone className="h-5 w-5" />
+                  Call: {BUSINESS_INFO.phone}
+                </a>
+              </Button>
+              <Button
+                asChild
+                variant="outline"
+                size="lg"
+                className="ring-1 ring-border hover:ring-primary text-foreground rounded-full px-6 py-3 font-semibold"
+                data-testid="region-hero-quote"
+              >
+                <Link href="/contact">Get a Free Quote</Link>
+              </Button>
+            </div>
+          </motion.div>
         </div>
       </section>
 
@@ -231,7 +272,7 @@ export default function RegionHub() {
               Need a plumber in the {region.displayName} now?
             </span>
             <a
-              href={`tel:${BUSINESS_INFO.phone}`}
+              href={`tel:${BUSINESS_INFO.phoneTel}`}
               className="text-xl font-bold hover:underline flex items-center gap-2"
               data-testid="region-emergency-phone"
             >
@@ -247,17 +288,25 @@ export default function RegionHub() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
             {/* Content */}
-            <div className="lg:col-span-2 space-y-12">
+            <div className="lg:col-span-2 space-y-16">
               {/* Intro - blurb + unique local content */}
-              <div>
-                <h2 className="text-2xl font-bold text-foreground mb-4">
+              <motion.div
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true }}
+                variants={fadeUp}
+              >
+                <p className="text-primary text-sm font-semibold tracking-widest uppercase mb-3">
+                  Local Plumbing
+                </p>
+                <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground mb-4">
                   Plumbing Across the {region.displayName}
                 </h2>
                 <div className="prose prose-gray dark:prose-invert max-w-none space-y-4">
-                  <p className="text-foreground/80 leading-relaxed">
+                  <p className="text-muted-foreground leading-relaxed">
                     {region.blurb}
                   </p>
-                  <p className="text-foreground/80 leading-relaxed">
+                  <p className="text-muted-foreground leading-relaxed">
                     {localParagraph}
                   </p>
                 </div>
@@ -270,19 +319,23 @@ export default function RegionHub() {
                   {region.commonIssues.map((issue, index) => (
                     <div
                       key={index}
-                      className="flex items-start gap-3 p-4 bg-muted/50 rounded-lg"
+                      className="flex items-start gap-3 bg-card rounded-xl2 border border-border shadow-card p-4"
                       data-testid={`region-issue-${index}`}
                     >
-                      <CheckCircle className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
-                      <p className="text-sm text-foreground/80">{issue}</p>
+                      <span className="flex items-center justify-center bg-primary/10 ring-1 ring-primary/20 text-primary rounded-xl p-2 flex-shrink-0">
+                        <CheckCircle className="h-5 w-5" />
+                      </span>
+                      <p className="text-sm text-foreground/90 self-center">{issue}</p>
                     </div>
                   ))}
                 </div>
 
                 {/* Trust signals */}
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8">
-                  <div className="flex items-center gap-3 p-4 bg-muted/50 rounded-lg">
-                    <ShieldCheck className="h-8 w-8 text-primary flex-shrink-0" />
+                  <div className="flex items-center gap-3 bg-card rounded-xl2 border border-border shadow-card p-4">
+                    <span className="flex items-center justify-center bg-primary/10 ring-1 ring-primary/20 text-primary rounded-xl p-3 flex-shrink-0">
+                      <ShieldCheck className="h-6 w-6" />
+                    </span>
                     <div>
                       <p className="font-semibold text-foreground">Licensed</p>
                       <p className="text-sm text-muted-foreground">
@@ -290,8 +343,10 @@ export default function RegionHub() {
                       </p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-3 p-4 bg-muted/50 rounded-lg">
-                    <Star className="h-8 w-8 text-primary flex-shrink-0" />
+                  <div className="flex items-center gap-3 bg-card rounded-xl2 border border-border shadow-card p-4">
+                    <span className="flex items-center justify-center bg-primary/10 ring-1 ring-primary/20 text-primary rounded-xl p-3 flex-shrink-0">
+                      <Clock className="h-6 w-6" />
+                    </span>
                     <div>
                       <p className="font-semibold text-foreground">
                         Same-Day Service
@@ -301,86 +356,123 @@ export default function RegionHub() {
                       </p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-3 p-4 bg-muted/50 rounded-lg">
-                    <Users className="h-8 w-8 text-primary flex-shrink-0" />
+                  <div className="flex items-center gap-3 bg-card rounded-xl2 border border-border shadow-card p-4">
+                    <span className="flex items-center justify-center bg-primary/10 ring-1 ring-primary/20 text-primary rounded-xl p-3 flex-shrink-0">
+                      <Users className="h-6 w-6" />
+                    </span>
                     <div>
                       <p className="font-semibold text-foreground">
                         Local Team
                       </p>
                       <p className="text-sm text-muted-foreground">
-                        Fast Response
+                        {BUSINESS_INFO.guarantee}
                       </p>
                     </div>
                   </div>
                 </div>
-              </div>
+              </motion.div>
 
               {/* Suburb grid - all suburbs in the region */}
               <div>
-                <h2 className="text-2xl font-bold text-foreground mb-6">
+                <motion.h2
+                  initial="hidden"
+                  whileInView="show"
+                  viewport={{ once: true }}
+                  variants={fadeUp}
+                  className="text-3xl md:text-4xl font-bold tracking-tight text-foreground mb-6"
+                >
                   Suburbs We Service in the {region.displayName}
-                </h2>
+                </motion.h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {suburbs.map((suburb) => (
-                    <Link
+                  {suburbs.map((suburb, i) => (
+                    <motion.div
                       key={suburb.id}
-                      href={`/locations/${suburb.slug}`}
-                      data-testid={`region-suburb-${suburb.slug}`}
+                      custom={i}
+                      initial="hidden"
+                      whileInView="show"
+                      viewport={{ once: true }}
+                      variants={fadeUp}
                     >
-                      <Card className="p-4 hover-elevate group h-full">
-                        <div className="flex items-center gap-3">
-                          <div className="flex items-center justify-center w-10 h-10 rounded-md bg-primary/10 flex-shrink-0">
-                            <MapPin className="h-5 w-5 text-primary" />
-                          </div>
-                          <div className="min-w-0">
-                            <p className="font-medium text-foreground group-hover:text-primary transition-colors truncate">
-                              Plumber in {suburb.name}
-                            </p>
-                            {suburb.postcode && (
-                              <p className="text-sm text-muted-foreground">
-                                {suburb.postcode}
+                      <Link
+                        href={`/locations/${suburb.slug}`}
+                        data-testid={`region-suburb-${suburb.slug}`}
+                      >
+                        <Card className="bg-card rounded-xl2 border border-border shadow-card group hover:-translate-y-1 hover:border-primary/50 hover:shadow-glow transition-all p-4 h-full">
+                          <div className="flex items-center gap-3">
+                            <span className="flex items-center justify-center bg-primary/10 ring-1 ring-primary/20 text-primary rounded-xl p-3 flex-shrink-0">
+                              <MapPin className="h-5 w-5" />
+                            </span>
+                            <div className="min-w-0">
+                              <p className="font-medium text-foreground group-hover:text-primary transition-colors truncate">
+                                Plumber in {suburb.name}
                               </p>
-                            )}
+                              {suburb.postcode && (
+                                <p className="text-sm text-muted-foreground">
+                                  {suburb.postcode}
+                                </p>
+                              )}
+                            </div>
                           </div>
-                        </div>
-                      </Card>
-                    </Link>
+                        </Card>
+                      </Link>
+                    </motion.div>
                   ))}
                 </div>
               </div>
 
-              {/* Services */}
+              {/* Services - per-service icons from iconMap */}
               <div>
-                <h2 className="text-2xl font-bold text-foreground mb-6">
+                <motion.h2
+                  initial="hidden"
+                  whileInView="show"
+                  viewport={{ once: true }}
+                  variants={fadeUp}
+                  className="text-3xl md:text-4xl font-bold tracking-tight text-foreground mb-6"
+                >
                   Plumbing Services in the {region.displayName}
-                </h2>
+                </motion.h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {SERVICES.map((service) => (
-                    <Link
-                      key={service.id}
-                      href={`/services/${service.slug}`}
-                      data-testid={`region-service-${service.slug}`}
-                    >
-                      <Card className="p-4 hover-elevate group">
-                        <div className="flex items-center gap-3">
-                          <div className="flex items-center justify-center w-10 h-10 rounded-md bg-primary/10 flex-shrink-0">
-                            <Wrench className="h-5 w-5 text-primary" />
-                          </div>
-                          <div>
-                            <p className="font-medium text-foreground group-hover:text-primary transition-colors">
-                              {service.title}
-                            </p>
-                            <p className="text-sm text-muted-foreground line-clamp-1">
-                              {service.shortDescription}
-                            </p>
-                          </div>
-                        </div>
-                      </Card>
-                    </Link>
-                  ))}
+                  {SERVICES.map((service, i) => {
+                    const Icon = iconMap[service.icon] || Wrench;
+                    return (
+                      <motion.div
+                        key={service.id}
+                        custom={i}
+                        initial="hidden"
+                        whileInView="show"
+                        viewport={{ once: true }}
+                        variants={fadeUp}
+                      >
+                        <Link
+                          href={`/services/${service.slug}`}
+                          data-testid={`region-service-${service.slug}`}
+                        >
+                          <Card className="bg-card rounded-xl2 border border-border shadow-card group hover:-translate-y-1 hover:border-primary/50 hover:shadow-glow transition-all p-4 h-full">
+                            <div className="flex items-center gap-3">
+                              <span className="flex items-center justify-center bg-primary/10 ring-1 ring-primary/20 text-primary rounded-xl p-3 flex-shrink-0">
+                                <Icon className="h-5 w-5" />
+                              </span>
+                              <div>
+                                <p className="font-medium text-foreground group-hover:text-primary transition-colors">
+                                  {service.title}
+                                </p>
+                                <p className="text-sm text-muted-foreground line-clamp-1">
+                                  {service.shortDescription}
+                                </p>
+                              </div>
+                            </div>
+                          </Card>
+                        </Link>
+                      </motion.div>
+                    );
+                  })}
                 </div>
                 <div className="mt-6">
-                  <Button asChild variant="outline">
+                  <Button
+                    asChild
+                    variant="outline"
+                    className="ring-1 ring-border hover:ring-primary text-foreground rounded-full px-6 py-3 font-semibold"
+                  >
                     <Link href="/services">View All Services</Link>
                   </Button>
                 </div>
@@ -388,15 +480,21 @@ export default function RegionHub() {
 
               {/* FAQs */}
               <div>
-                <h2 className="text-2xl font-bold text-foreground mb-6">
+                <motion.h2
+                  initial="hidden"
+                  whileInView="show"
+                  viewport={{ once: true }}
+                  variants={fadeUp}
+                  className="text-3xl md:text-4xl font-bold tracking-tight text-foreground mb-6"
+                >
                   Frequently Asked Questions
-                </h2>
+                </motion.h2>
                 <Accordion type="single" collapsible className="space-y-4">
                   {localFAQs.map((faq, index) => (
                     <AccordionItem
                       key={index}
                       value={`faq-${index}`}
-                      className="bg-card rounded-lg border border-border px-6"
+                      className="bg-card rounded-xl2 border border-border shadow-card px-6 data-[state=open]:border-primary/50"
                       data-testid={`region-faq-${index}`}
                     >
                       <AccordionTrigger className="text-left font-semibold text-foreground hover:no-underline py-4">
@@ -412,30 +510,44 @@ export default function RegionHub() {
 
               {/* Cross-links to the other region hubs */}
               <div>
-                <h2 className="text-2xl font-bold text-foreground mb-6">
+                <motion.h2
+                  initial="hidden"
+                  whileInView="show"
+                  viewport={{ once: true }}
+                  variants={fadeUp}
+                  className="text-3xl md:text-4xl font-bold tracking-tight text-foreground mb-6"
+                >
                   Other Regions We Service
-                </h2>
+                </motion.h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {otherRegions.map((other) => (
-                    <Link
+                  {otherRegions.map((other, i) => (
+                    <motion.div
                       key={other.slug}
-                      href={`/locations/region/${other.slug}`}
-                      data-testid={`region-link-${other.slug}`}
+                      custom={i}
+                      initial="hidden"
+                      whileInView="show"
+                      viewport={{ once: true }}
+                      variants={fadeUp}
                     >
-                      <Card className="p-5 hover-elevate group h-full">
-                        <div className="flex items-start justify-between gap-3">
-                          <div className="min-w-0">
-                            <p className="font-semibold text-foreground group-hover:text-primary transition-colors">
-                              Plumber {other.displayName}
-                            </p>
-                            <p className="text-sm text-muted-foreground line-clamp-2 mt-1">
-                              {other.blurb}
-                            </p>
+                      <Link
+                        href={`/locations/region/${other.slug}`}
+                        data-testid={`region-link-${other.slug}`}
+                      >
+                        <Card className="bg-card rounded-xl2 border border-border shadow-card group hover:-translate-y-1 hover:border-primary/50 hover:shadow-glow transition-all p-5 h-full">
+                          <div className="flex items-start justify-between gap-3">
+                            <div className="min-w-0">
+                              <p className="font-semibold text-foreground group-hover:text-primary transition-colors">
+                                Plumber {other.displayName}
+                              </p>
+                              <p className="text-sm text-muted-foreground line-clamp-2 mt-1">
+                                {other.blurb}
+                              </p>
+                            </div>
+                            <ArrowRight className="h-5 w-5 text-primary flex-shrink-0 mt-1 group-hover:translate-x-1 transition-transform" />
                           </div>
-                          <ArrowRight className="h-5 w-5 text-primary flex-shrink-0 mt-1 group-hover:translate-x-1 transition-transform" />
-                        </div>
-                      </Card>
-                    </Link>
+                        </Card>
+                      </Link>
+                    </motion.div>
                   ))}
                 </div>
               </div>
@@ -445,26 +557,56 @@ export default function RegionHub() {
             <div className="lg:col-span-1">
               <div className="sticky top-24 space-y-6">
                 {/* Quick Contact */}
-                <Card className="p-6 bg-primary text-primary-foreground">
-                  <h3 className="text-xl font-bold mb-4">
+                <Card className="bg-card rounded-xl2 border border-border shadow-card p-6">
+                  <h3 className="text-xl font-bold text-foreground mb-2">
                     Need a Plumber in the {region.displayName}?
                   </h3>
-                  <p className="text-primary-foreground/90 mb-6">
+                  <p className="text-muted-foreground mb-6">
                     Call now for same-day service or emergency assistance
                     anywhere in the {region.displayName}.
                   </p>
                   <Button
                     asChild
                     size="lg"
-                    className="w-full bg-white text-primary hover:bg-white/90"
+                    className="w-full bg-primary text-primary-foreground rounded-full px-6 py-3 font-bold shadow-glow hover:brightness-110 transition"
                     data-testid="region-sidebar-call"
                   >
                     <a
-                      href={`tel:${BUSINESS_INFO.phone}`}
+                      href={`tel:${BUSINESS_INFO.phoneTel}`}
                       className="flex items-center justify-center gap-2"
                     >
                       <Phone className="h-5 w-5" />
                       {BUSINESS_INFO.phone}
+                    </a>
+                  </Button>
+                  <p className="text-center text-muted-foreground text-xs mt-3">
+                    No call-out fee during business hours
+                  </p>
+                </Card>
+
+                {/* Reviews CTA - truthful, no aggregate rating */}
+                <Card className="bg-card rounded-xl2 border border-border shadow-card p-6">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Star className="h-5 w-5 text-primary" />
+                    <h3 className="text-lg font-bold text-foreground">
+                      Happy with our work?
+                    </h3>
+                  </div>
+                  <p className="text-muted-foreground text-sm mb-4">
+                    See what local customers say, or leave us a review on Google.
+                  </p>
+                  <Button
+                    asChild
+                    variant="outline"
+                    className="w-full ring-1 ring-border hover:ring-primary text-foreground rounded-full px-6 py-3 font-semibold"
+                    data-testid="region-google-reviews"
+                  >
+                    <a
+                      href={BUSINESS_INFO.googleReviewLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      See our Google reviews
                     </a>
                   </Button>
                 </Card>

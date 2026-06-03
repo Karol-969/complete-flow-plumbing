@@ -138,7 +138,7 @@ export default function ServiceDetail() {
           <div className="flex flex-col md:flex-row items-center justify-center gap-4 text-white">
             <span className="font-semibold">Need urgent {service.title.toLowerCase()}?</span>
             <a 
-              href={`tel:${BUSINESS_INFO.phone}`}
+              href={`tel:${BUSINESS_INFO.phoneTel}`}
               className="text-xl font-bold hover:underline flex items-center gap-2"
               data-testid="service-emergency-phone"
             >
@@ -310,7 +310,7 @@ export default function ServiceDetail() {
                     className="w-full bg-white text-primary hover:bg-white/90"
                     data-testid="service-sidebar-call"
                   >
-                    <a href={`tel:${BUSINESS_INFO.phone}`} className="flex items-center justify-center gap-2">
+                    <a href={`tel:${BUSINESS_INFO.phoneTel}`} className="flex items-center justify-center gap-2">
                       <Phone className="h-5 w-5" />
                       {BUSINESS_INFO.phone}
                     </a>

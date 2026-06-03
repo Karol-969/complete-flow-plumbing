@@ -1,4 +1,6 @@
-import { HOME_FAQS } from "@shared/schema";
+import { HOME_FAQS, BUSINESS_INFO } from "@shared/schema";
+import { motion } from "framer-motion";
+import { Phone } from "lucide-react";
 import {
   Accordion,
   AccordionContent,
@@ -8,35 +10,78 @@ import {
 
 export function FAQSection() {
   return (
-    <section className="py-16 md:py-24 bg-background">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+    <section className="relative py-16 md:py-24 bg-background overflow-hidden">
+      {/* Atmospheric sky glow behind the header */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute left-1/2 top-0 -translate-x-1/2 h-72 w-72 rounded-full bg-primary/10 blur-3xl"
+      />
+
+      <div className="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-12 md:mb-16"
+        >
+          <p className="text-primary text-sm font-semibold tracking-widest uppercase mb-3">
+            FAQ
+          </p>
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground mb-4">
             Frequently Asked Questions
           </h2>
           <p className="text-lg text-muted-foreground">
-            Got questions? We've got answers. If you can't find what you're looking for, 
-            give us a call.
+            Got questions? We've got answers. If you can't find what you're
+            looking for, give us a call.
           </p>
-        </div>
+        </motion.div>
 
-        <Accordion type="single" collapsible className="space-y-4">
-          {HOME_FAQS.map((faq, index) => (
-            <AccordionItem 
-              key={index} 
-              value={`faq-${index}`}
-              className="bg-card rounded-lg border border-border px-6"
-              data-testid={`faq-item-${index}`}
-            >
-              <AccordionTrigger className="text-left font-semibold text-foreground hover:no-underline py-4">
-                {faq.question}
-              </AccordionTrigger>
-              <AccordionContent className="text-muted-foreground pb-4">
-                {faq.answer}
-              </AccordionContent>
-            </AccordionItem>
-          ))}
-        </Accordion>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.1 }}
+        >
+          <Accordion type="single" collapsible className="w-full">
+            {HOME_FAQS.map((faq, index) => (
+              <AccordionItem
+                key={index}
+                value={`faq-${index}`}
+                className="border-b border-border"
+                data-testid={`faq-item-${index}`}
+              >
+                <AccordionTrigger className="text-left text-base md:text-lg font-semibold text-foreground hover:no-underline py-6 gap-4 [&>svg]:h-5 [&>svg]:w-5 [&>svg]:text-primary [&[data-state=open]]:text-primary">
+                  {faq.question}
+                </AccordionTrigger>
+                <AccordionContent className="text-base text-muted-foreground leading-relaxed pb-6 pr-8">
+                  {faq.answer}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </motion.div>
+
+        {/* Still have questions — call CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="mt-12 text-center"
+        >
+          <p className="text-muted-foreground mb-5">
+            Still have questions? Our team is here to help, 24/7.
+          </p>
+          <a
+            href={`tel:${BUSINESS_INFO.phone.replace(/\s/g, "")}`}
+            data-testid="faq-call-cta"
+            className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground rounded-full px-6 py-3 font-bold shadow-glow hover:brightness-110 transition"
+          >
+            <Phone className="h-5 w-5" />
+            Call {BUSINESS_INFO.phone}
+          </a>
+        </motion.div>
       </div>
     </section>
   );

@@ -60,8 +60,8 @@ export default function Home() {
       <WorkGallery />
       <ServiceAreaMap />
       <Testimonials />
-      <FAQSection />
       <SeoContent />
+      <FAQSection />
       <CTASection />
     </Layout>
   );

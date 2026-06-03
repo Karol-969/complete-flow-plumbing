@@ -97,10 +97,11 @@ export interface FAQ {
 export const BUSINESS_INFO = {
   name: "Complete Flow Plumbing",
   phone: "0468 723 029",
+  phoneTel: "0468723029",
   email: "completeflowplumbing@gmail.com",
   abn: "45 685 684 020",
   licence: "395338C",
-  address: "Sydney & Southern Highlands, NSW",
+  address: "Sutherland Shire to the Southern Highlands, NSW",
   serviceHours: "24/7 Emergency Service",
   googleReviewLink: "https://g.page/r/complete-flow-plumbing/review",
   googleMapsUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d424146.1027831!2d150.3500!3d-34.4700!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6b12a5f2aa4a9cc1%3A0x5017d681632ccc0!2sSouthern%20Highlands%2C%20NSW!5e0!3m2!1sen!2sau!4v1703000000000!5m2!1sen!2sau",
@@ -425,11 +426,11 @@ export const TESTIMONIALS: Testimonial[] = [
 
 // Home page FAQs
 export const HOME_FAQS: FAQ[] = [
-  { question: "Do you offer 24/7 emergency plumbing services?", answer: "Yes! Complete Flow Plumbing provides 24/7 emergency plumbing services across Sydney and the Southern Highlands. We understand that plumbing emergencies don't wait for business hours, so neither do we." },
+  { question: "Do you offer 24/7 emergency plumbing services?", answer: "Yes! Complete Flow Plumbing provides 24/7 emergency plumbing services across the Sutherland Shire, Wollondilly, the Southern Highlands, Wollongong, Illawarra and the Southern Tablelands. We understand that plumbing emergencies don't wait for business hours, so neither do we." },
   { question: "How quickly can you respond to an emergency?", answer: "For emergency call-outs, we aim to arrive within 60 minutes in our primary service areas. Our team is strategically located to provide fast response times across all suburbs we service." },
   { question: "Do you provide free quotes?", answer: "Yes, we provide free, no-obligation quotes for all plumbing work. For most jobs, we can give you an upfront fixed price before any work begins, so there are no surprises." },
   { question: "Are your plumbers licensed and insured?", answer: "Absolutely. All our plumbers are fully licensed, insured, and undergo regular training. We hold all required NSW trade licences and comprehensive insurance coverage." },
-  { question: "What areas do you service?", answer: "We service the entire Southern Highlands region including Bowral, Mittagong, Moss Vale, and surrounding suburbs, as well as Greater Sydney metropolitan areas." },
+  { question: "What areas do you service?", answer: "Complete Flow Plumbing proudly services Sutherland Shire, Wollondilly, the Southern Highlands, Wollongong, Illawarra and the Southern Tablelands — covering 90+ suburbs and townships from Cronulla to Goulburn." },
   { question: "Do you charge a call-out fee?", answer: "No call-out fee for standard service calls during business hours. Emergency after-hours calls may incur a small surcharge, which we always communicate upfront." },
   { question: "What payment methods do you accept?", answer: "We accept cash, EFTPOS, credit cards (Visa, Mastercard, Amex), and bank transfer. Payment is due upon completion of work." },
   { question: "Do you offer any guarantees on your work?", answer: "Yes, all our workmanship comes with a guarantee. We stand behind the quality of our work and will return to fix any issues at no additional cost within the guarantee period." },

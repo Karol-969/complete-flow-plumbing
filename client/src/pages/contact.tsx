@@ -28,7 +28,7 @@ export default function Contact() {
               <span className="font-semibold">Plumbing Emergency?</span>
             </div>
             <a 
-              href={`tel:${BUSINESS_INFO.phone}`}
+              href={`tel:${BUSINESS_INFO.phoneTel}`}
               className="text-xl font-bold hover:underline flex items-center gap-2"
               data-testid="emergency-phone"
             >
@@ -52,7 +52,7 @@ export default function Contact() {
               <div className="space-y-6">
                 <Card className="p-4">
                   <a 
-                    href={`tel:${BUSINESS_INFO.phone}`}
+                    href={`tel:${BUSINESS_INFO.phoneTel}`}
                     className="flex items-start gap-4 hover:text-primary transition-colors"
                     data-testid="contact-phone"
                   >

@@ -9,6 +9,12 @@ export default {
         lg: ".5625rem", /* 9px */
         md: ".375rem", /* 6px */
         sm: ".1875rem", /* 3px */
+        xl2: "1.25rem",
+      },
+      boxShadow: {
+        glow: "0 0 40px -8px hsl(197 100% 50% / 0.45)",
+        card: "0 8px 30px -12px rgba(0,0,0,0.6)",
+        lift: "0 16px 40px -16px rgba(0,0,0,0.7)",
       },
       colors: {
         // Flat / base colors (regular buttons)

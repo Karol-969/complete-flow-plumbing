@@ -195,7 +195,7 @@ export default function About() {
                   <Link href="/contact">Contact Us</Link>
                 </Button>
                 <Button asChild variant="outline" size="lg" data-testid="about-call">
-                  <a href={`tel:${BUSINESS_INFO.phone}`}>
+                  <a href={`tel:${BUSINESS_INFO.phoneTel}`}>
                     <Phone className="h-5 w-5 mr-2" />
                     Call: {BUSINESS_INFO.phone}
                   </a>

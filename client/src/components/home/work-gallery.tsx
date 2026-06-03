@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from "react";
+import { motion } from "framer-motion";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -94,17 +95,33 @@ export function WorkGallery() {
   const config = CATEGORY_CONFIG[activeCategory];
 
   return (
-    <section className="py-16 md:py-24 bg-muted/30">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="relative py-16 md:py-24 bg-background overflow-hidden">
+      {/* Atmospheric sky glow behind the header */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 h-72 w-[40rem] bg-primary/10 blur-3xl rounded-full"
+      />
 
-        <div className="text-center mb-10">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-3">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        <motion.div
+          className="text-center mb-10"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.4 }}
+        >
+          <p className="text-primary text-sm font-semibold tracking-widest uppercase mb-3">
             Our Recent Work
+          </p>
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground mb-3">
+            Real Jobs, Real Results
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Real jobs, real results — see our work across Sydney and the Southern Highlands
+            See our work across Sydney and the Southern Highlands — from emergency dig-ups
+            to hot water installs.
           </p>
-        </div>
+        </motion.div>
 
         {/* Category Tabs */}
         <div className="flex flex-wrap justify-center gap-2 mb-8">
@@ -118,10 +135,10 @@ export function WorkGallery() {
                 data-testid={`gallery-tab-${cat.toLowerCase().replace(/\s/g, "-")}`}
                 className={`
                   flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold
-                  transition-all duration-200 border-2
+                  transition-all duration-200 ring-1
                   ${isActive
-                    ? `${cfg.color} border-transparent shadow-lg scale-105`
-                    : "bg-background text-foreground border-border hover:border-primary hover:text-primary"
+                    ? `${cfg.color} ring-transparent shadow-glow scale-105`
+                    : "bg-card text-foreground ring-border hover:ring-primary hover:text-primary"
                   }
                 `}
               >
@@ -134,7 +151,7 @@ export function WorkGallery() {
 
         {/* Emergency Slider */}
         {isSlider && filtered.length > 0 && (
-          <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-emergency/30"
+          <div className="relative rounded-xl2 overflow-hidden shadow-card border border-emergency/30"
             onMouseEnter={() => setIsAutoPlaying(false)}
             onMouseLeave={() => setIsAutoPlaying(true)}
           >
@@ -215,36 +232,43 @@ export function WorkGallery() {
 
         {/* Grid for other categories */}
         {!isSlider && (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {filtered.map((image) => (
-              <Card
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+            {filtered.map((image, index) => (
+              <motion.div
                 key={image.id}
-                className="overflow-hidden cursor-pointer group hover-elevate"
-                onClick={() => setLightboxImage(image)}
-                data-testid={`gallery-image-${image.id}`}
-                role="button"
-                tabIndex={0}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault();
-                    setLightboxImage(image);
-                  }
-                }}
-                aria-label={`View ${image.alt}`}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.3, delay: index * 0.05 }}
               >
-                <div className="relative aspect-square">
-                  <img
-                    src={image.src}
-                    alt={image.alt}
-                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
-                  <Badge className={`absolute bottom-2 left-2 text-xs ${config.badge}`}>
-                    {image.category}
-                  </Badge>
-                </div>
-              </Card>
+                <Card
+                  className="overflow-hidden cursor-pointer bg-card rounded-xl2 border border-border shadow-card group hover:-translate-y-1 hover:border-primary/50 hover:shadow-glow transition-all"
+                  onClick={() => setLightboxImage(image)}
+                  data-testid={`gallery-image-${image.id}`}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      setLightboxImage(image);
+                    }
+                  }}
+                  aria-label={`View ${image.alt}`}
+                >
+                  <div className="relative aspect-square">
+                    <img
+                      src={image.src}
+                      alt={image.alt}
+                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300" />
+                    <Badge className={`absolute bottom-2 left-2 text-xs ${config.badge}`}>
+                      {image.category}
+                    </Badge>
+                  </div>
+                </Card>
+              </motion.div>
             ))}
             {filtered.length === 0 && (
               <div className="col-span-4 py-16 text-center text-muted-foreground">

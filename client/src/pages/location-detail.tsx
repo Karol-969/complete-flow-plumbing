@@ -1,12 +1,12 @@
 import { Layout } from "@/components/layout/layout";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Link, useParams } from "wouter";
 import { QuoteForm } from "@/components/forms/quote-form";
 import { SEOHead } from "@/components/seo/seo-head";
 import { LocalBusinessSchema, LocationSchema, FAQSchema } from "@/components/seo/structured-data";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
+import { iconMap } from "@/components/home/services-grid";
 import {
   SERVICES,
   BUSINESS_INFO,
@@ -23,18 +23,26 @@ import {
   CheckCircle,
   Siren,
   Wrench,
-  Droplets,
-  Flame,
   ShieldCheck,
-  Star,
   Users,
+  Star,
 } from "lucide-react";
+import { motion } from "framer-motion";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 20 },
+  show: (i: number = 0) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.4, delay: i * 0.05 },
+  }),
+};
 
 // Fallback region descriptor so content generation never breaks if a region
 // somehow has no matching entry in REGIONS (defensive — all 6 are present).
@@ -137,7 +145,10 @@ export default function LocationDetail() {
           <p className="text-muted-foreground mb-8">
             The location you're looking for doesn't exist.
           </p>
-          <Button asChild>
+          <Button
+            asChild
+            className="bg-primary text-primary-foreground rounded-full px-6 py-3 font-bold shadow-glow hover:brightness-110 transition"
+          >
             <Link href="/locations">View All Locations</Link>
           </Button>
         </div>
@@ -185,15 +196,17 @@ export default function LocationDetail() {
     ...region.targetKeywords,
   ];
 
-  // Region-specific "common issues" cards (first two issues for this region).
+  // Region-specific "common issues" cards. Icons come from the per-service
+  // iconMap (blocked drains -> PipeSolid, hot water -> Flame) so they stay
+  // visually consistent with the home page services grid.
   const issueCards = [
     {
-      icon: Droplets,
+      icon: iconMap["PipeSolid"] ?? Wrench,
       title: region.commonIssues[0] ?? "Blocked Drains",
       body: `In ${location.name}, ${(region.commonIssues[0] ?? "blocked drains").toLowerCase()} is one of the most frequent calls we get. ${region.localAngle} Our CCTV drain inspection and hydro jetting quickly diagnose and resolve the problem at its source.`,
     },
     {
-      icon: Flame,
+      icon: iconMap["Flame"] ?? Wrench,
       title: region.commonIssues[1] ?? "Hot Water Problems",
       body: `${region.commonIssues[1] ?? "Hot water failures"} are another common issue across ${location.name} and the ${regionDisplayName}. We service, repair, and install all types of hot water systems including gas, electric, solar, and heat pump units — often same day.`,
     },
@@ -220,29 +233,57 @@ export default function LocationDetail() {
       />
 
       {/* Hero */}
-      <section className="py-16 md:py-20 bg-primary">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            Plumber in {location.name}
-          </h1>
-          <p className="text-xl text-white/90 max-w-3xl mb-6">
-            Professional, reliable plumbing services in {location.name}, {regionDisplayName}.
-            Available 24/7 for emergencies with same-day service for most jobs.
-          </p>
-          <div className="flex flex-wrap gap-3">
-            <Badge className="bg-white/20 text-white border-white/30 px-4 py-2">
-              <Siren className="h-4 w-4 mr-2" />
-              24/7 Emergency
-            </Badge>
-            <Badge className="bg-white/20 text-white border-white/30 px-4 py-2">
-              <Clock className="h-4 w-4 mr-2" />
-              Same-Day Service
-            </Badge>
-            <Badge className="bg-white/20 text-white border-white/30 px-4 py-2">
-              <CheckCircle className="h-4 w-4 mr-2" />
-              Licensed & Insured
-            </Badge>
-          </div>
+      <section className="relative overflow-hidden bg-background py-16 md:py-24">
+        <div className="pointer-events-none absolute -top-24 left-1/2 -translate-x-1/2 w-[40rem] h-[40rem] bg-primary/10 blur-3xl rounded-full" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div initial="hidden" animate="show" variants={fadeUp} className="max-w-3xl">
+            <p className="text-primary text-sm font-semibold tracking-widest uppercase mb-3">
+              {regionDisplayName} · NSW
+            </p>
+            <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-foreground mb-4">
+              Plumber in {location.name}
+            </h1>
+            <p className="text-xl text-muted-foreground max-w-3xl mb-6">
+              Professional, reliable plumbing services in {location.name}, {regionDisplayName}.
+              Available 24/7 for emergencies with same-day service for most jobs.
+            </p>
+            <div className="flex flex-wrap gap-3 mb-8">
+              <span className="inline-flex items-center gap-2 rounded-full bg-primary/10 ring-1 ring-primary/20 text-primary px-4 py-2 text-sm font-semibold">
+                <Siren className="h-4 w-4" />
+                24/7 Emergency
+              </span>
+              <span className="inline-flex items-center gap-2 rounded-full bg-primary/10 ring-1 ring-primary/20 text-primary px-4 py-2 text-sm font-semibold">
+                <Clock className="h-4 w-4" />
+                Same-Day Service
+              </span>
+              <span className="inline-flex items-center gap-2 rounded-full bg-primary/10 ring-1 ring-primary/20 text-primary px-4 py-2 text-sm font-semibold">
+                <ShieldCheck className="h-4 w-4" />
+                Licensed & Insured
+              </span>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <Button
+                asChild
+                size="lg"
+                className="bg-primary text-primary-foreground rounded-full px-6 py-3 font-bold shadow-glow hover:brightness-110 transition"
+                data-testid="location-hero-call"
+              >
+                <a href={`tel:${BUSINESS_INFO.phoneTel}`} className="flex items-center justify-center gap-2">
+                  <Phone className="h-5 w-5" />
+                  Call: {BUSINESS_INFO.phone}
+                </a>
+              </Button>
+              <Button
+                asChild
+                variant="outline"
+                size="lg"
+                className="ring-1 ring-border hover:ring-primary text-foreground rounded-full px-6 py-3 font-semibold"
+                data-testid="location-hero-quote"
+              >
+                <Link href="/contact">Get a Free Quote</Link>
+              </Button>
+            </div>
+          </motion.div>
         </div>
       </section>
 
@@ -252,7 +293,7 @@ export default function LocationDetail() {
           <div className="flex flex-col md:flex-row items-center justify-center gap-4 text-white">
             <span className="font-semibold">Need a plumber in {location.name} now?</span>
             <a
-              href={`tel:${BUSINESS_INFO.phone}`}
+              href={`tel:${BUSINESS_INFO.phoneTel}`}
               className="text-xl font-bold hover:underline flex items-center gap-2"
               data-testid="location-emergency-phone"
             >
@@ -268,83 +309,118 @@ export default function LocationDetail() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
             {/* Content */}
-            <div className="lg:col-span-2 space-y-12">
+            <div className="lg:col-span-2 space-y-16">
               {/* Intro - Unique content for SEO */}
-              <div>
-                <h2 className="text-2xl font-bold text-foreground mb-4">
+              <motion.div
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true }}
+                variants={fadeUp}
+              >
+                <p className="text-primary text-sm font-semibold tracking-widest uppercase mb-3">
+                  Your Local Plumber
+                </p>
+                <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground mb-4">
                   Your Local Plumber in {location.name}
                 </h2>
                 <div className="prose prose-gray dark:prose-invert max-w-none space-y-4">
-                  <p className="text-foreground/80 leading-relaxed">{suburbContent.intro}</p>
-                  <p className="text-foreground/80 leading-relaxed">{suburbContent.localInfo}</p>
+                  <p className="text-muted-foreground leading-relaxed">{suburbContent.intro}</p>
+                  <p className="text-muted-foreground leading-relaxed">{suburbContent.localInfo}</p>
                   <h3 className="text-lg font-semibold text-foreground pt-2">
                     Plumbing Services in {location.name}
                   </h3>
-                  <p className="text-foreground/80 leading-relaxed">{suburbContent.services}</p>
+                  <p className="text-muted-foreground leading-relaxed">{suburbContent.services}</p>
                   <h3 className="text-lg font-semibold text-foreground pt-2">
                     Local Pipe & Drain Knowledge — {location.name}
                   </h3>
-                  <p className="text-foreground/80 leading-relaxed">{suburbContent.pipes}</p>
+                  <p className="text-muted-foreground leading-relaxed">{suburbContent.pipes}</p>
                 </div>
 
                 {/* Why Choose Us - Local trust signals */}
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8">
-                  <div className="flex items-center gap-3 p-4 bg-muted/50 rounded-lg">
-                    <ShieldCheck className="h-8 w-8 text-primary flex-shrink-0" />
+                  <div className="flex items-center gap-3 bg-card rounded-xl2 border border-border shadow-card p-4">
+                    <span className="flex items-center justify-center bg-primary/10 ring-1 ring-primary/20 text-primary rounded-xl p-3 flex-shrink-0">
+                      <ShieldCheck className="h-6 w-6" />
+                    </span>
                     <div>
                       <p className="font-semibold text-foreground">Licensed</p>
                       <p className="text-sm text-muted-foreground">NSW Lic. {BUSINESS_INFO.licence}</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-3 p-4 bg-muted/50 rounded-lg">
-                    <Star className="h-8 w-8 text-primary flex-shrink-0" />
+                  <div className="flex items-center gap-3 bg-card rounded-xl2 border border-border shadow-card p-4">
+                    <span className="flex items-center justify-center bg-primary/10 ring-1 ring-primary/20 text-primary rounded-xl p-3 flex-shrink-0">
+                      <Clock className="h-6 w-6" />
+                    </span>
                     <div>
                       <p className="font-semibold text-foreground">Same-Day Service</p>
                       <p className="text-sm text-muted-foreground">Fast local response</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-3 p-4 bg-muted/50 rounded-lg">
-                    <Users className="h-8 w-8 text-primary flex-shrink-0" />
+                  <div className="flex items-center gap-3 bg-card rounded-xl2 border border-border shadow-card p-4">
+                    <span className="flex items-center justify-center bg-primary/10 ring-1 ring-primary/20 text-primary rounded-xl p-3 flex-shrink-0">
+                      <Users className="h-6 w-6" />
+                    </span>
                     <div>
                       <p className="font-semibold text-foreground">Local Team</p>
-                      <p className="text-sm text-muted-foreground">Fast Response</p>
+                      <p className="text-sm text-muted-foreground">{BUSINESS_INFO.guarantee}</p>
                     </div>
                   </div>
                 </div>
-              </div>
+              </motion.div>
 
-              {/* Services */}
+              {/* Services - per-service icons from iconMap */}
               <div>
-                <h2 className="text-2xl font-bold text-foreground mb-6">
+                <motion.h2
+                  initial="hidden"
+                  whileInView="show"
+                  viewport={{ once: true }}
+                  variants={fadeUp}
+                  className="text-3xl md:text-4xl font-bold tracking-tight text-foreground mb-6"
+                >
                   Plumbing Services in {location.name}
-                </h2>
+                </motion.h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {SERVICES.slice(0, 6).map((service) => (
-                    <Link
-                      key={service.id}
-                      href={`/services/${service.slug}`}
-                      data-testid={`location-service-${service.slug}`}
-                    >
-                      <Card className="p-4 hover-elevate group">
-                        <div className="flex items-center gap-3">
-                          <div className="flex items-center justify-center w-10 h-10 rounded-md bg-primary/10 flex-shrink-0">
-                            <Wrench className="h-5 w-5 text-primary" />
-                          </div>
-                          <div>
-                            <p className="font-medium text-foreground group-hover:text-primary transition-colors">
-                              {service.title}
-                            </p>
-                            <p className="text-sm text-muted-foreground line-clamp-1">
-                              {service.shortDescription}
-                            </p>
-                          </div>
-                        </div>
-                      </Card>
-                    </Link>
-                  ))}
+                  {SERVICES.slice(0, 6).map((service, i) => {
+                    const Icon = iconMap[service.icon] || Wrench;
+                    return (
+                      <motion.div
+                        key={service.id}
+                        custom={i}
+                        initial="hidden"
+                        whileInView="show"
+                        viewport={{ once: true }}
+                        variants={fadeUp}
+                      >
+                        <Link
+                          href={`/services/${service.slug}`}
+                          data-testid={`location-service-${service.slug}`}
+                        >
+                          <Card className="bg-card rounded-xl2 border border-border shadow-card group hover:-translate-y-1 hover:border-primary/50 hover:shadow-glow transition-all p-4 h-full">
+                            <div className="flex items-center gap-3">
+                              <span className="flex items-center justify-center bg-primary/10 ring-1 ring-primary/20 text-primary rounded-xl p-3 flex-shrink-0">
+                                <Icon className="h-5 w-5" />
+                              </span>
+                              <div>
+                                <p className="font-medium text-foreground group-hover:text-primary transition-colors">
+                                  {service.title}
+                                </p>
+                                <p className="text-sm text-muted-foreground line-clamp-1">
+                                  {service.shortDescription}
+                                </p>
+                              </div>
+                            </div>
+                          </Card>
+                        </Link>
+                      </motion.div>
+                    );
+                  })}
                 </div>
                 <div className="mt-6">
-                  <Button asChild variant="outline">
+                  <Button
+                    asChild
+                    variant="outline"
+                    className="ring-1 ring-border hover:ring-primary text-foreground rounded-full px-6 py-3 font-semibold"
+                  >
                     <Link href="/services">View All Services</Link>
                   </Button>
                 </div>
@@ -352,24 +428,39 @@ export default function LocationDetail() {
 
               {/* Common Issues - region-specific */}
               <div>
-                <h2 className="text-2xl font-bold text-foreground mb-6">
+                <motion.h2
+                  initial="hidden"
+                  whileInView="show"
+                  viewport={{ once: true }}
+                  variants={fadeUp}
+                  className="text-3xl md:text-4xl font-bold tracking-tight text-foreground mb-6"
+                >
                   Common Plumbing Issues in {location.name} Homes
-                </h2>
+                </motion.h2>
                 <div className="space-y-4">
                   {issueCards.map((card, index) => {
                     const Icon = card.icon;
                     return (
-                      <Card key={index} className="p-6">
-                        <div className="flex items-start gap-4">
-                          <div className="flex items-center justify-center w-12 h-12 rounded-md bg-primary/10 flex-shrink-0">
-                            <Icon className="h-6 w-6 text-primary" />
+                      <motion.div
+                        key={index}
+                        custom={index}
+                        initial="hidden"
+                        whileInView="show"
+                        viewport={{ once: true }}
+                        variants={fadeUp}
+                      >
+                        <Card className="bg-card rounded-xl2 border border-border shadow-card hover:border-primary/50 hover:shadow-glow transition-all p-6">
+                          <div className="flex items-start gap-4">
+                            <span className="flex items-center justify-center bg-primary/10 ring-1 ring-primary/20 text-primary rounded-xl p-3 flex-shrink-0">
+                              <Icon className="h-6 w-6" />
+                            </span>
+                            <div>
+                              <h3 className="font-semibold text-foreground mb-2">{card.title}</h3>
+                              <p className="text-sm text-muted-foreground">{card.body}</p>
+                            </div>
                           </div>
-                          <div>
-                            <h3 className="font-semibold text-foreground mb-2">{card.title}</h3>
-                            <p className="text-sm text-muted-foreground">{card.body}</p>
-                          </div>
-                        </div>
-                      </Card>
+                        </Card>
+                      </motion.div>
                     );
                   })}
                 </div>
@@ -377,15 +468,21 @@ export default function LocationDetail() {
 
               {/* FAQs */}
               <div>
-                <h2 className="text-2xl font-bold text-foreground mb-6">
+                <motion.h2
+                  initial="hidden"
+                  whileInView="show"
+                  viewport={{ once: true }}
+                  variants={fadeUp}
+                  className="text-3xl md:text-4xl font-bold tracking-tight text-foreground mb-6"
+                >
                   Frequently Asked Questions
-                </h2>
+                </motion.h2>
                 <Accordion type="single" collapsible className="space-y-4">
                   {localFAQs.map((faq, index) => (
                     <AccordionItem
                       key={index}
                       value={`faq-${index}`}
-                      className="bg-card rounded-lg border border-border px-6"
+                      className="bg-card rounded-xl2 border border-border shadow-card px-6 data-[state=open]:border-primary/50"
                       data-testid={`location-faq-${index}`}
                     >
                       <AccordionTrigger className="text-left font-semibold text-foreground hover:no-underline py-4">
@@ -402,24 +499,34 @@ export default function LocationDetail() {
               {/* Nearby Suburbs - real adjacent slugs from location.nearby */}
               {nearbySuburbs.length > 0 && (
                 <div>
-                  <h2 className="text-2xl font-bold text-foreground mb-6">
+                  <motion.h2
+                    initial="hidden"
+                    whileInView="show"
+                    viewport={{ once: true }}
+                    variants={fadeUp}
+                    className="text-3xl md:text-4xl font-bold tracking-tight text-foreground mb-6"
+                  >
                     Nearby Suburbs We Service
-                  </h2>
+                  </motion.h2>
                   <div className="flex flex-wrap gap-3">
-                    {nearbySuburbs.map((suburb) => (
-                      <Link
+                    {nearbySuburbs.map((suburb, i) => (
+                      <motion.div
                         key={suburb.id}
-                        href={`/locations/${suburb.slug}`}
-                        data-testid={`nearby-${suburb.slug}`}
+                        custom={i}
+                        initial="hidden"
+                        whileInView="show"
+                        viewport={{ once: true }}
+                        variants={fadeUp}
                       >
-                        <Badge
-                          variant="secondary"
-                          className="px-4 py-2 text-sm hover:bg-primary hover:text-primary-foreground transition-colors"
+                        <Link
+                          href={`/locations/${suburb.slug}`}
+                          data-testid={`nearby-${suburb.slug}`}
+                          className="inline-flex items-center gap-1.5 rounded-full bg-card border border-border shadow-card px-4 py-2 text-sm font-medium text-foreground hover:border-primary/50 hover:text-primary hover:shadow-glow transition-all"
                         >
-                          <MapPin className="h-3 w-3 mr-1" />
+                          <MapPin className="h-3.5 w-3.5 text-primary" />
                           {suburb.name}
-                        </Badge>
-                      </Link>
+                        </Link>
+                      </motion.div>
                     ))}
                   </div>
                 </div>
@@ -430,22 +537,52 @@ export default function LocationDetail() {
             <div className="lg:col-span-1">
               <div className="sticky top-24 space-y-6">
                 {/* Quick Contact */}
-                <Card className="p-6 bg-primary text-primary-foreground">
-                  <h3 className="text-xl font-bold mb-4">
+                <Card className="bg-card rounded-xl2 border border-border shadow-card p-6">
+                  <h3 className="text-xl font-bold text-foreground mb-2">
                     Need a Plumber in {location.name}?
                   </h3>
-                  <p className="text-primary-foreground/90 mb-6">
+                  <p className="text-muted-foreground mb-6">
                     Call now for same-day service or emergency assistance.
                   </p>
                   <Button
                     asChild
                     size="lg"
-                    className="w-full bg-white text-primary hover:bg-white/90"
+                    className="w-full bg-primary text-primary-foreground rounded-full px-6 py-3 font-bold shadow-glow hover:brightness-110 transition"
                     data-testid="location-sidebar-call"
                   >
-                    <a href={`tel:${BUSINESS_INFO.phone}`} className="flex items-center justify-center gap-2">
+                    <a href={`tel:${BUSINESS_INFO.phoneTel}`} className="flex items-center justify-center gap-2">
                       <Phone className="h-5 w-5" />
                       {BUSINESS_INFO.phone}
+                    </a>
+                  </Button>
+                  <p className="text-center text-muted-foreground text-xs mt-3">
+                    No call-out fee during business hours
+                  </p>
+                </Card>
+
+                {/* Reviews CTA - truthful, no aggregate rating */}
+                <Card className="bg-card rounded-xl2 border border-border shadow-card p-6">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Star className="h-5 w-5 text-primary" />
+                    <h3 className="text-lg font-bold text-foreground">
+                      Happy with our work?
+                    </h3>
+                  </div>
+                  <p className="text-muted-foreground text-sm mb-4">
+                    See what local customers say, or leave us a review on Google.
+                  </p>
+                  <Button
+                    asChild
+                    variant="outline"
+                    className="w-full ring-1 ring-border hover:ring-primary text-foreground rounded-full px-6 py-3 font-semibold"
+                    data-testid="location-google-reviews"
+                  >
+                    <a
+                      href={BUSINESS_INFO.googleReviewLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      See our Google reviews
                     </a>
                   </Button>
                 </Card>
