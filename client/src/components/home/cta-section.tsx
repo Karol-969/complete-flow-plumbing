@@ -38,8 +38,8 @@ export function CTASection() {
               </h2>
               <p className="text-lg text-muted-foreground mb-8">
                 Whether it's a 2am burst pipe or a scheduled hot water swap, our team
-                is ready. Call now for fast, reliable plumbing across the Highlands,
-                Sydney and the Illawarra.
+                is ready. Call now for fast, reliable plumbing across the Sutherland Shire,
+                Wollongong, the Southern Highlands and the Illawarra.
               </p>
 
               <ul className="space-y-4 mb-8">

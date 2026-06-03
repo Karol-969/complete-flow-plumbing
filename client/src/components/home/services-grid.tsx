@@ -51,8 +51,8 @@ export function ServicesGrid() {
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             From emergency repairs to installations, we provide comprehensive
-            plumbing solutions for homes and businesses across Sydney and the
-            Southern Highlands.
+            plumbing solutions for homes and businesses across the Sutherland
+            Shire, Wollongong, the Southern Highlands and beyond.
           </p>
         </motion.div>
 

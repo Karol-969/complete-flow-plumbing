@@ -162,9 +162,9 @@ export default function ServiceDetail() {
                 </h2>
                 <div className="prose prose-gray dark:prose-invert max-w-none">
                   <p>
-                    At Complete Flow Plumbing, we provide professional {service.title.toLowerCase()} 
-                    services to homes and businesses across Sydney and the Southern Highlands. 
-                    Our licensed plumbers use the latest equipment and techniques to deliver 
+                    At Complete Flow Plumbing, we provide professional {service.title.toLowerCase()}
+                    services to homes and businesses across the Sutherland Shire, Wollondilly, the Southern Highlands, Wollongong, the Illawarra and the Southern Tablelands.
+                    Our licensed plumbers use the latest equipment and techniques to deliver
                     fast, effective solutions.
                   </p>
                   <p>
@@ -247,7 +247,7 @@ export default function ServiceDetail() {
                   {service.title} in Your Area
                 </h2>
                 <p className="text-muted-foreground mb-4">
-                  We provide {service.title.toLowerCase()} services across Sydney and the Southern Highlands, including:
+                  We provide {service.title.toLowerCase()} services across the Sutherland Shire, Wollondilly, the Southern Highlands, Wollongong, the Illawarra and the Southern Tablelands, including:
                 </p>
                 <div className="flex flex-wrap gap-3">
                   {featuredSuburbs.map((suburb) => (

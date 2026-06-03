@@ -55,7 +55,7 @@ export default function About() {
             About Complete Flow Plumbing
           </h1>
           <p className="text-xl text-white/90 max-w-3xl mx-auto">
-            Your trusted local plumbers serving Sydney and the Southern Highlands 
+            Your trusted local plumbers serving the Sutherland Shire, Wollondilly, the Southern Highlands, Wollongong, the Illawarra and the Southern Tablelands
             with professional, reliable plumbing services since 2008.
           </p>
         </div>
@@ -90,9 +90,9 @@ export default function About() {
                   exceptional customer care.
                 </p>
                 <p>
-                  What started as a small family operation has grown into a trusted team 
-                  of licensed plumbers serving homes and businesses across Sydney and 
-                  the beautiful Southern Highlands region.
+                  What started as a small family operation has grown into a trusted team
+                  of licensed plumbers serving homes and businesses across the Sutherland Shire,
+                  Wollondilly, the beautiful Southern Highlands, Wollongong, the Illawarra and the Southern Tablelands.
                 </p>
                 <p>
                   We've built our reputation on reliability, honest pricing, and workmanship 

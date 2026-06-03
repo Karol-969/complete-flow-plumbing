@@ -50,6 +50,7 @@ const FALLBACK_REGION: Region = {
   slug: "",
   name: "the local area",
   displayName: "the local area",
+  theName: "the local area",
   blurb: "",
   localAngle:
     "Local NSW conditions including ageing pipework, seasonal weather extremes and tree-root drain intrusion.",
@@ -73,21 +74,21 @@ const primaryIssue = (region: Region): string =>
 // Generate local FAQs for each suburb — unique per region via localAngle/commonIssues.
 const generateLocalFAQs = (location: Location, region: Region): FAQ[] => {
   const suburbName = location.name;
-  const regionName = region.displayName;
+  const theName = region.theName;
   const issuesList = region.commonIssues.join(", ").toLowerCase();
 
   return [
     {
       question: `Do you provide emergency plumbing services in ${suburbName}?`,
-      answer: `Yes! Complete Flow Plumbing offers 24/7 emergency plumbing services in ${suburbName} and across the ${regionName}. We aim to respond fast for urgent calls — burst pipes, gas leaks, blocked sewers and no hot water. Our emergency plumbers are on standby around the clock, including weekends and public holidays.`,
+      answer: `Yes! Complete Flow Plumbing offers 24/7 emergency plumbing services in ${suburbName} and across ${theName}. We aim to respond fast for urgent calls — burst pipes, gas leaks, blocked sewers and no hot water. Our emergency plumbers are on standby around the clock, including weekends and public holidays.`,
     },
     {
       question: `How quickly can a plumber get to ${suburbName}?`,
-      answer: `For standard appointments, we offer same-day service in ${suburbName}. For emergencies, we prioritise rapid response. As local plumbers who work throughout the ${regionName} every day, we know the streets, the access challenges and the typical plumbing setups around ${suburbName}, so we arrive prepared.`,
+      answer: `For standard appointments, we offer same-day service in ${suburbName}. For emergencies, we prioritise rapid response. As local plumbers who work throughout ${theName} every day, we know the streets, the access challenges and the typical plumbing setups around ${suburbName}, so we arrive prepared.`,
     },
     {
       question: `What plumbing services do you offer in ${suburbName}?`,
-      answer: `We provide comprehensive plumbing services in ${suburbName} including: blocked drain clearing with CCTV inspection, hot water system repairs and installations (gas, electric, solar, heat pump), gas fitting and leak detection, toilet and tap repairs, pipe relining and replacement, bathroom renovations, and stormwater drainage solutions. In the ${regionName} we particularly often handle ${issuesList}.`,
+      answer: `We provide comprehensive plumbing services in ${suburbName} including: blocked drain clearing with CCTV inspection, hot water system repairs and installations (gas, electric, solar, heat pump), gas fitting and leak detection, toilet and tap repairs, pipe relining and replacement, bathroom renovations, and stormwater drainage solutions. In ${theName} we particularly often handle ${issuesList}.`,
     },
     {
       question: `Do you charge a call-out fee in ${suburbName}?`,
@@ -95,11 +96,11 @@ const generateLocalFAQs = (location: Location, region: Region): FAQ[] => {
     },
     {
       question: `Are your plumbers licensed to work in ${suburbName}?`,
-      answer: `Absolutely. All our plumbers are fully licensed with NSW Fair Trading (Licence ${BUSINESS_INFO.licence}) and carry comprehensive public liability insurance. We're qualified to work throughout ${suburbName}, the ${regionName} and all of NSW.`,
+      answer: `Absolutely. All our plumbers are fully licensed with NSW Fair Trading (Licence ${BUSINESS_INFO.licence}) and carry comprehensive public liability insurance. We're qualified to work throughout ${suburbName}, ${theName} and all of NSW.`,
     },
     {
       question: `What are common plumbing problems in ${suburbName} homes?`,
-      answer: `Across the ${regionName} the issues we see most are ${issuesList}. ${region.localAngle} In ${suburbName} specifically we tailor our approach to the local property types and conditions, diagnosing the real cause before recommending a fix.`,
+      answer: `Across ${theName} the issues we see most are ${issuesList}. ${region.localAngle} In ${suburbName} specifically we tailor our approach to the local property types and conditions, diagnosing the real cause before recommending a fix.`,
     },
     {
       question: `How much does a plumber cost in ${suburbName}?`,
@@ -119,14 +120,15 @@ const generateSuburbContent = (
 ): { intro: string; localInfo: string; services: string; pipes: string } => {
   const suburbName = location.name;
   const regionName = region.displayName;
+  const theName = region.theName;
   const issues = region.commonIssues;
   const issuesSentence = issues.length
     ? `${issues.slice(0, -1).join(", ")}${issues.length > 1 ? " and " : ""}${issues[issues.length - 1]}`.toLowerCase()
     : "blocked drains and hot water faults";
 
   return {
-    intro: `Looking for a trusted plumber in ${suburbName}? Complete Flow Plumbing provides fast, reliable plumbing services throughout ${suburbName} and the wider ${regionName}. Our licensed NSW plumbers are available 24 hours a day, 7 days a week for plumbing emergencies, and offer same-day bookings for all standard plumbing work. We provide upfront written quotes, no call-out fees during business hours, and back every job with a workmanship guarantee.`,
-    localInfo: `${region.localAngle} That's exactly the environment our ${suburbName} plumbers work in every day. Whether you need an emergency plumber in ${suburbName} at 2am, a blocked drain cleared before guests arrive, a hot water system replaced today, or a gas appliance installed safely, Complete Flow Plumbing is your local ${suburbName} plumber. We service residential homes, rental properties, strata buildings, and small commercial premises throughout the ${regionName}.`,
+    intro: `Looking for a trusted plumber in ${suburbName}? Complete Flow Plumbing provides fast, reliable plumbing services throughout ${suburbName} and the wider ${regionName} region. Our licensed NSW plumbers are available 24 hours a day, 7 days a week for plumbing emergencies, and offer same-day bookings for all standard plumbing work. We provide upfront written quotes, no call-out fees during business hours, and back every job with a workmanship guarantee.`,
+    localInfo: `${region.localAngle} That's exactly the environment our ${suburbName} plumbers work in every day. Whether you need an emergency plumber in ${suburbName} at 2am, a blocked drain cleared before guests arrive, a hot water system replaced today, or a gas appliance installed safely, Complete Flow Plumbing is your local ${suburbName} plumber. We service residential homes, rental properties, strata buildings, and small commercial premises throughout ${theName}.`,
     services: `Our plumbers in ${suburbName} handle the full range of residential and commercial plumbing: blocked drains and CCTV inspection, hot water system repairs and replacement (gas, electric, heat pump, solar), gas fitting and gas leak detection, leaking taps and burst pipes, toilet repairs and replacements, bathroom and kitchen plumbing, pipe relining, stormwater drainage, and more. If it involves water or gas pipes in ${suburbName}, we do it.`,
     pipes: `Because of the local conditions, ${suburbName} properties commonly need help with ${issuesSentence}. ${region.localAngle} Our CCTV drain inspection and leak detection identify exactly what's happening before we recommend a solution, so you only pay for the work that's actually required.`,
   };
@@ -158,6 +160,7 @@ export default function LocationDetail() {
 
   const region = getRegion(location);
   const regionDisplayName = region.displayName;
+  const theName = region.theName;
   const localFAQs = generateLocalFAQs(location, region);
   const suburbContent = generateSuburbContent(location, region);
 
@@ -208,7 +211,7 @@ export default function LocationDetail() {
     {
       icon: iconMap["Flame"] ?? Wrench,
       title: region.commonIssues[1] ?? "Hot Water Problems",
-      body: `${region.commonIssues[1] ?? "Hot water failures"} are another common issue across ${location.name} and the ${regionDisplayName}. We service, repair, and install all types of hot water systems including gas, electric, solar, and heat pump units — often same day.`,
+      body: `${region.commonIssues[1] ?? "Hot water failures"} are another common issue across ${location.name} and ${theName}. We service, repair, and install all types of hot water systems including gas, electric, solar, and heat pump units — often same day.`,
     },
   ];
 

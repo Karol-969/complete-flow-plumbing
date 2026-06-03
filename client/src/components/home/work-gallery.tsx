@@ -118,7 +118,7 @@ export function WorkGallery() {
             Real Jobs, Real Results
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            See our work across Sydney and the Southern Highlands — from emergency dig-ups
+            See our work across the Sutherland Shire, Wollongong, the Southern Highlands and beyond — from emergency dig-ups
             to hot water installs.
           </p>
         </motion.div>

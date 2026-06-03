@@ -12,7 +12,7 @@ export function GoogleMap() {
             Find Us on Google Maps
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            We service Sydney and the Southern Highlands region. Find our location and get directions.
+            We service the Sutherland Shire, Wollondilly, the Southern Highlands, Wollongong, the Illawarra and the Southern Tablelands. Find our location and get directions.
           </p>
         </div>
 
@@ -43,7 +43,7 @@ export function GoogleMap() {
                 <div>
                   <h3 className="font-semibold text-foreground mb-2">Service Areas</h3>
                   <p className="text-sm text-muted-foreground mb-4">
-                    We proudly service all suburbs across Sydney and the Southern Highlands including Bowral, Mittagong, Moss Vale, and surrounding areas.
+                    We proudly service all suburbs across the Sutherland Shire, Wollondilly, the Southern Highlands, Wollongong, the Illawarra and the Southern Tablelands — from Cronulla to Goulburn.
                   </p>
                   <Button asChild variant="outline" className="w-full">
                     <a 

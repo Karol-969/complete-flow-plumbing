@@ -52,33 +52,34 @@ const fadeUp = {
 // Generate region-specific FAQs from the region's local angle and common issues
 const generateRegionFAQs = (
   displayName: string,
+  theName: string,
   localAngle: string,
   commonIssues: string[],
   suburbCount: number,
 ): FAQ[] => [
   {
-    question: `Do you provide emergency plumbing across the ${displayName}?`,
-    answer: `Yes. Complete Flow Plumbing offers 24/7 emergency plumbing throughout the ${displayName}, covering all ${suburbCount} suburbs and townships we list on this page. Our licensed plumbers are on call around the clock, including weekends and public holidays, and aim to respond fast to urgent burst pipes, blocked drains, and hot water failures.`,
+    question: `Do you provide emergency plumbing across ${theName}?`,
+    answer: `Yes. Complete Flow Plumbing offers 24/7 emergency plumbing throughout ${theName}, covering all ${suburbCount} suburbs and townships we list on this page. Our licensed plumbers are on call around the clock, including weekends and public holidays, and aim to respond fast to urgent burst pipes, blocked drains, and hot water failures.`,
   },
   {
     question: `Which ${displayName} suburbs do you cover?`,
-    answer: `We service the entire ${displayName} region — all ${suburbCount} suburbs listed on this page and the surrounding areas. Wherever you are in the ${displayName}, you can tap your suburb above to see a dedicated local plumbing page, or simply call us and we'll dispatch a plumber to you.`,
+    answer: `We service the entire ${displayName} region — all ${suburbCount} suburbs listed on this page and the surrounding areas. Wherever you are in ${theName}, you can tap your suburb above to see a dedicated local plumbing page, or simply call us and we'll dispatch a plumber to you.`,
   },
   {
-    question: `What plumbing problems are most common in the ${displayName}?`,
-    answer: `In the ${displayName} we regularly handle: ${commonIssues.join("; ")}. ${localAngle} Our team understands the local conditions and brings the right equipment for the job the first time.`,
+    question: `What plumbing problems are most common in ${theName}?`,
+    answer: `In ${theName} we regularly handle: ${commonIssues.join("; ")}. ${localAngle} Our team understands the local conditions and brings the right equipment for the job the first time.`,
   },
   {
-    question: `Do you charge a call-out fee in the ${displayName}?`,
-    answer: `No call-out fee for standard service calls during business hours anywhere in the ${displayName}. Emergency after-hours work may attract a small surcharge, which we always confirm with you upfront. Every job is quoted in writing before we start so there are no surprises.`,
+    question: `Do you charge a call-out fee in ${theName}?`,
+    answer: `No call-out fee for standard service calls during business hours anywhere in ${theName}. Emergency after-hours work may attract a small surcharge, which we always confirm with you upfront. Every job is quoted in writing before we start so there are no surprises.`,
   },
   {
     question: `Are your ${displayName} plumbers licensed and insured?`,
-    answer: `Absolutely. All our plumbers are fully licensed with NSW Fair Trading (Licence ${BUSINESS_INFO.licence}) and carry comprehensive public liability insurance. We are qualified to work throughout the ${displayName} and all of NSW.`,
+    answer: `Absolutely. All our plumbers are fully licensed with NSW Fair Trading (Licence ${BUSINESS_INFO.licence}) and carry comprehensive public liability insurance. We are qualified to work throughout ${theName} and all of NSW.`,
   },
   {
-    question: `How quickly can a plumber reach me in the ${displayName}?`,
-    answer: `For standard appointments we offer same-day service across the ${displayName}. For emergencies we prioritise rapid response and dispatch the nearest available plumber. Because we work locally across the region, we can reach most ${displayName} addresses quickly.`,
+    question: `How quickly can a plumber reach me in ${theName}?`,
+    answer: `For standard appointments we offer same-day service across ${theName}. For emergencies we prioritise rapid response and dispatch the nearest available plumber. Because we work locally across the region, we can reach most ${displayName} addresses quickly.`,
   },
 ];
 
@@ -118,6 +119,7 @@ export default function RegionHub() {
 
   const localFAQs = generateRegionFAQs(
     region.displayName,
+    region.theName,
     region.localAngle,
     region.commonIssues,
     suburbs.length,
@@ -127,9 +129,9 @@ export default function RegionHub() {
   const otherRegions = REGIONS.filter((r) => r.slug !== region.slug);
 
   // A unique paragraph built from the region's local angle and common issues.
-  const localParagraph = `What sets plumbing in the ${region.displayName} apart? ${region.localAngle} That's why our local crews come prepared for the issues we see most often here: ${region.commonIssues
+  const localParagraph = `What sets plumbing in ${region.theName} apart? ${region.localAngle} That's why our local crews come prepared for the issues we see most often here: ${region.commonIssues
     .map((issue) => issue.charAt(0).toLowerCase() + issue.slice(1))
-    .join(", ")}. From the first phone call to the final clean-up, you get a plumber who knows the ${region.displayName} and treats your home or business with respect.`;
+    .join(", ")}. From the first phone call to the final clean-up, you get a plumber who knows ${region.theName} and treats your home or business with respect.`;
 
   // SEO keywords for the region — combine the curated targetKeywords with broad region terms.
   const seoKeywords = [
@@ -150,7 +152,7 @@ export default function RegionHub() {
   const regionServiceSchema = {
     "@context": "https://schema.org",
     "@type": "Service",
-    name: `Plumbing Services in the ${region.displayName}`,
+    name: `Plumbing Services in ${region.theName}`,
     description: region.blurb,
     provider: {
       "@type": "LocalBusiness",
@@ -177,7 +179,7 @@ export default function RegionHub() {
         "@type": "Offer",
         itemOffered: {
           "@type": "Service",
-          name: `${service.title} in the ${region.displayName}`,
+          name: `${service.title} in ${region.theName}`,
           description: service.shortDescription,
         },
       })),
@@ -269,7 +271,7 @@ export default function RegionHub() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row items-center justify-center gap-4 text-white">
             <span className="font-semibold">
-              Need a plumber in the {region.displayName} now?
+              Need a plumber in {region.theName} now?
             </span>
             <a
               href={`tel:${BUSINESS_INFO.phoneTel}`}
@@ -300,7 +302,7 @@ export default function RegionHub() {
                   Local Plumbing
                 </p>
                 <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground mb-4">
-                  Plumbing Across the {region.displayName}
+                  Plumbing Across {region.theName}
                 </h2>
                 <div className="prose prose-gray dark:prose-invert max-w-none space-y-4">
                   <p className="text-muted-foreground leading-relaxed">
@@ -313,7 +315,7 @@ export default function RegionHub() {
 
                 {/* Common issues for the region */}
                 <h3 className="text-lg font-semibold text-foreground pt-6 mb-4">
-                  Common Plumbing Issues in the {region.displayName}
+                  Common Plumbing Issues in {region.theName}
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {region.commonIssues.map((issue, index) => (
@@ -381,7 +383,7 @@ export default function RegionHub() {
                   variants={fadeUp}
                   className="text-3xl md:text-4xl font-bold tracking-tight text-foreground mb-6"
                 >
-                  Suburbs We Service in the {region.displayName}
+                  Suburbs We Service in {region.theName}
                 </motion.h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                   {suburbs.map((suburb, i) => (
@@ -429,7 +431,7 @@ export default function RegionHub() {
                   variants={fadeUp}
                   className="text-3xl md:text-4xl font-bold tracking-tight text-foreground mb-6"
                 >
-                  Plumbing Services in the {region.displayName}
+                  Plumbing Services in {region.theName}
                 </motion.h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {SERVICES.map((service, i) => {
@@ -559,11 +561,11 @@ export default function RegionHub() {
                 {/* Quick Contact */}
                 <Card className="bg-card rounded-xl2 border border-border shadow-card p-6">
                   <h3 className="text-xl font-bold text-foreground mb-2">
-                    Need a Plumber in the {region.displayName}?
+                    Need a Plumber in {region.theName}?
                   </h3>
                   <p className="text-muted-foreground mb-6">
                     Call now for same-day service or emergency assistance
-                    anywhere in the {region.displayName}.
+                    anywhere in {region.theName}.
                   </p>
                   <Button
                     asChild

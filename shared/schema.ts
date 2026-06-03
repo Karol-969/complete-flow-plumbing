@@ -71,6 +71,7 @@ export interface Region {
   slug: string;
   name: string;
   displayName: string;
+  theName: string;
   blurb: string;
   localAngle: string;
   commonIssues: string[];
@@ -145,6 +146,7 @@ export const REGIONS: Region[] = [
     slug: "sutherland-shire",
     name: "Sutherland Shire",
     displayName: "Sutherland Shire",
+    theName: "the Sutherland Shire",
     blurb:
       "Licensed local plumbers servicing the entire Sutherland Shire, from Cronulla to Menai, with fast emergency callouts, blocked drains, hot water and gas fitting.",
     localAngle:
@@ -168,6 +170,7 @@ export const REGIONS: Region[] = [
     slug: "wollondilly",
     name: "Wollondilly",
     displayName: "Wollondilly",
+    theName: "Wollondilly",
     blurb:
       "Wollondilly's trusted plumbing team covering Picton, Tahmoor and surrounding rural townships for blocked drains, leak detection, septic and hot water systems.",
     localAngle:
@@ -191,6 +194,7 @@ export const REGIONS: Region[] = [
     slug: "southern-highlands",
     name: "Southern Highlands",
     displayName: "Southern Highlands",
+    theName: "the Southern Highlands",
     blurb:
       "Reliable Southern Highlands plumbers serving Bowral, Mittagong and Moss Vale with emergency repairs, blocked drains, gas fitting and hot water installation.",
     localAngle:
@@ -214,6 +218,7 @@ export const REGIONS: Region[] = [
     slug: "wollongong",
     name: "Wollongong",
     displayName: "Wollongong",
+    theName: "Wollongong",
     blurb:
       "Wollongong's go-to plumbers for blocked drains, burst pipes, hot water and emergency callouts across the northern beaches, city and western suburbs.",
     localAngle:
@@ -237,6 +242,7 @@ export const REGIONS: Region[] = [
     slug: "illawarra",
     name: "Illawarra",
     displayName: "Illawarra",
+    theName: "the Illawarra",
     blurb:
       "Plumbing services across the Illawarra coast and Shellharbour-Kiama region, from blocked drains and leak detection to gas fitting and emergency repairs.",
     localAngle:
@@ -260,6 +266,7 @@ export const REGIONS: Region[] = [
     slug: "southern-tablelands",
     name: "Southern Tablelands",
     displayName: "Southern Tablelands",
+    theName: "the Southern Tablelands",
     blurb:
       "Plumbers servicing the Southern Tablelands including Goulburn, Marulan and Crookwell for rural and town plumbing, blocked drains, tanks and hot water.",
     localAngle:

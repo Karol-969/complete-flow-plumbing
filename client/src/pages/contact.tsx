@@ -92,7 +92,7 @@ export default function Contact() {
                     <div>
                       <p className="font-semibold text-foreground">Service Area</p>
                       <p className="text-muted-foreground">{BUSINESS_INFO.address}</p>
-                      <p className="text-sm text-muted-foreground">Sydney & Southern Highlands</p>
+                      <p className="text-sm text-muted-foreground">Sutherland Shire, Wollondilly, Southern Highlands, Wollongong, Illawarra & Southern Tablelands</p>
                     </div>
                   </div>
                 </Card>
