@@ -28,7 +28,7 @@ export function ServiceAreaMap() {
             Our Service Area
           </p>
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground mb-4">
-            Serving the Southern Highlands, Illawarra &amp; South Coast
+            Serving the Sutherland Shire to the Southern Tablelands
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             From the Sutherland Shire down to the Southern Tablelands, {BUSINESS_INFO.name}{" "}

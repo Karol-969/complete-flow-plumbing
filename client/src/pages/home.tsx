@@ -4,12 +4,15 @@ import { TrustSignals } from "@/components/home/trust-signals";
 import { ServicesGrid } from "@/components/home/services-grid";
 import { EmergencyBanner } from "@/components/home/emergency-banner";
 import { ProcessSteps } from "@/components/home/process-steps";
-import { Testimonials } from "@/components/home/testimonials";
 import { FAQSection } from "@/components/home/faq-section";
 import { CTASection } from "@/components/home/cta-section";
 import { WorkGallery } from "@/components/home/work-gallery";
 import { ServiceAreaMap } from "@/components/home/service-area-map";
 import { SeoContent } from "@/components/home/seo-content";
+import { ValueBand } from "@/components/home/value-band";
+import { TeamBand } from "@/components/home/team-band";
+import { CallBar } from "@/components/home/call-bar";
+import { PromiseReviews } from "@/components/home/promise-reviews";
 import { SEOHead } from "@/components/seo/seo-head";
 import { LocalBusinessSchema, FAQSchema, OrganizationSchema, WebsiteSchema } from "@/components/seo/structured-data";
 import { HOME_FAQS } from "@shared/schema";
@@ -55,11 +58,14 @@ export default function Home() {
       <Hero />
       <TrustSignals />
       <ServicesGrid />
+      <ValueBand />
       <EmergencyBanner />
       <ProcessSteps />
       <WorkGallery />
+      <TeamBand />
+      <CallBar />
       <ServiceAreaMap />
-      <Testimonials />
+      <PromiseReviews />
       <SeoContent />
       <FAQSection />
       <CTASection />
