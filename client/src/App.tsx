@@ -11,6 +11,7 @@ import Services from "@/pages/services";
 import ServiceDetail from "@/pages/service-detail";
 import Locations from "@/pages/locations";
 import LocationDetail from "@/pages/location-detail";
+import RegionHub from "@/pages/region-hub";
 import Contact from "@/pages/contact";
 import Blog from "@/pages/blog";
 import BlogPost from "@/pages/blog-post";
@@ -31,6 +32,7 @@ function Router() {
         <Route path="/services" component={Services} />
         <Route path="/services/:slug" component={ServiceDetail} />
         <Route path="/locations" component={Locations} />
+        <Route path="/locations/region/:regionSlug" component={RegionHub} />
         <Route path="/locations/:slug" component={LocationDetail} />
         <Route path="/contact" component={Contact} />
         <Route path="/blog" component={Blog} />
@@ -45,7 +47,7 @@ function Router() {
 
 function App() {
   return (
-    <ThemeProvider defaultTheme="light" storageKey="complete-flow-theme">
+    <ThemeProvider defaultTheme="dark" storageKey="complete-flow-theme">
       <QueryClientProvider client={queryClient}>
         <TooltipProvider>
           <Toaster />

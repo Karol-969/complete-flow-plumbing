@@ -1,5 +1,5 @@
 import { Link } from "wouter";
-import { BUSINESS_INFO, SERVICES, SOUTHERN_HIGHLANDS_SUBURBS, SYDNEY_METRO_SUBURBS } from "@shared/schema";
+import { BUSINESS_INFO, SERVICES, REGIONS, locationsByRegion } from "@shared/schema";
 import logoImage from "@assets/logo_1766462914112.jpeg";
 import { 
   Phone, 
@@ -29,8 +29,6 @@ const legalLinks = [
 ];
 
 export function Footer() {
-  const allSuburbs = [...SYDNEY_METRO_SUBURBS, ...SOUTHERN_HIGHLANDS_SUBURBS];
-
   return (
     <footer className="bg-card border-t border-border text-foreground">
       {/* Main footer content */}
@@ -47,8 +45,7 @@ export function Footer() {
               />
             </Link>
             <p className="text-muted-foreground text-sm mb-6">
-              Your trusted local plumber serving Sydney and the Southern Highlands. 
-              Available 24/7 for emergency plumbing services.
+              Complete Flow Plumbing proudly services Sutherland Shire, Wollondilly, the Southern Highlands, Wollongong, Illawarra and the Southern Tablelands.
             </p>
             
             {/* Trust badges */}
@@ -148,49 +145,69 @@ export function Footer() {
 
             {/* Social links */}
             <div className="flex gap-3 mt-6">
-              <Button 
-                variant="outline" 
-                size="icon" 
+              <Button
+                asChild
+                variant="outline"
+                size="icon"
                 data-testid="footer-facebook"
               >
-                <Facebook className="h-5 w-5" />
-                <span className="sr-only">Facebook</span>
+                <a href="#" aria-label="Facebook">
+                  <Facebook className="h-5 w-5" />
+                  <span className="sr-only">Facebook</span>
+                </a>
               </Button>
-              <Button 
-                variant="outline" 
+              <Button
+                asChild
+                variant="outline"
                 size="icon"
                 data-testid="footer-instagram"
               >
-                <Instagram className="h-5 w-5" />
-                <span className="sr-only">Instagram</span>
+                <a href="#" aria-label="Instagram">
+                  <Instagram className="h-5 w-5" />
+                  <span className="sr-only">Instagram</span>
+                </a>
               </Button>
             </div>
           </div>
         </div>
 
-        {/* Service Areas — full list for SEO internal linking */}
+        {/* Service Areas — grouped by region for SEO internal linking */}
         <div className="mt-12 pt-8 border-t border-border">
-          <h3 className="font-semibold text-foreground mb-2">Plumber Services Across Sydney & Southern Highlands</h3>
-          <p className="text-xs text-muted-foreground mb-4">
+          <h3 className="font-semibold text-foreground mb-2">Plumber Services Across Sutherland Shire, Wollondilly, the Southern Highlands, Wollongong, Illawarra & the Southern Tablelands</h3>
+          <p className="text-xs text-muted-foreground mb-6">
             Emergency plumber, blocked drains, hot water systems & gas fitting available across all suburbs.
           </p>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-x-3 gap-y-1">
-            {allSuburbs.map((suburb) => (
-              <Link
-                key={suburb.id}
-                href={`/locations/${suburb.slug}`}
-                className="text-xs text-muted-foreground hover:text-primary transition-colors truncate"
-                data-testid={`footer-suburb-${suburb.slug}`}
-              >
-                Plumber {suburb.name}
-              </Link>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-8">
+            {REGIONS.map((region) => (
+              <div key={region.slug} data-testid={`footer-region-${region.slug}`}>
+                <Link
+                  href={`/locations/region/${region.slug}`}
+                  className="block font-semibold text-sm text-foreground hover:text-primary transition-colors mb-2"
+                  data-testid={`footer-region-link-${region.slug}`}
+                >
+                  {region.displayName}
+                </Link>
+                <ul className="space-y-1">
+                  {locationsByRegion(region.slug).map((suburb) => (
+                    <li key={suburb.id}>
+                      <Link
+                        href={`/locations/${suburb.slug}`}
+                        className="text-xs text-muted-foreground hover:text-primary transition-colors truncate block"
+                        data-testid={`footer-suburb-${suburb.slug}`}
+                      >
+                        Plumber {suburb.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             ))}
           </div>
           <Link
             href="/locations"
-            className="inline-block mt-4 text-sm text-primary hover:underline"
+            className="inline-block mt-6 text-sm text-primary hover:underline"
           >
-            View all {allSuburbs.length} service areas →
+            View all service areas →
           </Link>
         </div>
 

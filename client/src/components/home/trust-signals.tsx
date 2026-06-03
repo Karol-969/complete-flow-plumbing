@@ -3,7 +3,7 @@ import { Shield, Award, Clock, CreditCard, Star, ThumbsUp } from "lucide-react";
 const trustItems = [
   { icon: Shield, label: "Licensed & Insured", description: "Fully licensed NSW plumbers" },
   { icon: Clock, label: "24/7 Available", description: "Emergency service anytime" },
-  { icon: Star, label: "5-Star Rated", description: "100+ Google reviews" },
+  { icon: Star, label: "Same-Day Service", description: "Fast local response" },
   { icon: Award, label: "Guaranteed Work", description: "Workmanship guarantee" },
   { icon: CreditCard, label: "Upfront Pricing", description: "No hidden fees" },
   { icon: ThumbsUp, label: "No Call-Out Fee", description: "During business hours" },

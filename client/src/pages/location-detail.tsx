@@ -7,27 +7,27 @@ import { QuoteForm } from "@/components/forms/quote-form";
 import { SEOHead } from "@/components/seo/seo-head";
 import { LocalBusinessSchema, LocationSchema, FAQSchema } from "@/components/seo/structured-data";
 import { Breadcrumbs } from "@/components/seo/breadcrumbs";
-import { 
-  SOUTHERN_HIGHLANDS_SUBURBS, 
-  SYDNEY_METRO_SUBURBS, 
-  SERVICES, 
+import {
+  SERVICES,
   BUSINESS_INFO,
   ALL_LOCATIONS,
+  regionBySlug,
   type FAQ,
-  type Location
+  type Location,
+  type Region,
 } from "@shared/schema";
-import { 
-  Phone, 
-  MapPin, 
-  Clock, 
-  CheckCircle, 
+import {
+  Phone,
+  MapPin,
+  Clock,
+  CheckCircle,
   Siren,
   Wrench,
   Droplets,
   Flame,
   ShieldCheck,
   Star,
-  Users
+  Users,
 } from "lucide-react";
 import {
   Accordion,
@@ -36,68 +36,99 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-// Generate local FAQs for each suburb
-const generateLocalFAQs = (suburbName: string, region: string): FAQ[] => [
-  {
-    question: `Do you provide emergency plumbing services in ${suburbName}?`,
-    answer: `Yes! Complete Flow Plumbing offers 24/7 emergency plumbing services in ${suburbName} and surrounding areas. We aim to respond within 60 minutes for urgent calls. Our emergency plumbers are on standby around the clock, including weekends and public holidays.`,
-  },
-  {
-    question: `How quickly can a plumber get to ${suburbName}?`,
-    answer: `For standard appointments, we offer same-day service in ${suburbName}. For emergencies, we prioritize rapid response and typically arrive within 30-60 minutes. Being locally based in ${region === 'southern-highlands' ? 'the Southern Highlands' : 'Sydney'}, we can reach ${suburbName} quickly.`,
-  },
-  {
-    question: `What plumbing services do you offer in ${suburbName}?`,
-    answer: `We provide comprehensive plumbing services in ${suburbName} including: blocked drain clearing with CCTV inspection, hot water system repairs and installations (gas, electric, solar, heat pump), gas fitting and leak detection, toilet and tap repairs, pipe relining and replacement, bathroom renovations, and stormwater drainage solutions.`,
-  },
-  {
-    question: `Do you charge a call-out fee in ${suburbName}?`,
-    answer: `No call-out fee for standard service calls during business hours in ${suburbName}. Emergency after-hours calls may incur a small surcharge which we communicate upfront. We always provide a written quote before starting any work so there are no surprises.`,
-  },
-  {
-    question: `Are your plumbers licensed to work in ${suburbName}?`,
-    answer: `Absolutely. All our plumbers are fully licensed with NSW Fair Trading (Licence ${BUSINESS_INFO.licence}) and carry comprehensive public liability insurance. We're qualified to work throughout ${suburbName} and all of NSW.`,
-  },
-  {
-    question: `What are common plumbing problems in ${suburbName} homes?`,
-    answer: `Common issues we see in ${suburbName} include: blocked drains from tree roots (especially in older properties with clay pipes), hot water system failures during winter months, leaking taps and running toilets, burst pipes during temperature extremes, and stormwater drainage problems. ${region === 'southern-highlands' ? 'The cooler climate in the Southern Highlands can also lead to frozen pipes in winter.' : 'Sydney\'s clay soil can cause pipe movement and joint failures.'}`,
-  },
-  {
-    question: `How much does a plumber cost in ${suburbName}?`,
-    answer: `Plumbing costs vary depending on the job. Simple repairs like fixing a leaking tap typically start from $120, while more complex jobs are quoted individually. We offer free quotes for larger jobs and always provide upfront pricing before starting work.`,
-  },
-  {
-    question: `Do you offer warranties on your work in ${suburbName}?`,
-    answer: `Yes! All our workmanship comes with a lifetime guarantee. We also honor manufacturer warranties on all products we install. If something isn't right, we'll come back and fix it at no extra cost.`,
-  },
-];
+// Fallback region descriptor so content generation never breaks if a region
+// somehow has no matching entry in REGIONS (defensive — all 6 are present).
+const FALLBACK_REGION: Region = {
+  slug: "",
+  name: "the local area",
+  displayName: "the local area",
+  blurb: "",
+  localAngle:
+    "Local NSW conditions including ageing pipework, seasonal weather extremes and tree-root drain intrusion.",
+  commonIssues: [
+    "Blocked drains and tree-root intrusion",
+    "Hot water system failures",
+    "Leaking taps and burst pipes",
+    "Gas fitting and leak detection",
+  ],
+  targetKeywords: [],
+};
 
-// Generate unique suburb content based on location
-const generateSuburbContent = (location: Location): { intro: string; localInfo: string; services: string; pipes: string } => {
-  const regionName = location.region === 'southern-highlands' ? 'Southern Highlands' : 'Greater Sydney';
-  const isSH = location.region === 'southern-highlands';
+// Resolve the Region descriptor for a location, falling back gracefully.
+const getRegion = (location: Location): Region =>
+  regionBySlug(location.region) ?? FALLBACK_REGION;
 
-  const pipeType = isSH
-    ? `Many ${location.name} homes, especially those built before the 1980s, have clay or terracotta sewer pipes that are susceptible to tree root intrusion and joint failure. Our CCTV drain inspection service identifies exactly what's happening inside your pipes before we recommend a solution.`
-    : `${location.name} has a mix of older clay pipes and modern PVC systems depending on the era of construction. Sydney's clay soil creates ground movement that can cause pipe joints to separate over time, and native trees are notorious for root intrusion into sewer lines.`;
+// Pick the first listed common issue (region-specific) for FAQ copy.
+const primaryIssue = (region: Region): string =>
+  (region.commonIssues[0] ?? "blocked drains and hot water faults").toLowerCase();
 
-  const climateNote = isSH
-    ? `The Southern Highlands climate, with its cooler winters and occasional frosts, creates unique challenges for ${location.name} plumbing. Pipe freezing and hot water system failures are more common here than in coastal Sydney, and our team is experienced with the specific issues that arise in a highland environment.`
-    : `${location.name} residents experience Sydney's full range of plumbing demands — from summer storm overflows to winter hot water failures. Our team is familiar with the local infrastructure, council requirements, and Sydney Water regulations that apply to all plumbing work in ${location.name}.`;
+// Generate local FAQs for each suburb — unique per region via localAngle/commonIssues.
+const generateLocalFAQs = (location: Location, region: Region): FAQ[] => {
+  const suburbName = location.name;
+  const regionName = region.displayName;
+  const issuesList = region.commonIssues.join(", ").toLowerCase();
+
+  return [
+    {
+      question: `Do you provide emergency plumbing services in ${suburbName}?`,
+      answer: `Yes! Complete Flow Plumbing offers 24/7 emergency plumbing services in ${suburbName} and across the ${regionName}. We aim to respond fast for urgent calls — burst pipes, gas leaks, blocked sewers and no hot water. Our emergency plumbers are on standby around the clock, including weekends and public holidays.`,
+    },
+    {
+      question: `How quickly can a plumber get to ${suburbName}?`,
+      answer: `For standard appointments, we offer same-day service in ${suburbName}. For emergencies, we prioritise rapid response. As local plumbers who work throughout the ${regionName} every day, we know the streets, the access challenges and the typical plumbing setups around ${suburbName}, so we arrive prepared.`,
+    },
+    {
+      question: `What plumbing services do you offer in ${suburbName}?`,
+      answer: `We provide comprehensive plumbing services in ${suburbName} including: blocked drain clearing with CCTV inspection, hot water system repairs and installations (gas, electric, solar, heat pump), gas fitting and leak detection, toilet and tap repairs, pipe relining and replacement, bathroom renovations, and stormwater drainage solutions. In the ${regionName} we particularly often handle ${issuesList}.`,
+    },
+    {
+      question: `Do you charge a call-out fee in ${suburbName}?`,
+      answer: `No call-out fee for standard service calls during business hours in ${suburbName}. Emergency after-hours calls may incur a small surcharge which we communicate upfront. We always provide a written quote before starting any work so there are no surprises.`,
+    },
+    {
+      question: `Are your plumbers licensed to work in ${suburbName}?`,
+      answer: `Absolutely. All our plumbers are fully licensed with NSW Fair Trading (Licence ${BUSINESS_INFO.licence}) and carry comprehensive public liability insurance. We're qualified to work throughout ${suburbName}, the ${regionName} and all of NSW.`,
+    },
+    {
+      question: `What are common plumbing problems in ${suburbName} homes?`,
+      answer: `Across the ${regionName} the issues we see most are ${issuesList}. ${region.localAngle} In ${suburbName} specifically we tailor our approach to the local property types and conditions, diagnosing the real cause before recommending a fix.`,
+    },
+    {
+      question: `How much does a plumber cost in ${suburbName}?`,
+      answer: `Plumbing costs vary depending on the job. Simple repairs like fixing a leaking tap typically start from $120, while more complex jobs — such as ${primaryIssue(region)} — are quoted individually after inspection. We offer free quotes for larger jobs and always provide upfront pricing before starting work in ${suburbName}.`,
+    },
+    {
+      question: `Do you offer warranties on your work in ${suburbName}?`,
+      answer: `Yes! All our workmanship comes with a guarantee. We also honour manufacturer warranties on all products we install. If something isn't right, we'll come back and fix it at no extra cost.`,
+    },
+  ];
+};
+
+// Generate unique suburb content based on location and its region's local realities.
+const generateSuburbContent = (
+  location: Location,
+  region: Region,
+): { intro: string; localInfo: string; services: string; pipes: string } => {
+  const suburbName = location.name;
+  const regionName = region.displayName;
+  const issues = region.commonIssues;
+  const issuesSentence = issues.length
+    ? `${issues.slice(0, -1).join(", ")}${issues.length > 1 ? " and " : ""}${issues[issues.length - 1]}`.toLowerCase()
+    : "blocked drains and hot water faults";
 
   return {
-    intro: `Looking for a trusted plumber in ${location.name}? Complete Flow Plumbing provides fast, reliable plumbing services throughout ${location.name} and the surrounding ${regionName} area. Our licensed NSW plumbers are available 24 hours a day, 7 days a week for plumbing emergencies, and offer same-day bookings for all standard plumbing work. We provide upfront written quotes, no call-out fees during business hours, and back every job with a lifetime workmanship guarantee.`,
-    localInfo: `${climateNote} Whether you need an emergency plumber in ${location.name} at 2am, a blocked drain cleared before guests arrive, a hot water system replaced today, or a gas appliance installed safely — Complete Flow Plumbing is your local ${location.name} plumber. We service residential homes, rental properties, strata buildings, and small commercial premises throughout ${location.name}.`,
-    services: `Our plumbers in ${location.name} handle the full range of residential and commercial plumbing: blocked drains and CCTV inspection, hot water system repairs and replacement (gas, electric, heat pump, solar), gas fitting and gas leak detection, leaking taps and burst pipes, toilet repairs and replacements, bathroom and kitchen plumbing, pipe relining, stormwater drainage, and more. If it involves water or gas pipes in ${location.name}, we do it.`,
-    pipes: pipeType,
+    intro: `Looking for a trusted plumber in ${suburbName}? Complete Flow Plumbing provides fast, reliable plumbing services throughout ${suburbName} and the wider ${regionName}. Our licensed NSW plumbers are available 24 hours a day, 7 days a week for plumbing emergencies, and offer same-day bookings for all standard plumbing work. We provide upfront written quotes, no call-out fees during business hours, and back every job with a workmanship guarantee.`,
+    localInfo: `${region.localAngle} That's exactly the environment our ${suburbName} plumbers work in every day. Whether you need an emergency plumber in ${suburbName} at 2am, a blocked drain cleared before guests arrive, a hot water system replaced today, or a gas appliance installed safely, Complete Flow Plumbing is your local ${suburbName} plumber. We service residential homes, rental properties, strata buildings, and small commercial premises throughout the ${regionName}.`,
+    services: `Our plumbers in ${suburbName} handle the full range of residential and commercial plumbing: blocked drains and CCTV inspection, hot water system repairs and replacement (gas, electric, heat pump, solar), gas fitting and gas leak detection, leaking taps and burst pipes, toilet repairs and replacements, bathroom and kitchen plumbing, pipe relining, stormwater drainage, and more. If it involves water or gas pipes in ${suburbName}, we do it.`,
+    pipes: `Because of the local conditions, ${suburbName} properties commonly need help with ${issuesSentence}. ${region.localAngle} Our CCTV drain inspection and leak detection identify exactly what's happening before we recommend a solution, so you only pay for the work that's actually required.`,
   };
 };
 
 export default function LocationDetail() {
   const { slug } = useParams<{ slug: string }>();
-  
-  const location = ALL_LOCATIONS.find(l => l.slug === slug);
-  
+
+  const location = ALL_LOCATIONS.find((l) => l.slug === slug);
+
   if (!location) {
     return (
       <Layout>
@@ -114,17 +145,18 @@ export default function LocationDetail() {
     );
   }
 
-  const localFAQs = generateLocalFAQs(location.name, location.region);
-  const suburbContent = generateSuburbContent(location);
-  const regionDisplayName = location.region === 'southern-highlands' ? 'Southern Highlands' : 'Sydney';
-  
-  // Get nearby suburbs (same region, different from current)
-  const allRegionSuburbs = location.region === "southern-highlands" 
-    ? SOUTHERN_HIGHLANDS_SUBURBS 
-    : SYDNEY_METRO_SUBURBS;
-  const nearbySuburbs = allRegionSuburbs.filter(s => s.id !== location.id).slice(0, 6);
+  const region = getRegion(location);
+  const regionDisplayName = region.displayName;
+  const localFAQs = generateLocalFAQs(location, region);
+  const suburbContent = generateSuburbContent(location, region);
 
-  // SEO keywords for this location - comprehensive for all SERP features
+  // Nearby suburbs: resolve this location's real adjacent slugs (same region).
+  const nearbySuburbs: Location[] = (location.nearby ?? [])
+    .map((nearbySlug) => ALL_LOCATIONS.find((l) => l.slug === nearbySlug))
+    .filter((l): l is Location => Boolean(l));
+
+  // SEO keywords for this location — generic per-suburb terms plus the region's
+  // own curated target keywords for genuinely localised, non-thin content.
   const seoKeywords = [
     `plumber ${location.name}`,
     `plumber in ${location.name}`,
@@ -150,25 +182,42 @@ export default function LocationDetail() {
     `same day plumber ${location.name}`,
     `weekend plumber ${location.name}`,
     `after hours plumber ${location.name}`,
+    ...region.targetKeywords,
+  ];
+
+  // Region-specific "common issues" cards (first two issues for this region).
+  const issueCards = [
+    {
+      icon: Droplets,
+      title: region.commonIssues[0] ?? "Blocked Drains",
+      body: `In ${location.name}, ${(region.commonIssues[0] ?? "blocked drains").toLowerCase()} is one of the most frequent calls we get. ${region.localAngle} Our CCTV drain inspection and hydro jetting quickly diagnose and resolve the problem at its source.`,
+    },
+    {
+      icon: Flame,
+      title: region.commonIssues[1] ?? "Hot Water Problems",
+      body: `${region.commonIssues[1] ?? "Hot water failures"} are another common issue across ${location.name} and the ${regionDisplayName}. We service, repair, and install all types of hot water systems including gas, electric, solar, and heat pump units — often same day.`,
+    },
   ];
 
   return (
     <Layout>
       <SEOHead
         title={`Plumber ${location.name} | Emergency & Same-Day | Complete Flow Plumbing`}
-        description={`Local plumber ${location.name}. Blocked drains, hot water systems, gas fitting & emergency plumbing. No call-out fee. Licensed NSW plumbers. Call 0468 723 029 — we respond fast.`}
+        description={`Local plumber ${location.name}, ${regionDisplayName}. Blocked drains, hot water systems, gas fitting & emergency plumbing. No call-out fee. Licensed NSW plumbers. Call 0468 723 029 — we respond fast.`}
         canonical={`/locations/${location.slug}`}
         keywords={seoKeywords}
       />
       <LocalBusinessSchema />
       <LocationSchema location={location} />
       <FAQSchema faqs={localFAQs} />
-      
-      <Breadcrumbs items={[
-        { name: "Locations", url: "/locations" },
-        { name: regionDisplayName, url: `/locations?region=${location.region}` },
-        { name: location.name, url: `/locations/${location.slug}` }
-      ]} />
+
+      <Breadcrumbs
+        items={[
+          { name: "Locations", url: "/locations" },
+          { name: regionDisplayName, url: `/locations/region/${location.region}` },
+          { name: location.name, url: `/locations/${location.slug}` },
+        ]}
+      />
 
       {/* Hero */}
       <section className="py-16 md:py-20 bg-primary">
@@ -177,7 +226,7 @@ export default function LocationDetail() {
             Plumber in {location.name}
           </h1>
           <p className="text-xl text-white/90 max-w-3xl mb-6">
-            Professional, reliable plumbing services in {location.name}, {regionDisplayName}. 
+            Professional, reliable plumbing services in {location.name}, {regionDisplayName}.
             Available 24/7 for emergencies with same-day service for most jobs.
           </p>
           <div className="flex flex-wrap gap-3">
@@ -202,7 +251,7 @@ export default function LocationDetail() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row items-center justify-center gap-4 text-white">
             <span className="font-semibold">Need a plumber in {location.name} now?</span>
-            <a 
+            <a
               href={`tel:${BUSINESS_INFO.phone}`}
               className="text-xl font-bold hover:underline flex items-center gap-2"
               data-testid="location-emergency-phone"
@@ -250,8 +299,8 @@ export default function LocationDetail() {
                   <div className="flex items-center gap-3 p-4 bg-muted/50 rounded-lg">
                     <Star className="h-8 w-8 text-primary flex-shrink-0" />
                     <div>
-                      <p className="font-semibold text-foreground">5-Star Rated</p>
-                      <p className="text-sm text-muted-foreground">Google Reviews</p>
+                      <p className="font-semibold text-foreground">Same-Day Service</p>
+                      <p className="text-sm text-muted-foreground">Fast local response</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-3 p-4 bg-muted/50 rounded-lg">
@@ -271,7 +320,7 @@ export default function LocationDetail() {
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {SERVICES.slice(0, 6).map((service) => (
-                    <Link 
+                    <Link
                       key={service.id}
                       href={`/services/${service.slug}`}
                       data-testid={`location-service-${service.slug}`}
@@ -301,42 +350,28 @@ export default function LocationDetail() {
                 </div>
               </div>
 
-              {/* Common Issues */}
+              {/* Common Issues - region-specific */}
               <div>
                 <h2 className="text-2xl font-bold text-foreground mb-6">
                   Common Plumbing Issues in {location.name} Homes
                 </h2>
                 <div className="space-y-4">
-                  <Card className="p-6">
-                    <div className="flex items-start gap-4">
-                      <div className="flex items-center justify-center w-12 h-12 rounded-md bg-primary/10 flex-shrink-0">
-                        <Droplets className="h-6 w-6 text-primary" />
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-foreground mb-2">Blocked Drains</h3>
-                        <p className="text-sm text-muted-foreground">
-                          Tree roots, grease buildup, and debris are common causes of blocked 
-                          drains in {location.name}. Our CCTV drain inspection and hydro jetting 
-                          services can quickly diagnose and clear even the toughest blockages.
-                        </p>
-                      </div>
-                    </div>
-                  </Card>
-                  <Card className="p-6">
-                    <div className="flex items-start gap-4">
-                      <div className="flex items-center justify-center w-12 h-12 rounded-md bg-primary/10 flex-shrink-0">
-                        <Flame className="h-6 w-6 text-primary" />
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-foreground mb-2">Hot Water Problems</h3>
-                        <p className="text-sm text-muted-foreground">
-                          Cold showers are no fun, especially in {location.name}'s cooler months. 
-                          We service, repair, and install all types of hot water systems including 
-                          gas, electric, solar, and heat pump units.
-                        </p>
-                      </div>
-                    </div>
-                  </Card>
+                  {issueCards.map((card, index) => {
+                    const Icon = card.icon;
+                    return (
+                      <Card key={index} className="p-6">
+                        <div className="flex items-start gap-4">
+                          <div className="flex items-center justify-center w-12 h-12 rounded-md bg-primary/10 flex-shrink-0">
+                            <Icon className="h-6 w-6 text-primary" />
+                          </div>
+                          <div>
+                            <h3 className="font-semibold text-foreground mb-2">{card.title}</h3>
+                            <p className="text-sm text-muted-foreground">{card.body}</p>
+                          </div>
+                        </div>
+                      </Card>
+                    );
+                  })}
                 </div>
               </div>
 
@@ -347,8 +382,8 @@ export default function LocationDetail() {
                 </h2>
                 <Accordion type="single" collapsible className="space-y-4">
                   {localFAQs.map((faq, index) => (
-                    <AccordionItem 
-                      key={index} 
+                    <AccordionItem
+                      key={index}
                       value={`faq-${index}`}
                       className="bg-card rounded-lg border border-border px-6"
                       data-testid={`location-faq-${index}`}
@@ -364,26 +399,31 @@ export default function LocationDetail() {
                 </Accordion>
               </div>
 
-              {/* Nearby Suburbs */}
-              <div>
-                <h2 className="text-2xl font-bold text-foreground mb-6">
-                  Nearby Suburbs We Service
-                </h2>
-                <div className="flex flex-wrap gap-3">
-                  {nearbySuburbs.map((suburb) => (
-                    <Link 
-                      key={suburb.id}
-                      href={`/locations/${suburb.slug}`}
-                      data-testid={`nearby-${suburb.slug}`}
-                    >
-                      <Badge variant="secondary" className="px-4 py-2 text-sm hover:bg-primary hover:text-primary-foreground transition-colors">
-                        <MapPin className="h-3 w-3 mr-1" />
-                        {suburb.name}
-                      </Badge>
-                    </Link>
-                  ))}
+              {/* Nearby Suburbs - real adjacent slugs from location.nearby */}
+              {nearbySuburbs.length > 0 && (
+                <div>
+                  <h2 className="text-2xl font-bold text-foreground mb-6">
+                    Nearby Suburbs We Service
+                  </h2>
+                  <div className="flex flex-wrap gap-3">
+                    {nearbySuburbs.map((suburb) => (
+                      <Link
+                        key={suburb.id}
+                        href={`/locations/${suburb.slug}`}
+                        data-testid={`nearby-${suburb.slug}`}
+                      >
+                        <Badge
+                          variant="secondary"
+                          className="px-4 py-2 text-sm hover:bg-primary hover:text-primary-foreground transition-colors"
+                        >
+                          <MapPin className="h-3 w-3 mr-1" />
+                          {suburb.name}
+                        </Badge>
+                      </Link>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
 
             {/* Sidebar */}
@@ -397,8 +437,8 @@ export default function LocationDetail() {
                   <p className="text-primary-foreground/90 mb-6">
                     Call now for same-day service or emergency assistance.
                   </p>
-                  <Button 
-                    asChild 
+                  <Button
+                    asChild
                     size="lg"
                     className="w-full bg-white text-primary hover:bg-white/90"
                     data-testid="location-sidebar-call"

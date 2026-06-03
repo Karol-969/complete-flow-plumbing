@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { BUSINESS_INFO, type Service, type Location, type Testimonial, type FAQ } from "@shared/schema";
+import { BUSINESS_INFO, REGIONS, type Service, type Location, type FAQ } from "@shared/schema";
 
 interface LocalBusinessSchemaProps {
   additionalType?: string;
@@ -12,47 +12,20 @@ export function LocalBusinessSchema({ additionalType }: LocalBusinessSchemaProps
     ...(additionalType && { additionalType }),
     "@id": "https://completeflowplumbing.com.au/#organization",
     name: BUSINESS_INFO.name,
-    description: "Professional plumbing services in Sydney and Southern Highlands. 24/7 emergency plumber, blocked drains, hot water systems, gas fitting, and leak detection. Licensed & insured.",
+    description: "Professional plumbing services across the Sutherland Shire, Wollondilly, Southern Highlands, Wollongong, Illawarra and Southern Tablelands. 24/7 emergency plumber, blocked drains, hot water systems, gas fitting, and leak detection. Licensed & insured.",
     url: "https://completeflowplumbing.com.au",
     telephone: BUSINESS_INFO.phone,
     email: BUSINESS_INFO.email,
     image: "https://completeflowplumbing.com.au/og-image.png",
     address: {
       "@type": "PostalAddress",
-      streetAddress: "Sydney & Southern Highlands",
-      addressLocality: "Sydney",
       addressRegion: "NSW",
-      postalCode: "2000",
       addressCountry: "AU"
     },
-    geo: {
-      "@type": "GeoCoordinates",
-      latitude: -33.8688,
-      longitude: 151.2093
-    },
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: "5.0",
-      reviewCount: "47",
-      bestRating: "5",
-      worstRating: "1"
-    },
-    areaServed: [
-      { "@type": "City", name: "Sydney" },
-      { "@type": "City", name: "Parramatta" },
-      { "@type": "City", name: "Campbelltown" },
-      { "@type": "City", name: "Liverpool" },
-      { "@type": "City", name: "Penrith" },
-      { "@type": "City", name: "Blacktown" },
-      { "@type": "City", name: "Camden" },
-      { "@type": "City", name: "Narellan" },
-      { "@type": "City", name: "Bowral" },
-      { "@type": "City", name: "Mittagong" },
-      { "@type": "City", name: "Moss Vale" },
-      { "@type": "City", name: "Picton" },
-      { "@type": "AdministrativeArea", name: "Southern Highlands" },
-      { "@type": "AdministrativeArea", name: "Greater Sydney" }
-    ],
+    areaServed: REGIONS.map((region) => ({
+      "@type": "AdministrativeArea",
+      name: region.displayName
+    })),
     priceRange: "$$",
     currenciesAccepted: "AUD",
     paymentAccepted: "Cash, Credit Card, EFTPOS, Bank Transfer",
@@ -70,7 +43,7 @@ export function LocalBusinessSchema({ additionalType }: LocalBusinessSchemaProps
     ],
     hasOfferCatalog: {
       "@type": "OfferCatalog",
-      name: "Plumbing Services Sydney & Southern Highlands",
+      name: "Plumbing Services Across Southern Sydney, the Illawarra & Southern Highlands",
       itemListElement: [
         { "@type": "Offer", itemOffered: { "@type": "Service", name: "Emergency Plumbing Sydney", description: "24/7 emergency plumber available across Sydney and Southern Highlands" } },
         { "@type": "Offer", itemOffered: { "@type": "Service", name: "Blocked Drains Sydney", description: "Fast blocked drain clearing using CCTV and hydro jetting" } },
@@ -146,43 +119,9 @@ export function FAQSchema({ faqs }: FAQSchemaProps) {
   return <JsonLd data={schema} id="faq-schema" />;
 }
 
-interface ReviewSchemaProps {
-  reviews: Testimonial[];
-}
-
-export function ReviewSchema({ reviews }: ReviewSchemaProps) {
-  const avgRating = reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length;
-  
-  const schema = {
-    "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    name: BUSINESS_INFO.name,
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: avgRating.toFixed(1),
-      reviewCount: reviews.length,
-      bestRating: "5",
-      worstRating: "1"
-    },
-    review: reviews.map(review => ({
-      "@type": "Review",
-      author: {
-        "@type": "Person",
-        name: review.name
-      },
-      reviewRating: {
-        "@type": "Rating",
-        ratingValue: review.rating,
-        bestRating: "5",
-        worstRating: "1"
-      },
-      reviewBody: review.text,
-      datePublished: new Date().toISOString().split('T')[0]
-    }))
-  };
-
-  return <JsonLd data={schema} id="review-schema" />;
-}
+// NOTE: Review/AggregateRating schema intentionally removed. Structured-data
+// reviews must reflect REAL, verifiable customer reviews — fabricated ratings
+// risk a Google manual action. Re-add only when wired to genuine review data.
 
 interface BreadcrumbSchemaProps {
   items: Array<{ name: string; url: string }>;
@@ -210,11 +149,12 @@ interface LocationSchemaProps {
 }
 
 export function LocationSchema({ location }: LocationSchemaProps) {
+  const regionName = REGIONS.find((r) => r.slug === location.region)?.displayName ?? "New South Wales";
   const schema = {
     "@context": "https://schema.org",
     "@type": "Service",
     name: `Plumber in ${location.name}`,
-    description: `Professional plumbing services in ${location.name}, ${location.region === 'southern-highlands' ? 'Southern Highlands' : 'Sydney'}. Emergency plumber, blocked drains, hot water, gas fitting. Call now!`,
+    description: `Professional plumbing services in ${location.name}, ${regionName}. Emergency plumber, blocked drains, hot water, gas fitting. Call now!`,
     provider: {
       "@type": "LocalBusiness",
       name: BUSINESS_INFO.name,

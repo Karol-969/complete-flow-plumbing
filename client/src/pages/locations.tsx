@@ -2,7 +2,7 @@ import { Layout } from "@/components/layout/layout";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
-import { SOUTHERN_HIGHLANDS_SUBURBS, SYDNEY_METRO_SUBURBS, BUSINESS_INFO } from "@shared/schema";
+import { REGIONS, locationsByRegion, BUSINESS_INFO } from "@shared/schema";
 import { MapPin, Phone, CheckCircle, ArrowRight } from "lucide-react";
 
 export default function Locations() {
@@ -16,12 +16,10 @@ export default function Locations() {
               Areas We Service
             </h1>
             <p className="text-xl text-white/90 mb-8">
-              Complete Flow Plumbing provides professional plumbing services across 
-              the Southern Highlands and Greater Sydney. Same-day service available 
-              in most areas.
+              Complete Flow Plumbing proudly services Sutherland Shire, Wollondilly, the Southern Highlands, Wollongong, Illawarra and the Southern Tablelands.
             </p>
-            <Button 
-              asChild 
+            <Button
+              asChild
               size="lg"
               className="bg-white text-primary hover:bg-white/90"
               data-testid="locations-call"
@@ -35,73 +33,53 @@ export default function Locations() {
         </div>
       </section>
 
-      {/* Southern Highlands */}
-      <section className="py-16 md:py-24 bg-background">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mb-12">
-            <h2 className="text-3xl font-bold text-foreground mb-4">
-              Southern Highlands
-            </h2>
-            <p className="text-lg text-muted-foreground">
-              We're proud to serve the beautiful Southern Highlands region. 
-              Our team knows the area well and can respond quickly to your plumbing needs.
-            </p>
-          </div>
+      {/* Region sections */}
+      {REGIONS.map((region, index) => {
+        const suburbs = locationsByRegion(region.slug);
+        return (
+          <section
+            key={region.slug}
+            className={`py-16 md:py-24 ${index % 2 === 0 ? "bg-background" : "bg-muted/50"}`}
+            data-testid={`region-section-${region.slug}`}
+          >
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="mb-12">
+                <Link
+                  href={`/locations/region/${region.slug}`}
+                  className="inline-flex items-center gap-2 group"
+                  data-testid={`region-hub-${region.slug}`}
+                >
+                  <h2 className="text-3xl font-bold text-foreground mb-4 group-hover:text-primary transition-colors">
+                    {region.displayName}
+                  </h2>
+                </Link>
+                <p className="text-lg text-muted-foreground">
+                  {region.blurb}
+                </p>
+              </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-            {SOUTHERN_HIGHLANDS_SUBURBS.map((suburb) => (
-              <Link 
-                key={suburb.id}
-                href={`/locations/${suburb.slug}`}
-                data-testid={`location-${suburb.slug}`}
-              >
-                <Card className="p-4 hover-elevate transition-all group">
-                  <div className="flex items-center gap-2">
-                    <MapPin className="h-4 w-4 text-primary flex-shrink-0" />
-                    <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">
-                      {suburb.name}
-                    </span>
-                  </div>
-                </Card>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Sydney Metro */}
-      <section className="py-16 md:py-24 bg-muted/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mb-12">
-            <h2 className="text-3xl font-bold text-foreground mb-4">
-              Sydney Metro
-            </h2>
-            <p className="text-lg text-muted-foreground">
-              We also service Greater Sydney, providing the same high-quality 
-              plumbing solutions to homes and businesses across the metropolitan area.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-            {SYDNEY_METRO_SUBURBS.map((suburb) => (
-              <Link 
-                key={suburb.id}
-                href={`/locations/${suburb.slug}`}
-                data-testid={`location-${suburb.slug}`}
-              >
-                <Card className="p-4 hover-elevate transition-all group">
-                  <div className="flex items-center gap-2">
-                    <MapPin className="h-4 w-4 text-primary flex-shrink-0" />
-                    <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">
-                      {suburb.name}
-                    </span>
-                  </div>
-                </Card>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+                {suburbs.map((suburb) => (
+                  <Link
+                    key={suburb.id}
+                    href={`/locations/${suburb.slug}`}
+                    data-testid={`location-${suburb.slug}`}
+                  >
+                    <Card className="p-4 hover-elevate transition-all group">
+                      <div className="flex items-center gap-2">
+                        <MapPin className="h-4 w-4 text-primary flex-shrink-0" />
+                        <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">
+                          Plumber in {suburb.name}
+                        </span>
+                      </div>
+                    </Card>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </section>
+        );
+      })}
 
       {/* Why Choose Us */}
       <section className="py-16 bg-background">
@@ -111,7 +89,7 @@ export default function Locations() {
               Local Service, Professional Results
             </h2>
             <p className="text-muted-foreground">
-              As a local plumbing company, we understand the unique needs of homes 
+              As a local plumbing company, we understand the unique needs of homes
               and businesses in each area we service.
             </p>
           </div>

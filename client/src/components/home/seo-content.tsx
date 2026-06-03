@@ -10,45 +10,45 @@ export function SeoContent() {
           <div className="lg:col-span-2 space-y-10">
             <div>
               <h2 className="text-3xl font-bold text-foreground mb-4">
-                Sydney's Most Trusted Local Plumber — Serving 90+ Suburbs
+                Your Trusted Local Plumber Across 6 Regions — Serving 90+ Suburbs
               </h2>
               <p className="text-muted-foreground text-lg leading-relaxed mb-4">
-                Complete Flow Plumbing is a licensed, fully insured plumbing company servicing all of Greater Sydney and the Southern Highlands. Whether you need an emergency plumber in Sydney at 2am, a blocked drain cleared in Campbelltown, a hot water system replaced in Parramatta, or gas fitting in Bowral — our team responds fast, quotes upfront, and backs every job with a workmanship guarantee.
+                Complete Flow Plumbing proudly services Sutherland Shire, Wollondilly, the Southern Highlands, Wollongong, Illawarra and the Southern Tablelands. Whether you need an emergency plumber in Cronulla at 2am, a blocked drain cleared in Picton, a hot water system replaced in Wollongong, or gas fitting in Bowral — our team responds fast, quotes upfront, and backs every job with a workmanship guarantee.
               </p>
               <p className="text-muted-foreground leading-relaxed">
-                As a local Sydney plumber with deep roots in the community, we understand the specific plumbing challenges Sydney homes face: ageing clay pipes in inner suburbs, tree root intrusions, Sydney Water compliance requirements, and the wear that temperature extremes put on hot water systems.
+                As a local plumber with deep roots across these communities, we understand the specific plumbing challenges our region faces: salt-air corrosion on the coast, ageing clay and cast-iron pipes in heritage homes, tree root intrusions, septic and rainwater systems on rural acreage, frozen pipes in cold winters, and the wear that temperature extremes put on hot water systems.
               </p>
             </div>
 
             <div>
               <h2 className="text-2xl font-bold text-foreground mb-5">
-                Complete Plumbing Services Across Sydney & Southern Highlands
+                Complete Plumbing Services Across All 6 Regions
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
                   <h3 className="text-lg font-semibold text-foreground mb-2">
                     <Link href="/services/emergency-plumbing" className="hover:text-primary transition-colors">
-                      Emergency Plumber Sydney
+                      Emergency Plumber
                     </Link>
                   </h3>
                   <p className="text-muted-foreground text-sm leading-relaxed">
-                    24/7 emergency plumbing across Sydney. Burst pipes, flooding, sewage overflow — we respond within 60 minutes. No call-out fee during business hours. Available every day including public holidays.
+                    24/7 emergency plumbing across all 6 regions. Burst pipes, flooding, sewage overflow — we respond fast. No call-out fee during business hours. Available every day including public holidays.
                   </p>
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold text-foreground mb-2">
                     <Link href="/services/blocked-drains" className="hover:text-primary transition-colors">
-                      Blocked Drains Sydney
+                      Blocked Drains
                     </Link>
                   </h3>
                   <p className="text-muted-foreground text-sm leading-relaxed">
-                    CCTV drain camera inspection to find the exact cause, followed by hydro jet clearing. We fix the root cause — not just the symptom. Tree root intrusion specialists for Sydney's older suburbs.
+                    CCTV drain camera inspection to find the exact cause, followed by hydro jet clearing. We fix the root cause — not just the symptom. Tree root intrusion specialists for older and heritage suburbs.
                   </p>
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold text-foreground mb-2">
                     <Link href="/services/hot-water-systems" className="hover:text-primary transition-colors">
-                      Hot Water System Sydney
+                      Hot Water Systems
                     </Link>
                   </h3>
                   <p className="text-muted-foreground text-sm leading-relaxed">
@@ -58,27 +58,27 @@ export function SeoContent() {
                 <div>
                   <h3 className="text-lg font-semibold text-foreground mb-2">
                     <Link href="/services/gas-fitting" className="hover:text-primary transition-colors">
-                      Gas Plumber Sydney
+                      Gas Plumber
                     </Link>
                   </h3>
                   <p className="text-muted-foreground text-sm leading-relaxed">
-                    Licensed gas plumbers for all gas fitting, gas leak detection, gas appliance installation, and gas line repairs across Sydney. Certificate of Compliance provided on every job.
+                    Licensed gas plumbers for all gas fitting, gas leak detection, gas appliance installation, and gas line repairs across all 6 regions. Certificate of Compliance provided on every job.
                   </p>
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold text-foreground mb-2">
                     <Link href="/services/pipe-relining" className="hover:text-primary transition-colors">
-                      Pipe Relining Sydney
+                      Pipe Relining
                     </Link>
                   </h3>
                   <p className="text-muted-foreground text-sm leading-relaxed">
-                    No-dig pipe relining repairs damaged sewer and drain pipes from the inside. No excavation, no disruption to gardens or driveways. 50-year product warranty. Ideal for Sydney's clay pipe systems.
+                    No-dig pipe relining repairs damaged sewer and drain pipes from the inside. No excavation, no disruption to gardens or driveways. 50-year product warranty. Ideal for older clay pipe systems.
                   </p>
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold text-foreground mb-2">
                     <Link href="/services/leak-detection" className="hover:text-primary transition-colors">
-                      Leak Detection Sydney
+                      Leak Detection
                     </Link>
                   </h3>
                   <p className="text-muted-foreground text-sm leading-relaxed">
@@ -90,15 +90,15 @@ export function SeoContent() {
 
             <div>
               <h2 className="text-2xl font-bold text-foreground mb-4">
-                Why Sydney Homeowners Choose Complete Flow Plumbing
+                Why Local Homeowners Choose Complete Flow Plumbing
               </h2>
               <div className="space-y-3">
                 {[
                   { title: "Licensed NSW Plumbers", desc: `All plumbers hold a current NSW Fair Trading licence (${BUSINESS_INFO.licence}). Verify any plumber before they enter your home.` },
                   { title: "Upfront Fixed Pricing", desc: "You receive a written quote before work starts. The price you're quoted is the price you pay — no hidden call-out fees, no surprise charges." },
-                  { title: "60-Minute Emergency Response", desc: "For genuine plumbing emergencies across Greater Sydney, we aim to arrive within 60 minutes. Our vans are stocked with common parts for same-visit repairs." },
+                  { title: "Fast Emergency Response", desc: "For genuine plumbing emergencies across all 6 regions we service, we aim to arrive as fast as possible. Our vans are stocked with common parts for same-visit repairs." },
                   { title: "Lifetime Workmanship Guarantee", desc: "We stand behind every job. If our workmanship causes a problem, we return and fix it at no cost. No questions asked." },
-                  { title: "Sydney Water Compliance", desc: "All work meets Sydney Water and NSW plumbing code requirements. We handle all required compliance certificates." },
+                  { title: "NSW Code Compliance", desc: "All work meets Sydney Water and NSW plumbing code requirements. We handle all required compliance certificates." },
                   { title: "CCTV Camera Technology", desc: "We use drain cameras on every drain job to identify the real cause — not just clear the symptom. You see exactly what we see." },
                 ].map((item) => (
                   <div key={item.title} className="flex gap-3">
@@ -114,21 +114,21 @@ export function SeoContent() {
 
             <div>
               <h2 className="text-2xl font-bold text-foreground mb-4">
-                Plumbing Services Across Greater Sydney — All Suburbs
+                Plumbing Services Across Our 6 Regions — All Suburbs
               </h2>
               <p className="text-muted-foreground text-sm mb-4">
-                We service all suburbs across Greater Sydney, from the inner city to the outer western growth corridors, the northern beaches, the Sutherland Shire, and the Southern Highlands:
+                We service suburbs and towns across the Sutherland Shire, Wollondilly, the Southern Highlands, Wollongong, the Illawarra and the Southern Tablelands:
               </p>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-4 gap-y-1 text-sm text-muted-foreground">
                 {[
-                  "Plumber Parramatta", "Plumber Campbelltown", "Plumber Liverpool",
-                  "Plumber Penrith", "Plumber Blacktown", "Plumber Camden",
-                  "Plumber Narellan", "Plumber Oran Park", "Plumber Gregory Hills",
-                  "Plumber Cronulla", "Plumber Hurstville", "Plumber Bankstown",
-                  "Plumber Marrickville", "Plumber Newtown", "Plumber Ryde",
-                  "Plumber Bondi", "Plumber Manly", "Plumber Chatswood",
-                  "Plumber Bowral", "Plumber Mittagong", "Plumber Moss Vale",
-                  "Plumber Picton", "Plumber Bundanoon", "Plumber Berrima",
+                  "Plumber Cronulla", "Plumber Miranda", "Plumber Caringbah",
+                  "Plumber Menai", "Plumber Picton", "Plumber Tahmoor",
+                  "Plumber Appin", "Plumber Wilton", "Plumber Bowral",
+                  "Plumber Mittagong", "Plumber Moss Vale", "Plumber Berrima",
+                  "Plumber Wollongong", "Plumber Corrimal", "Plumber Thirroul",
+                  "Plumber Dapto", "Plumber Shellharbour", "Plumber Albion Park",
+                  "Plumber Kiama", "Plumber Oak Flats", "Plumber Goulburn",
+                  "Plumber Marulan", "Plumber Crookwell", "Plumber Yass",
                 ].map((loc) => {
                   const suburb = loc.replace("Plumber ", "").toLowerCase().replace(/\s+/g, "-");
                   return (
@@ -197,11 +197,12 @@ export function SeoContent() {
               <h3 className="text-lg font-bold text-foreground mb-3">Service Areas</h3>
               <div className="space-y-1">
                 {[
-                  { name: "Greater Sydney", sub: "All 45+ suburbs" },
+                  { name: "Sutherland Shire", sub: "Cronulla, Miranda, Menai" },
+                  { name: "Wollondilly", sub: "Picton, Tahmoor, Appin" },
                   { name: "Southern Highlands", sub: "Bowral, Mittagong, Moss Vale" },
-                  { name: "Macarthur Region", sub: "Campbelltown, Camden, Narellan" },
-                  { name: "South-West Sydney", sub: "Liverpool, Fairfield, Prestons" },
-                  { name: "Western Sydney", sub: "Parramatta, Penrith, Blacktown" },
+                  { name: "Wollongong", sub: "Wollongong, Corrimal, Dapto" },
+                  { name: "Illawarra", sub: "Shellharbour, Albion Park, Kiama" },
+                  { name: "Southern Tablelands", sub: "Goulburn, Marulan, Crookwell" },
                 ].map((area) => (
                   <div key={area.name} className="flex justify-between text-sm">
                     <span className="text-foreground font-medium">{area.name}</span>

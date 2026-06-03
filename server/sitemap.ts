@@ -1,4 +1,4 @@
-import { SERVICES, ALL_LOCATIONS } from "@shared/schema";
+import { SERVICES, ALL_LOCATIONS, REGIONS } from "@shared/schema";
 
 const BASE_URL = "https://completeflowplumbing.com.au";
 
@@ -29,6 +29,16 @@ export function generateSitemap(): string {
       lastmod: today,
       changefreq: "monthly",
       priority: 0.8,
+    });
+  });
+
+  // Region hub pages - high priority for local SEO
+  REGIONS.forEach((region) => {
+    urls.push({
+      loc: `/locations/region/${region.slug}`,
+      lastmod: today,
+      changefreq: "monthly",
+      priority: 0.9,
     });
   });
 

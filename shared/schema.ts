@@ -55,7 +55,26 @@ export interface Location {
   id: string;
   slug: string;
   name: string;
-  region: "southern-highlands" | "sydney-metro";
+  region:
+    | "sutherland-shire"
+    | "wollondilly"
+    | "southern-highlands"
+    | "wollongong"
+    | "illawarra"
+    | "southern-tablelands";
+  postcode?: string;
+  nearby?: string[];
+}
+
+// Service region type
+export interface Region {
+  slug: string;
+  name: string;
+  displayName: string;
+  blurb: string;
+  localAngle: string;
+  commonIssues: string[];
+  targetKeywords: string[];
 }
 
 // Testimonial type
@@ -119,105 +138,280 @@ export const SERVICES: Service[] = [
   { id: "9", slug: "toilet-repair", title: "Toilet Repair & Unblock", shortDescription: "Quick fixes for blocked, running, or leaking toilets.", icon: "Bath", category: "leak-detection" },
 ];
 
-// Southern Highlands suburbs
-export const SOUTHERN_HIGHLANDS_SUBURBS: Location[] = [
-  { id: "1", slug: "run-o-waters", name: "Run-O-Waters", region: "southern-highlands" },
-  { id: "2", slug: "brisbane-grove", name: "Brisbane Grove", region: "southern-highlands" },
-  { id: "3", slug: "marulan", name: "Marulan", region: "southern-highlands" },
-  { id: "4", slug: "towrang", name: "Towrang", region: "southern-highlands" },
-  { id: "5", slug: "boxers-creek", name: "Boxers Creek", region: "southern-highlands" },
-  { id: "6", slug: "bungonia", name: "Bungonia", region: "southern-highlands" },
-  { id: "7", slug: "tallong", name: "Tallong", region: "southern-highlands" },
-  { id: "8", slug: "brayton", name: "Brayton", region: "southern-highlands" },
-  { id: "9", slug: "wingello", name: "Wingello", region: "southern-highlands" },
-  { id: "10", slug: "penrose", name: "Penrose", region: "southern-highlands" },
-  { id: "11", slug: "bundanoon", name: "Bundanoon", region: "southern-highlands" },
-  { id: "12", slug: "exeter", name: "Exeter", region: "southern-highlands" },
-  { id: "13", slug: "sutton-forest", name: "Sutton Forest", region: "southern-highlands" },
-  { id: "14", slug: "berrima", name: "Berrima", region: "southern-highlands" },
-  { id: "15", slug: "new-berrima", name: "New Berrima", region: "southern-highlands" },
-  { id: "16", slug: "moss-vale", name: "Moss Vale", region: "southern-highlands" },
-  { id: "17", slug: "renwick", name: "Renwick", region: "southern-highlands" },
-  { id: "18", slug: "burradoo", name: "Burradoo", region: "southern-highlands" },
-  { id: "19", slug: "bowral", name: "Bowral", region: "southern-highlands" },
-  { id: "20", slug: "east-bowral", name: "East Bowral", region: "southern-highlands" },
-  { id: "21", slug: "mittagong", name: "Mittagong", region: "southern-highlands" },
-  { id: "22", slug: "welby", name: "Welby", region: "southern-highlands" },
-  { id: "23", slug: "balaclava", name: "Balaclava", region: "southern-highlands" },
-  { id: "24", slug: "braemar", name: "Braemar", region: "southern-highlands" },
-  { id: "25", slug: "willow-vale", name: "Willow Vale", region: "southern-highlands" },
-  { id: "26", slug: "colo-vale", name: "Colo Vale", region: "southern-highlands" },
-  { id: "27", slug: "hill-top", name: "Hill Top", region: "southern-highlands" },
-  { id: "28", slug: "yerrinbool", name: "Yerrinbool", region: "southern-highlands" },
-  { id: "29", slug: "alpine", name: "Alpine", region: "southern-highlands" },
-  { id: "30", slug: "robertson", name: "Robertson", region: "southern-highlands" },
-  { id: "31", slug: "avoca", name: "Avoca", region: "southern-highlands" },
-  { id: "32", slug: "kangaloon", name: "Kangaloon", region: "southern-highlands" },
-  { id: "33", slug: "east-kangaloon", name: "East Kangaloon", region: "southern-highlands" },
-  { id: "34", slug: "burrawang", name: "Burrawang", region: "southern-highlands" },
-  { id: "35", slug: "wildes-meadow", name: "Wildes Meadow", region: "southern-highlands" },
-  { id: "36", slug: "knights-hill", name: "Knight's Hill", region: "southern-highlands" },
-  { id: "37", slug: "upper-kangaroo-river", name: "Upper Kangaroo River", region: "southern-highlands" },
-  { id: "38", slug: "balmoral", name: "Balmoral", region: "southern-highlands" },
-  { id: "39", slug: "couridjah", name: "Couridjah", region: "southern-highlands" },
-  { id: "40", slug: "tahmoor", name: "Tahmoor", region: "southern-highlands" },
-  { id: "41", slug: "thirlmere", name: "Thirlmere", region: "southern-highlands" },
-  { id: "42", slug: "buxton", name: "Buxton", region: "southern-highlands" },
-  { id: "43", slug: "picton", name: "Picton", region: "southern-highlands" },
-  { id: "44", slug: "lakesland", name: "Lakesland", region: "southern-highlands" },
+// Service regions
+export const REGIONS: Region[] = [
+  {
+    slug: "sutherland-shire",
+    name: "Sutherland Shire",
+    displayName: "Sutherland Shire",
+    blurb:
+      "Licensed local plumbers servicing the entire Sutherland Shire, from Cronulla to Menai, with fast emergency callouts, blocked drains, hot water and gas fitting.",
+    localAngle:
+      "Coastal/beachside Sydney. Salt-air corrosion of pipes and fittings, older fibro and brick homes, pool and outdoor plumbing, stormwater near the Royal National Park and Port Hacking.",
+    commonIssues: [
+      "Salt-corroded copper pipework near the coast",
+      "Blocked stormwater from heavy beachside rain",
+      "Hot water system replacements in older homes",
+      "Pool and outdoor tap plumbing",
+    ],
+    targetKeywords: [
+      "plumber Sutherland Shire",
+      "emergency plumber Cronulla",
+      "blocked drains Miranda",
+      "hot water repairs Caringbah",
+      "gas fitter Menai",
+      "plumber Engadine",
+    ],
+  },
+  {
+    slug: "wollondilly",
+    name: "Wollondilly",
+    displayName: "Wollondilly",
+    blurb:
+      "Wollondilly's trusted plumbing team covering Picton, Tahmoor and surrounding rural townships for blocked drains, leak detection, septic and hot water systems.",
+    localAngle:
+      "Semi-rural Macarthur fringe. Rainwater tanks, septic and on-site wastewater systems, bore pumps, acreage properties on tank water, long driveways and rural water supply.",
+    commonIssues: [
+      "Septic and on-site wastewater faults",
+      "Rainwater tank pump and supply issues",
+      "Tree-root blockages in rural drains",
+      "Bore and pressure pump repairs",
+    ],
+    targetKeywords: [
+      "plumber Wollondilly",
+      "emergency plumber Picton",
+      "blocked drains Tahmoor",
+      "septic system plumber Wilton",
+      "hot water repairs Thirlmere",
+      "plumber Appin",
+    ],
+  },
+  {
+    slug: "southern-highlands",
+    name: "Southern Highlands",
+    displayName: "Southern Highlands",
+    blurb:
+      "Reliable Southern Highlands plumbers serving Bowral, Mittagong and Moss Vale with emergency repairs, blocked drains, gas fitting and hot water installation.",
+    localAngle:
+      "Cool-climate heritage region. Burst pipes in winter frosts, heritage homes with old clay and cast-iron pipes needing relining, tree-root drain blockages, slow-combustion and gas heating plumbing.",
+    commonIssues: [
+      "Frozen and burst pipes in winter",
+      "Tree-root intrusion in old clay drains",
+      "Pipe relining for heritage homes",
+      "Gas fitting for heating and hot water",
+    ],
+    targetKeywords: [
+      "plumber Southern Highlands",
+      "emergency plumber Bowral",
+      "blocked drains Mittagong",
+      "hot water systems Moss Vale",
+      "gas fitter Bowral",
+      "plumber Bundanoon",
+    ],
+  },
+  {
+    slug: "wollongong",
+    name: "Wollongong",
+    displayName: "Wollongong",
+    blurb:
+      "Wollongong's go-to plumbers for blocked drains, burst pipes, hot water and emergency callouts across the northern beaches, city and western suburbs.",
+    localAngle:
+      "Coastal city between escarpment and sea. Mix of high-rise units and houses, escarpment stormwater runoff, salt corrosion on the coast, older Port Kembla/Warrawong housing, unit and strata plumbing.",
+    commonIssues: [
+      "Strata and unit plumbing in high-rise",
+      "Escarpment stormwater and flooding",
+      "Salt-corroded coastal pipework",
+      "Hot water and burst pipe emergencies",
+    ],
+    targetKeywords: [
+      "plumber Wollongong",
+      "emergency plumber Wollongong",
+      "blocked drains Corrimal",
+      "burst pipe repair Figtree",
+      "hot water repairs Dapto",
+      "plumber Thirroul",
+    ],
+  },
+  {
+    slug: "illawarra",
+    name: "Illawarra",
+    displayName: "Illawarra",
+    blurb:
+      "Plumbing services across the Illawarra coast and Shellharbour-Kiama region, from blocked drains and leak detection to gas fitting and emergency repairs.",
+    localAngle:
+      "South coast growth corridor. New estates (Shell Cove, Calderwood, Flinders) needing fit-outs alongside older coastal homes, salt-air corrosion, lake and coastal stormwater around Lake Illawarra.",
+    commonIssues: [
+      "New-estate plumbing fit-outs and rectification",
+      "Salt-corroded fittings near the coast",
+      "Blocked drains from coastal sand and runoff",
+      "Hot water and gas installation",
+    ],
+    targetKeywords: [
+      "plumber Illawarra",
+      "emergency plumber Shellharbour",
+      "blocked drains Albion Park",
+      "plumber Kiama",
+      "hot water repairs Oak Flats",
+      "leak detection Warilla",
+    ],
+  },
+  {
+    slug: "southern-tablelands",
+    name: "Southern Tablelands",
+    displayName: "Southern Tablelands",
+    blurb:
+      "Plumbers servicing the Southern Tablelands including Goulburn, Marulan and Crookwell for rural and town plumbing, blocked drains, tanks and hot water.",
+    localAngle:
+      "Rural high country. Hard water and mineral build-up, rainwater tanks and bore pumps on rural properties, frost and burst pipes in cold winters, large acreage and town water supply around Goulburn.",
+    commonIssues: [
+      "Hard-water scale and hot water faults",
+      "Rainwater tank and bore pump systems",
+      "Frozen and burst pipes in winter",
+      "Rural acreage water supply and drainage",
+    ],
+    targetKeywords: [
+      "plumber Goulburn",
+      "emergency plumber Southern Tablelands",
+      "blocked drains Marulan",
+      "plumber Crookwell",
+      "rural water tank plumber Goulburn",
+      "hot water repairs Yass",
+    ],
+  },
 ];
 
-// Sydney Metro suburbs
-export const SYDNEY_METRO_SUBURBS: Location[] = [
-  { id: "s1", slug: "parramatta", name: "Parramatta", region: "sydney-metro" },
-  { id: "s2", slug: "blacktown", name: "Blacktown", region: "sydney-metro" },
-  { id: "s3", slug: "penrith", name: "Penrith", region: "sydney-metro" },
-  { id: "s4", slug: "castle-hill", name: "Castle Hill", region: "sydney-metro" },
-  { id: "s5", slug: "liverpool", name: "Liverpool", region: "sydney-metro" },
-  { id: "s6", slug: "campbelltown", name: "Campbelltown", region: "sydney-metro" },
-  { id: "s7", slug: "bondi", name: "Bondi", region: "sydney-metro" },
-  { id: "s8", slug: "randwick", name: "Randwick", region: "sydney-metro" },
-  { id: "s9", slug: "marrickville", name: "Marrickville", region: "sydney-metro" },
-  { id: "s10", slug: "newtown", name: "Newtown", region: "sydney-metro" },
-  { id: "s11", slug: "chatswood", name: "Chatswood", region: "sydney-metro" },
-  { id: "s12", slug: "hornsby", name: "Hornsby", region: "sydney-metro" },
-  { id: "s13", slug: "cronulla", name: "Cronulla", region: "sydney-metro" },
-  { id: "s14", slug: "manly", name: "Manly", region: "sydney-metro" },
-  { id: "s15", slug: "ryde", name: "Ryde", region: "sydney-metro" },
-  { id: "s16", slug: "bankstown", name: "Bankstown", region: "sydney-metro" },
-  { id: "s17", slug: "hurstville", name: "Hurstville", region: "sydney-metro" },
-  { id: "s18", slug: "baulkham-hills", name: "Baulkham Hills", region: "sydney-metro" },
-  { id: "s19", slug: "kellyville", name: "Kellyville", region: "sydney-metro" },
-  { id: "s20", slug: "camden", name: "Camden", region: "sydney-metro" },
-  { id: "s21", slug: "narellan", name: "Narellan", region: "sydney-metro" },
-  { id: "s22", slug: "oran-park", name: "Oran Park", region: "sydney-metro" },
-  { id: "s23", slug: "gregory-hills", name: "Gregory Hills", region: "sydney-metro" },
-  { id: "s24", slug: "mount-annan", name: "Mount Annan", region: "sydney-metro" },
-  { id: "s25", slug: "harrington-park", name: "Harrington Park", region: "sydney-metro" },
-  { id: "s26", slug: "gledswood-hills", name: "Gledswood Hills", region: "sydney-metro" },
-  { id: "s27", slug: "appin", name: "Appin", region: "sydney-metro" },
-  { id: "s28", slug: "wollondilly", name: "Wollondilly", region: "sydney-metro" },
-  { id: "s29", slug: "st-marys", name: "St Marys", region: "sydney-metro" },
-  { id: "s30", slug: "glenmore-park", name: "Glenmore Park", region: "sydney-metro" },
-  { id: "s31", slug: "werrington", name: "Werrington", region: "sydney-metro" },
-  { id: "s32", slug: "fairfield", name: "Fairfield", region: "sydney-metro" },
-  { id: "s33", slug: "cabramatta", name: "Cabramatta", region: "sydney-metro" },
-  { id: "s34", slug: "prestons", name: "Prestons", region: "sydney-metro" },
-  { id: "s35", slug: "moorebank", name: "Moorebank", region: "sydney-metro" },
-  { id: "s36", slug: "macquarie-fields", name: "Macquarie Fields", region: "sydney-metro" },
-  { id: "s37", slug: "ingleburn", name: "Ingleburn", region: "sydney-metro" },
-  { id: "s38", slug: "minto", name: "Minto", region: "sydney-metro" },
-  { id: "s39", slug: "leumeah", name: "Leumeah", region: "sydney-metro" },
-  { id: "s40", slug: "ambarvale", name: "Ambarvale", region: "sydney-metro" },
-  { id: "s41", slug: "rosemeadow", name: "Rosemeadow", region: "sydney-metro" },
-  { id: "s42", slug: "eagle-vale", name: "Eagle Vale", region: "sydney-metro" },
-  { id: "s43", slug: "claymore", name: "Claymore", region: "sydney-metro" },
-  { id: "s44", slug: "raby", name: "Raby", region: "sydney-metro" },
-  { id: "s45", slug: "blairmount", name: "Blairmount", region: "sydney-metro" },
+// Sutherland Shire suburbs
+export const SUTHERLAND_SHIRE_SUBURBS: Location[] = [
+  { id: "ss1", slug: "cronulla", name: "Cronulla", region: "sutherland-shire", postcode: "2230", nearby: ["woolooware", "caringbah", "miranda"] },
+  { id: "ss2", slug: "miranda", name: "Miranda", region: "sutherland-shire", postcode: "2228", nearby: ["caringbah", "gymea", "kirrawee", "sylvania"] },
+  { id: "ss3", slug: "caringbah", name: "Caringbah", region: "sutherland-shire", postcode: "2229", nearby: ["miranda", "cronulla", "woolooware", "sylvania"] },
+  { id: "ss4", slug: "sutherland", name: "Sutherland", region: "sutherland-shire", postcode: "2232", nearby: ["kirrawee", "jannali", "engadine", "gymea"] },
+  { id: "ss5", slug: "engadine", name: "Engadine", region: "sutherland-shire", postcode: "2233", nearby: ["heathcote", "sutherland", "menai"] },
+  { id: "ss6", slug: "menai", name: "Menai", region: "sutherland-shire", postcode: "2234", nearby: ["bangor", "illawong", "sutherland"] },
+  { id: "ss7", slug: "gymea", name: "Gymea", region: "sutherland-shire", postcode: "2227", nearby: ["miranda", "kirrawee", "sutherland"] },
+  { id: "ss8", slug: "kirrawee", name: "Kirrawee", region: "sutherland-shire", postcode: "2232", nearby: ["gymea", "sutherland", "miranda"] },
+  { id: "ss9", slug: "sylvania", name: "Sylvania", region: "sutherland-shire", postcode: "2224", nearby: ["miranda", "caringbah", "como"] },
+  { id: "ss10", slug: "jannali", name: "Jannali", region: "sutherland-shire", postcode: "2226", nearby: ["como", "sutherland", "kirrawee"] },
+  { id: "ss11", slug: "como", name: "Como", region: "sutherland-shire", postcode: "2226", nearby: ["jannali", "sylvania", "illawong"] },
+  { id: "ss12", slug: "heathcote", name: "Heathcote", region: "sutherland-shire", postcode: "2233", nearby: ["engadine", "sutherland"] },
+  { id: "ss13", slug: "illawong", name: "Illawong", region: "sutherland-shire", postcode: "2234", nearby: ["menai", "bangor", "como"] },
+  { id: "ss14", slug: "bangor", name: "Bangor", region: "sutherland-shire", postcode: "2234", nearby: ["menai", "illawong", "sutherland"] },
+  { id: "ss15", slug: "woolooware", name: "Woolooware", region: "sutherland-shire", postcode: "2230", nearby: ["cronulla", "caringbah", "miranda"] },
+];
+
+// Wollondilly suburbs
+export const WOLLONDILLY_SUBURBS: Location[] = [
+  { id: "wd1", slug: "picton", name: "Picton", region: "wollondilly", postcode: "2571", nearby: ["tahmoor", "thirlmere", "the-oaks"] },
+  { id: "wd2", slug: "tahmoor", name: "Tahmoor", region: "wollondilly", postcode: "2573", nearby: ["picton", "bargo", "thirlmere"] },
+  { id: "wd3", slug: "thirlmere", name: "Thirlmere", region: "wollondilly", postcode: "2572", nearby: ["picton", "tahmoor", "the-oaks"] },
+  { id: "wd4", slug: "bargo", name: "Bargo", region: "wollondilly", postcode: "2574", nearby: ["tahmoor", "yanderra", "buxton"] },
+  { id: "wd5", slug: "the-oaks", name: "The Oaks", region: "wollondilly", postcode: "2570", nearby: ["oakdale", "picton", "thirlmere"] },
+  { id: "wd6", slug: "oakdale", name: "Oakdale", region: "wollondilly", postcode: "2570", nearby: ["the-oaks", "silverdale", "warragamba"] },
+  { id: "wd7", slug: "silverdale", name: "Silverdale", region: "wollondilly", postcode: "2752", nearby: ["warragamba", "oakdale", "the-oaks"] },
+  { id: "wd8", slug: "douglas-park", name: "Douglas Park", region: "wollondilly", postcode: "2569", nearby: ["menangle", "appin", "picton"] },
+  { id: "wd9", slug: "appin", name: "Appin", region: "wollondilly", postcode: "2560", nearby: ["wilton", "douglas-park", "menangle"] },
+  { id: "wd10", slug: "wilton", name: "Wilton", region: "wollondilly", postcode: "2571", nearby: ["appin", "picton", "douglas-park"] },
+  { id: "wd11", slug: "menangle", name: "Menangle", region: "wollondilly", postcode: "2568", nearby: ["camden-park", "douglas-park", "picton"] },
+  { id: "wd12", slug: "buxton", name: "Buxton", region: "wollondilly", postcode: "2571", nearby: ["bargo", "tahmoor", "yanderra"] },
+  { id: "wd13", slug: "warragamba", name: "Warragamba", region: "wollondilly", postcode: "2752", nearby: ["silverdale", "oakdale"] },
+  { id: "wd14", slug: "yanderra", name: "Yanderra", region: "wollondilly", postcode: "2574", nearby: ["bargo", "buxton", "tahmoor"] },
+  { id: "wd15", slug: "camden-park", name: "Camden Park", region: "wollondilly", postcode: "2570", nearby: ["menangle", "douglas-park"] },
+];
+
+// Southern Highlands suburbs
+export const SOUTHERN_HIGHLANDS_SUBURBS: Location[] = [
+  { id: "sh1", slug: "bowral", name: "Bowral", region: "southern-highlands", postcode: "2576", nearby: ["mittagong", "burradoo", "moss-vale"] },
+  { id: "sh2", slug: "mittagong", name: "Mittagong", region: "southern-highlands", postcode: "2575", nearby: ["bowral", "welby", "colo-vale"] },
+  { id: "sh3", slug: "moss-vale", name: "Moss Vale", region: "southern-highlands", postcode: "2577", nearby: ["bowral", "sutton-forest", "burradoo"] },
+  { id: "sh4", slug: "bundanoon", name: "Bundanoon", region: "southern-highlands", postcode: "2578", nearby: ["penrose", "exeter", "sutton-forest"] },
+  { id: "sh5", slug: "robertson", name: "Robertson", region: "southern-highlands", postcode: "2577", nearby: ["burrawang", "moss-vale"] },
+  { id: "sh6", slug: "berrima", name: "Berrima", region: "southern-highlands", postcode: "2577", nearby: ["moss-vale", "mittagong", "sutton-forest"] },
+  { id: "sh7", slug: "burradoo", name: "Burradoo", region: "southern-highlands", postcode: "2576", nearby: ["bowral", "moss-vale", "mittagong"] },
+  { id: "sh8", slug: "colo-vale", name: "Colo Vale", region: "southern-highlands", postcode: "2575", nearby: ["mittagong", "hill-top", "yerrinbool"] },
+  { id: "sh9", slug: "sutton-forest", name: "Sutton Forest", region: "southern-highlands", postcode: "2577", nearby: ["moss-vale", "berrima", "exeter"] },
+  { id: "sh10", slug: "exeter", name: "Exeter", region: "southern-highlands", postcode: "2579", nearby: ["bundanoon", "sutton-forest", "penrose"] },
+  { id: "sh11", slug: "hill-top", name: "Hill Top", region: "southern-highlands", postcode: "2575", nearby: ["colo-vale", "yerrinbool", "mittagong"] },
+  { id: "sh12", slug: "yerrinbool", name: "Yerrinbool", region: "southern-highlands", postcode: "2575", nearby: ["hill-top", "colo-vale", "mittagong"] },
+  { id: "sh13", slug: "welby", name: "Welby", region: "southern-highlands", postcode: "2575", nearby: ["mittagong", "bowral", "colo-vale"] },
+  { id: "sh14", slug: "burrawang", name: "Burrawang", region: "southern-highlands", postcode: "2577", nearby: ["robertson", "moss-vale"] },
+  { id: "sh15", slug: "penrose", name: "Penrose", region: "southern-highlands", postcode: "2579", nearby: ["bundanoon", "exeter"] },
+];
+
+// Wollongong suburbs
+export const WOLLONGONG_SUBURBS: Location[] = [
+  { id: "wg1", slug: "wollongong", name: "Wollongong", region: "wollongong", postcode: "2500", nearby: ["fairy-meadow", "figtree", "port-kembla"] },
+  { id: "wg2", slug: "thirroul", name: "Thirroul", region: "wollongong", postcode: "2515", nearby: ["austinmer", "bulli", "woonona"] },
+  { id: "wg3", slug: "corrimal", name: "Corrimal", region: "wollongong", postcode: "2518", nearby: ["fairy-meadow", "woonona", "balgownie"] },
+  { id: "wg4", slug: "fairy-meadow", name: "Fairy Meadow", region: "wollongong", postcode: "2519", nearby: ["corrimal", "wollongong", "balgownie"] },
+  { id: "wg5", slug: "figtree", name: "Figtree", region: "wollongong", postcode: "2525", nearby: ["wollongong", "unanderra"] },
+  { id: "wg6", slug: "dapto", name: "Dapto", region: "wollongong", postcode: "2530", nearby: ["unanderra", "berkeley"] },
+  { id: "wg7", slug: "unanderra", name: "Unanderra", region: "wollongong", postcode: "2526", nearby: ["figtree", "dapto", "berkeley"] },
+  { id: "wg8", slug: "bulli", name: "Bulli", region: "wollongong", postcode: "2516", nearby: ["woonona", "thirroul", "austinmer"] },
+  { id: "wg9", slug: "woonona", name: "Woonona", region: "wollongong", postcode: "2517", nearby: ["bulli", "corrimal", "thirroul"] },
+  { id: "wg10", slug: "port-kembla", name: "Port Kembla", region: "wollongong", postcode: "2505", nearby: ["warrawong", "wollongong", "berkeley"] },
+  { id: "wg11", slug: "warrawong", name: "Warrawong", region: "wollongong", postcode: "2502", nearby: ["port-kembla", "berkeley", "unanderra"] },
+  { id: "wg12", slug: "helensburgh", name: "Helensburgh", region: "wollongong", postcode: "2508", nearby: ["thirroul", "austinmer"] },
+  { id: "wg13", slug: "berkeley", name: "Berkeley", region: "wollongong", postcode: "2506", nearby: ["warrawong", "dapto", "unanderra"] },
+  { id: "wg14", slug: "balgownie", name: "Balgownie", region: "wollongong", postcode: "2519", nearby: ["fairy-meadow", "corrimal", "wollongong"] },
+  { id: "wg15", slug: "austinmer", name: "Austinmer", region: "wollongong", postcode: "2515", nearby: ["thirroul", "bulli", "helensburgh"] },
+];
+
+// Illawarra suburbs
+export const ILLAWARRA_SUBURBS: Location[] = [
+  { id: "il1", slug: "shellharbour", name: "Shellharbour", region: "illawarra", postcode: "2529", nearby: ["shell-cove", "oak-flats", "barrack-heights"] },
+  { id: "il2", slug: "albion-park", name: "Albion Park", region: "illawarra", postcode: "2527", nearby: ["albion-park-rail", "calderwood", "oak-flats"] },
+  { id: "il3", slug: "oak-flats", name: "Oak Flats", region: "illawarra", postcode: "2529", nearby: ["albion-park-rail", "shellharbour", "lake-illawarra"] },
+  { id: "il4", slug: "warilla", name: "Warilla", region: "illawarra", postcode: "2528", nearby: ["barrack-heights", "lake-illawarra", "shellharbour"] },
+  { id: "il5", slug: "shell-cove", name: "Shell Cove", region: "illawarra", postcode: "2529", nearby: ["shellharbour", "barrack-heights", "flinders"] },
+  { id: "il6", slug: "kiama", name: "Kiama", region: "illawarra", postcode: "2533", nearby: ["kiama-downs", "minnamurra", "gerringong"] },
+  { id: "il7", slug: "kiama-downs", name: "Kiama Downs", region: "illawarra", postcode: "2533", nearby: ["kiama", "minnamurra", "jamberoo"] },
+  { id: "il8", slug: "gerringong", name: "Gerringong", region: "illawarra", postcode: "2534", nearby: ["kiama", "kiama-downs"] },
+  { id: "il9", slug: "lake-illawarra", name: "Lake Illawarra", region: "illawarra", postcode: "2528", nearby: ["warilla", "oak-flats", "barrack-heights"] },
+  { id: "il10", slug: "albion-park-rail", name: "Albion Park Rail", region: "illawarra", postcode: "2527", nearby: ["albion-park", "oak-flats", "shellharbour"] },
+  { id: "il11", slug: "calderwood", name: "Calderwood", region: "illawarra", postcode: "2527", nearby: ["albion-park", "albion-park-rail"] },
+  { id: "il12", slug: "barrack-heights", name: "Barrack Heights", region: "illawarra", postcode: "2528", nearby: ["warilla", "shellharbour", "lake-illawarra"] },
+  { id: "il13", slug: "flinders", name: "Flinders", region: "illawarra", postcode: "2529", nearby: ["shell-cove", "shellharbour", "minnamurra"] },
+  { id: "il14", slug: "jamberoo", name: "Jamberoo", region: "illawarra", postcode: "2533", nearby: ["kiama", "kiama-downs", "minnamurra"] },
+  { id: "il15", slug: "minnamurra", name: "Minnamurra", region: "illawarra", postcode: "2533", nearby: ["kiama-downs", "kiama", "flinders"] },
+];
+
+// Southern Tablelands suburbs
+export const SOUTHERN_TABLELANDS_SUBURBS: Location[] = [
+  { id: "st1", slug: "goulburn", name: "Goulburn", region: "southern-tablelands", postcode: "2580", nearby: ["marulan", "towrang", "tarago"] },
+  { id: "st2", slug: "marulan", name: "Marulan", region: "southern-tablelands", postcode: "2579", nearby: ["towrang", "goulburn", "tallong"] },
+  { id: "st3", slug: "crookwell", name: "Crookwell", region: "southern-tablelands", postcode: "2583", nearby: ["gunning", "taralga", "goulburn"] },
+  { id: "st4", slug: "gunning", name: "Gunning", region: "southern-tablelands", postcode: "2581", nearby: ["collector", "crookwell", "bowning"] },
+  { id: "st5", slug: "tallong", name: "Tallong", region: "southern-tablelands", postcode: "2579", nearby: ["marulan", "towrang", "bungonia"] },
+  { id: "st6", slug: "taralga", name: "Taralga", region: "southern-tablelands", postcode: "2580", nearby: ["crookwell", "goulburn"] },
+  { id: "st7", slug: "tarago", name: "Tarago", region: "southern-tablelands", postcode: "2580", nearby: ["lake-bathurst", "bungendore", "collector"] },
+  { id: "st8", slug: "collector", name: "Collector", region: "southern-tablelands", postcode: "2581", nearby: ["gunning", "tarago", "lake-bathurst"] },
+  { id: "st9", slug: "bungonia", name: "Bungonia", region: "southern-tablelands", postcode: "2580", nearby: ["marulan", "tallong", "goulburn"] },
+  { id: "st10", slug: "yass", name: "Yass", region: "southern-tablelands", postcode: "2582", nearby: ["murrumbateman", "bowning", "gunning"] },
+  { id: "st11", slug: "murrumbateman", name: "Murrumbateman", region: "southern-tablelands", postcode: "2582", nearby: ["yass", "bowning", "bungendore"] },
+  { id: "st12", slug: "bowning", name: "Bowning", region: "southern-tablelands", postcode: "2582", nearby: ["yass", "gunning", "murrumbateman"] },
+  { id: "st13", slug: "lake-bathurst", name: "Lake Bathurst", region: "southern-tablelands", postcode: "2580", nearby: ["tarago", "collector", "goulburn"] },
+  { id: "st14", slug: "towrang", name: "Towrang", region: "southern-tablelands", postcode: "2580", nearby: ["goulburn", "marulan", "tallong"] },
+  { id: "st15", slug: "bungendore", name: "Bungendore", region: "southern-tablelands", postcode: "2621", nearby: ["tarago", "murrumbateman", "collector"] },
 ];
 
 // All locations combined
-export const ALL_LOCATIONS = [...SOUTHERN_HIGHLANDS_SUBURBS, ...SYDNEY_METRO_SUBURBS];
+export const ALL_LOCATIONS: Location[] = [
+  ...SUTHERLAND_SHIRE_SUBURBS,
+  ...WOLLONDILLY_SUBURBS,
+  ...SOUTHERN_HIGHLANDS_SUBURBS,
+  ...WOLLONGONG_SUBURBS,
+  ...ILLAWARRA_SUBURBS,
+  ...SOUTHERN_TABLELANDS_SUBURBS,
+];
+
+// Lookup helpers
+export function regionBySlug(slug: string): Region | undefined {
+  return REGIONS.find((region) => region.slug === slug);
+}
+
+export function locationsByRegion(slug: string): Location[] {
+  return ALL_LOCATIONS.filter((location) => location.region === slug);
+}
 
 // Sample testimonials
 export const TESTIMONIALS: Testimonial[] = [
