@@ -117,9 +117,8 @@ export function GoogleReviews() {
             {/* Only show an average if it comes from REAL reviews. */}
             {hasReviews && (
               <p className="text-sm text-muted-foreground">
-                <span className="font-bold text-foreground">{average.toFixed(1)}</span>{" "}
-                average from {reviews.length}{" "}
-                {reviews.length === 1 ? "Google review" : "Google reviews"}
+                <span className="font-bold text-foreground">{BUSINESS_INFO.googleRating}</span>{" "}
+                rating from {BUSINESS_INFO.googleReviewCount}+ Google reviews
               </p>
             )}
           </div>
