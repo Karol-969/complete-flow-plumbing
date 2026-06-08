@@ -11,7 +11,7 @@ import owner from "@assets/cfp-owner.jpeg";
 
 // Honest trust ticks — no invented names, reviews, ratings, or counts.
 const TRUST_TICKS = [
-  { icon: BadgeCheck, label: `Licensed — NSW Lic. ${BUSINESS_INFO.licence}` },
+  { icon: BadgeCheck, label: `Qualified Supervisor — NSW Lic. ${BUSINESS_INFO.licence}` },
   { icon: ShieldCheck, label: "Fully insured" },
   { icon: Clock, label: "Same-day service" },
 ] as const;
@@ -53,7 +53,7 @@ export function MeetTheTeam() {
               <div className="absolute bottom-4 left-4">
                 <span className="inline-flex items-center gap-2 rounded-full bg-background/80 px-4 py-2 text-sm font-semibold text-foreground ring-1 ring-primary/30 backdrop-blur">
                   <BadgeCheck className="h-4 w-4 text-primary" />
-                  Complete Flow Plumbing
+                  David Taha · NSW Lic. {BUSINESS_INFO.licence}
                 </span>
               </div>
             </div>
@@ -70,14 +70,21 @@ export function MeetTheTeam() {
               Familiar Faces
             </p>
             <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-foreground">
-              Meet <span className="text-primary">David</span>, Your Local
+              Meet <span className="text-primary">David Taha</span>, Your Local
               Plumber
             </h2>
+            <p className="mt-3 text-base font-semibold text-foreground">
+              Owner &amp; Licensed Plumber · Qualified Supervisor ·{" "}
+              <span className="text-primary">
+                NSW Contractor Licence {BUSINESS_INFO.licence}
+              </span>
+            </p>
             <p className="mt-5 text-lg text-muted-foreground max-w-prose">
-              When you call Complete Flow Plumbing you deal directly with David —
-              a licensed local plumber who turns up, does the job right, and
-              stands behind it. No call centres, no subcontractors you have never
-              met — just honest, reliable work from someone who knows your area.
+              When you call Complete Flow Plumbing you deal directly with David
+              Taha — a licensed local plumber and qualified supervisor who turns
+              up, does the job right, and stands behind it. No call centres, no
+              subcontractors you have never met — just honest, reliable work from
+              someone who knows your area.
             </p>
 
             {/* Trust ticks */}
