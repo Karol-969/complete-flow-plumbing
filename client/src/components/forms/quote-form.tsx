@@ -29,11 +29,6 @@ import { apiRequest } from "@/lib/queryClient";
 import { Loader2, Send, CheckCircle } from "lucide-react";
 import { useState } from "react";
 
-// Paste your FREE Web3Forms access key here (get it at https://web3forms.com using
-// completeflowplumbing@gmail.com). When set, every quote request is emailed straight
-// to that inbox. Leave empty and submissions are still saved server-side.
-const WEB3FORMS_ACCESS_KEY = "";
-
 export function QuoteForm() {
   const { toast } = useToast();
   const [submitted, setSubmitted] = useState(false);
@@ -53,31 +48,9 @@ export function QuoteForm() {
 
   const mutation = useMutation({
     mutationFn: async (data: QuoteRequest) => {
-      // 1) Save the lead server-side (admin record).
+      // Saves the lead server-side AND emails it to the business inbox
+      // (the /api/quotes route sends the email via Gmail).
       const response = await apiRequest("POST", "/api/quotes", data);
-      // 2) Email it straight to the business inbox via Web3Forms (if configured).
-      if (WEB3FORMS_ACCESS_KEY) {
-        try {
-          await fetch("https://api.web3forms.com/submit", {
-            method: "POST",
-            headers: { "Content-Type": "application/json", Accept: "application/json" },
-            body: JSON.stringify({
-              access_key: WEB3FORMS_ACCESS_KEY,
-              subject: `New Quote Request — ${data.name} (${data.suburb})`,
-              from_name: "Complete Flow Plumbing Website",
-              name: data.name,
-              phone: data.phone,
-              email: data.email || "(not provided)",
-              suburb: data.suburb,
-              service: data.serviceType,
-              urgency: data.urgency,
-              message: data.message || "(none)",
-            }),
-          });
-        } catch {
-          /* email is best-effort; the lead is already saved above */
-        }
-      }
       return response;
     },
     onSuccess: () => {

@@ -4,6 +4,7 @@ import { storage } from "./storage";
 import { quoteRequestSchema, contactFormSchema } from "@shared/schema";
 import { z } from "zod";
 import { generateSitemap } from "./sitemap";
+import { sendLeadEmail } from "./email";
 
 declare module "express-session" {
   interface SessionData {
@@ -38,6 +39,16 @@ export async function registerRoutes(
       const data = quoteRequestSchema.parse(req.body);
       const quote = await storage.createQuote(data);
       console.log("New quote:", { name: quote.name, suburb: quote.suburb, service: quote.serviceType });
+      // Email the lead to the business inbox (best-effort; never blocks the response).
+      void sendLeadEmail(`New Quote Request — ${quote.name} (${quote.suburb})`, {
+        Name: quote.name,
+        Phone: quote.phone,
+        Email: quote.email || "(not provided)",
+        Suburb: quote.suburb,
+        Service: quote.serviceType,
+        Urgency: quote.urgency,
+        Message: quote.message || "(none)",
+      });
       res.status(201).json({ success: true, message: "Quote submitted", id: quote.id });
     } catch (error) {
       if (error instanceof z.ZodError) {
@@ -54,6 +65,12 @@ export async function registerRoutes(
       const data = contactFormSchema.parse(req.body);
       const contact = await storage.createContact(data);
       console.log("New contact:", { name: contact.name, email: contact.email });
+      void sendLeadEmail(`New Contact Message — ${contact.name}`, {
+        Name: contact.name,
+        Phone: contact.phone,
+        Email: contact.email,
+        Message: contact.message,
+      });
       res.status(201).json({ success: true, message: "Message sent", id: contact.id });
     } catch (error) {
       if (error instanceof z.ZodError) {
