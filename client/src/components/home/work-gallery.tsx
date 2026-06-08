@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { BUSINESS_INFO } from "@shared/schema";
@@ -51,14 +51,15 @@ const GALLERY_IMAGES: string[] = [
 // Generic, truthful alt text — no invented details, names or counts.
 const ALT_TEXT = `Completed plumbing job by ${BUSINESS_INFO.name}`;
 
-// How many photos to show before "View all our work" reveals the rest.
-const INITIAL_COUNT = 12;
+// Each slide card width per breakpoint (shrink-0 so they sit in a scroll row).
+const SLIDE_WIDTH =
+  "shrink-0 snap-start w-[78%] sm:w-[46%] md:w-[33%] lg:w-[25%]";
 
 export function WorkGallery() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
-  const [showAll, setShowAll] = useState(false);
   const isOpen = activeIndex !== null;
   const total = GALLERY_IMAGES.length;
+  const trackRef = useRef<HTMLDivElement>(null);
 
   const close = useCallback(() => setActiveIndex(null), []);
   const prev = useCallback(
@@ -69,6 +70,13 @@ export function WorkGallery() {
     () => setActiveIndex((i) => (i === null ? i : (i + 1) % total)),
     [total],
   );
+
+  // Slide the horizontal track left/right by roughly one viewport of cards.
+  const scrollByPage = useCallback((dir: number) => {
+    const el = trackRef.current;
+    if (!el) return;
+    el.scrollBy({ left: dir * el.clientWidth * 0.85, behavior: "smooth" });
+  }, []);
 
   // Keyboard: Escape closes, arrows navigate while the lightbox is open.
   useEffect(() => {
@@ -92,10 +100,6 @@ export function WorkGallery() {
     };
   }, [isOpen]);
 
-  const visibleImages = showAll
-    ? GALLERY_IMAGES
-    : GALLERY_IMAGES.slice(0, INITIAL_COUNT);
-
   return (
     <section className="relative py-20 md:py-28 bg-background overflow-hidden">
       {/* Atmospheric sky glow behind the header */}
@@ -107,7 +111,7 @@ export function WorkGallery() {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section header */}
         <motion.div
-          className="text-center mb-14 md:mb-20 max-w-3xl mx-auto"
+          className="text-center mb-12 md:mb-16 max-w-3xl mx-auto"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -126,102 +130,118 @@ export function WorkGallery() {
           </p>
         </motion.div>
 
-        {/* Premium responsive tile grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
-          {/* Featured video tile — spans 2 columns on larger screens */}
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.5 }}
-            className="group relative col-span-2 row-span-1 overflow-hidden rounded-2xl border border-border/60 bg-card shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-glow"
-            data-testid="gallery-video"
+        {/* Horizontal slider */}
+        <div className="relative">
+          {/* Prev / Next arrows (desktop) */}
+          <button
+            type="button"
+            onClick={() => scrollByPage(-1)}
+            aria-label="Previous"
+            data-testid="gallery-slide-prev"
+            className="hidden md:flex absolute -left-3 lg:-left-5 top-1/2 -translate-y-1/2 z-20 h-12 w-12 items-center justify-center rounded-full bg-card border border-border shadow-card text-foreground transition hover:bg-primary hover:text-primary-foreground hover:border-primary"
           >
-            <div className="relative aspect-[4/3] sm:aspect-[16/9] overflow-hidden">
-              <video
-                src={workVideo}
-                autoPlay
-                muted
-                loop
-                playsInline
-                aria-label={`Short clip of a real plumbing job by ${BUSINESS_INFO.name}`}
-                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-              {/* Gradient for badge legibility */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/10" />
-              {/* Live clip badge */}
-              <span className="absolute top-3 left-3 inline-flex items-center gap-1.5 rounded-full bg-primary/90 px-3 py-1 text-xs font-bold uppercase tracking-wide text-primary-foreground shadow-glow backdrop-blur-sm">
-                <Play className="h-3.5 w-3.5 fill-current" />
-                Watch
-              </span>
-              <span className="absolute bottom-3 left-3 flex items-center gap-2 text-sm font-medium text-white/90">
-                <span className="relative flex h-2.5 w-2.5">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75" />
-                  <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-primary" />
-                </span>
-                Live from the job
-              </span>
-            </div>
-          </motion.div>
+            <ChevronLeft className="h-6 w-6" />
+          </button>
+          <button
+            type="button"
+            onClick={() => scrollByPage(1)}
+            aria-label="Next"
+            data-testid="gallery-slide-next"
+            className="hidden md:flex absolute -right-3 lg:-right-5 top-1/2 -translate-y-1/2 z-20 h-12 w-12 items-center justify-center rounded-full bg-card border border-border shadow-card text-foreground transition hover:bg-primary hover:text-primary-foreground hover:border-primary"
+          >
+            <ChevronRight className="h-6 w-6" />
+          </button>
 
-          {/* Photo tiles */}
-          {visibleImages.map((src, index) => (
-            <motion.button
-              key={src}
-              type="button"
-              onClick={() => setActiveIndex(index)}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{
-                duration: 0.45,
-                delay: Math.min(index, 8) * 0.05,
-              }}
-              className="group relative block overflow-hidden rounded-2xl border border-border/60 bg-card shadow-card text-left transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-glow"
-              data-testid={`gallery-image-${index + 1}`}
-              aria-label={`View photo ${index + 1}: ${ALT_TEXT}`}
+          {/* Edge fade hints (more content) */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-y-0 right-0 z-10 w-12 bg-gradient-to-l from-background to-transparent hidden sm:block"
+          />
+
+          {/* Scroll track */}
+          <div
+            ref={trackRef}
+            className="flex gap-4 md:gap-5 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-4 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+            data-testid="gallery-track"
+          >
+            {/* Featured video slide */}
+            <div
+              className={`group relative ${SLIDE_WIDTH} overflow-hidden rounded-2xl border border-border/60 bg-card shadow-card`}
+              data-testid="gallery-video"
             >
-              <div className="relative aspect-square md:aspect-[4/3] overflow-hidden">
-                <img
-                  src={src}
-                  alt={ALT_TEXT}
-                  loading="lazy"
+              <div className="relative aspect-[4/3] overflow-hidden">
+                <video
+                  src={workVideo}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  aria-label={`Short clip of a real plumbing job by ${BUSINESS_INFO.name}`}
                   className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
-                {/* Hover overlay: dark gradient + maximize icon */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/0 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                  <span className="flex h-11 w-11 items-center justify-center rounded-full bg-primary/90 text-primary-foreground shadow-glow ring-1 ring-white/20 backdrop-blur-sm">
-                    <Maximize2 className="h-5 w-5" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/10" />
+                <span className="absolute top-3 left-3 inline-flex items-center gap-1.5 rounded-full bg-primary/90 px-3 py-1 text-xs font-bold uppercase tracking-wide text-primary-foreground shadow-glow backdrop-blur-sm">
+                  <Play className="h-3.5 w-3.5 fill-current" />
+                  Watch
+                </span>
+                <span className="absolute bottom-3 left-3 flex items-center gap-2 text-sm font-medium text-white/90">
+                  <span className="relative flex h-2.5 w-2.5">
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75" />
+                    <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-primary" />
                   </span>
-                </div>
+                  Live from the job
+                </span>
               </div>
-            </motion.button>
-          ))}
-        </div>
+            </div>
 
-        {/* View all our work */}
-        {!showAll && total > INITIAL_COUNT && (
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4 }}
-            className="mt-10 flex justify-center"
-          >
-            <Button
+            {/* Photo slides */}
+            {GALLERY_IMAGES.map((src, index) => (
+              <button
+                key={src}
+                type="button"
+                onClick={() => setActiveIndex(index)}
+                className={`group relative block ${SLIDE_WIDTH} overflow-hidden rounded-2xl border border-border/60 bg-card shadow-card text-left transition-all duration-300 hover:border-primary/40 hover:shadow-glow`}
+                data-testid={`gallery-image-${index + 1}`}
+                aria-label={`View photo ${index + 1}: ${ALT_TEXT}`}
+              >
+                <div className="relative aspect-[4/3] overflow-hidden">
+                  <img
+                    src={src}
+                    alt={ALT_TEXT}
+                    loading="lazy"
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/0 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                    <span className="flex h-11 w-11 items-center justify-center rounded-full bg-primary/90 text-primary-foreground shadow-glow ring-1 ring-white/20 backdrop-blur-sm">
+                      <Maximize2 className="h-5 w-5" />
+                    </span>
+                  </div>
+                </div>
+              </button>
+            ))}
+          </div>
+
+          {/* Mobile arrows below the track */}
+          <div className="mt-5 flex justify-center gap-3 md:hidden">
+            <button
               type="button"
-              variant="outline"
-              size="lg"
-              onClick={() => setShowAll(true)}
-              className="rounded-full border-primary/40 px-7 py-3.5 font-semibold text-foreground hover:border-primary hover:bg-primary/10 hover:text-primary transition"
-              data-testid="button-view-all-work"
+              onClick={() => scrollByPage(-1)}
+              aria-label="Previous"
+              className="flex h-11 w-11 items-center justify-center rounded-full bg-card border border-border shadow-card text-foreground transition active:bg-primary active:text-primary-foreground"
             >
-              View all our work
-              <ArrowRight className="h-5 w-5 ml-2" />
-            </Button>
-          </motion.div>
-        )}
+              <ChevronLeft className="h-5 w-5" />
+            </button>
+            <button
+              type="button"
+              onClick={() => scrollByPage(1)}
+              aria-label="Next"
+              className="flex h-11 w-11 items-center justify-center rounded-full bg-card border border-border shadow-card text-foreground transition active:bg-primary active:text-primary-foreground"
+            >
+              <ChevronRight className="h-5 w-5" />
+            </button>
+          </div>
+        </div>
 
         {/* CTA */}
         <motion.div
