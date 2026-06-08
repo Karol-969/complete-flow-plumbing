@@ -1,5 +1,6 @@
 import { BUSINESS_INFO } from "@shared/schema";
 import { Phone, Zap } from "lucide-react";
+import { motion, useReducedMotion } from "framer-motion";
 
 const phoneTel = BUSINESS_INFO.phone.replace(/\s/g, "");
 
@@ -11,15 +12,41 @@ const phoneTel = BUSINESS_INFO.phone.replace(/\s/g, "");
  * sparingly per the design system. Click-to-call on the whole strip.
  */
 export function EmergencyBanner() {
+  const reduce = useReducedMotion();
+
   return (
-    <div className="w-full bg-emergency text-emergency-foreground">
+    <div className="relative w-full overflow-hidden bg-emergency text-emergency-foreground">
+      {/* Subtle continuous shimmer sweeping across the bar (transform/opacity only) */}
+      {!reduce && (
+        <motion.div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-y-0 -left-1/2 w-1/2 bg-gradient-to-r from-transparent via-white/15 to-transparent"
+          animate={{ x: ["0%", "400%"] }}
+          transition={{
+            duration: 4,
+            repeat: Infinity,
+            ease: "easeInOut",
+            repeatDelay: 2,
+          }}
+        />
+      )}
       <a
         href={`tel:${phoneTel}`}
-        className="group flex items-center justify-center gap-x-2 gap-y-1 flex-wrap px-4 py-2 text-center text-xs sm:text-sm font-semibold tracking-wide"
+        className="group relative flex items-center justify-center gap-x-2 gap-y-1 flex-wrap px-4 py-2 text-center text-xs sm:text-sm font-semibold tracking-wide"
         data-testid="link-emergency-phone"
         aria-label={`24/7 emergency plumber, same-day service, call ${BUSINESS_INFO.phone}`}
       >
-        <Zap className="h-4 w-4 flex-shrink-0 fill-current" aria-hidden="true" />
+        <motion.span
+          className="inline-flex"
+          animate={reduce ? undefined : { scale: [1, 1.18, 1], opacity: [0.8, 1, 0.8] }}
+          transition={
+            reduce
+              ? undefined
+              : { duration: 2.2, repeat: Infinity, ease: "easeInOut" }
+          }
+        >
+          <Zap className="h-4 w-4 flex-shrink-0 fill-current" aria-hidden="true" />
+        </motion.span>
         <span>24/7 Emergency Plumber</span>
         <span className="opacity-50" aria-hidden="true">·</span>
         <span className="hidden xs:inline sm:inline">Same-Day Service</span>

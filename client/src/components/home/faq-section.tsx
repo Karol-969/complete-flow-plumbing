@@ -1,5 +1,5 @@
 import { HOME_FAQS, BUSINESS_INFO } from "@shared/schema";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion, type Variants } from "framer-motion";
 import { Phone } from "lucide-react";
 import {
   Accordion,
@@ -8,21 +8,63 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
+const EASE = [0.22, 1, 0.36, 1] as const;
+
+const fadeUp: Variants = {
+  hidden: { opacity: 0, y: 50 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE } },
+};
+const fadeLeft: Variants = {
+  hidden: { opacity: 0, x: -60 },
+  show: { opacity: 1, x: 0, transition: { duration: 0.6, ease: EASE } },
+};
+const fade: Variants = {
+  hidden: { opacity: 0 },
+  show: { opacity: 1, transition: { duration: 0.6, ease: EASE } },
+};
+
 export function FAQSection() {
+  const reduce = useReducedMotion();
+
+  // When reduced motion is requested, fall back to a plain opacity fade.
+  const v = (motionVariant: Variants) => (reduce ? fade : motionVariant);
+
+  const container: Variants = {
+    hidden: {},
+    show: {
+      transition: { staggerChildren: reduce ? 0 : 0.1, delayChildren: reduce ? 0 : 0.05 },
+    },
+  };
+
+  const rowHover = reduce
+    ? undefined
+    : {
+        y: -3,
+        transition: { type: "spring" as const, stiffness: 300, damping: 20 },
+      };
+
   return (
     <section className="relative py-20 md:py-28 bg-background overflow-hidden">
-      {/* Atmospheric sky glow behind the header */}
-      <div
+      {/* Atmospheric sky glow behind the header — gently floats */}
+      <motion.div
         aria-hidden="true"
         className="pointer-events-none absolute left-1/2 top-0 -translate-x-1/2 h-80 w-80 rounded-full bg-primary/10 blur-3xl"
+        animate={
+          reduce ? undefined : { y: [0, -18, 0], opacity: [0.5, 0.8, 0.5] }
+        }
+        transition={
+          reduce
+            ? undefined
+            : { duration: 9, repeat: Infinity, ease: "easeInOut" }
+        }
       />
 
       <div className="relative max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          variants={v(fadeUp)}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-80px" }}
           className="text-center mb-14 md:mb-16"
         >
           <p className="text-primary text-sm font-semibold tracking-widest uppercase mb-3">
@@ -38,49 +80,52 @@ export function FAQSection() {
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.1 }}
+          variants={container}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-80px" }}
         >
           <Accordion type="single" collapsible className="w-full space-y-4">
             {HOME_FAQS.map((faq, index) => (
-              <AccordionItem
-                key={index}
-                value={`faq-${index}`}
-                className="bg-card rounded-2xl border border-border/60 shadow-card px-6 transition-all hover:border-primary/40"
-                data-testid={`faq-item-${index}`}
-              >
-                <AccordionTrigger className="text-left text-base md:text-lg font-semibold text-foreground hover:no-underline py-6 gap-4 [&>svg]:h-5 [&>svg]:w-5 [&>svg]:text-primary [&[data-state=open]]:text-primary">
-                  {faq.question}
-                </AccordionTrigger>
-                <AccordionContent className="text-base text-muted-foreground leading-relaxed pb-6 pr-8">
-                  {faq.answer}
-                </AccordionContent>
-              </AccordionItem>
+              <motion.div key={index} variants={v(fadeLeft)} whileHover={rowHover}>
+                <AccordionItem
+                  value={`faq-${index}`}
+                  className="bg-card rounded-2xl border border-border/60 shadow-card px-6 transition-all hover:border-primary/40"
+                  data-testid={`faq-item-${index}`}
+                >
+                  <AccordionTrigger className="text-left text-base md:text-lg font-semibold text-foreground hover:no-underline py-6 gap-4 [&>svg]:h-5 [&>svg]:w-5 [&>svg]:text-primary [&[data-state=open]]:text-primary">
+                    {faq.question}
+                  </AccordionTrigger>
+                  <AccordionContent className="text-base text-muted-foreground leading-relaxed pb-6 pr-8">
+                    {faq.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              </motion.div>
             ))}
           </Accordion>
         </motion.div>
 
         {/* Still have questions — call CTA */}
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.2 }}
+          variants={v(fadeUp)}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-80px" }}
           className="mt-14 text-center"
         >
           <p className="text-muted-foreground mb-5">
             Still have questions? Our team is here to help, 24/7.
           </p>
-          <a
+          <motion.a
             href={`tel:${BUSINESS_INFO.phoneTel}`}
             data-testid="faq-call-cta"
             className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground rounded-full px-7 py-3.5 font-bold shadow-glow hover:brightness-110 transition-all"
+            whileHover={reduce ? undefined : { scale: 1.04 }}
+            whileTap={reduce ? undefined : { scale: 0.96 }}
           >
             <Phone className="h-5 w-5" />
             Call {BUSINESS_INFO.phone}
-          </a>
+          </motion.a>
         </motion.div>
       </div>
     </section>

@@ -1,9 +1,11 @@
 import { Link } from "wouter";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion, type Variants } from "framer-motion";
 import { BUSINESS_INFO, SERVICES } from "@shared/schema";
 import { Phone, Siren, ExternalLink, ArrowRight, ChevronRight } from "lucide-react";
 
 const phoneTel = BUSINESS_INFO.phoneTel;
+
+const EASE = [0.22, 1, 0.36, 1] as const;
 
 const WHY_US = [
   {
@@ -86,61 +88,115 @@ const SERVICE_COLUMNS = [
 ];
 
 export function SeoContent() {
+  const reduce = useReducedMotion();
+
+  // When reduced motion is requested, every reveal collapses to a plain fade.
+  const fadeUp: Variants = {
+    hidden: { opacity: 0, y: reduce ? 0 : 50 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE } },
+  };
+  const fadeLeft: Variants = {
+    hidden: { opacity: 0, x: reduce ? 0 : -60 },
+    show: { opacity: 1, x: 0, transition: { duration: 0.6, ease: EASE } },
+  };
+  const fadeRight: Variants = {
+    hidden: { opacity: 0, x: reduce ? 0 : 60 },
+    show: { opacity: 1, x: 0, transition: { duration: 0.6, ease: EASE } },
+  };
+  const container: Variants = {
+    hidden: {},
+    show: { transition: { staggerChildren: reduce ? 0 : 0.1 } },
+  };
+  const tightContainer: Variants = {
+    hidden: {},
+    show: { transition: { staggerChildren: reduce ? 0 : 0.06 } },
+  };
+
+  const hoverCard = reduce
+    ? undefined
+    : { y: -6, scale: 1.02, transition: { type: "spring" as const, stiffness: 300, damping: 20 } };
+  const hoverTap = {
+    whileHover: reduce ? undefined : { scale: 1.04 },
+    whileTap: reduce ? undefined : { scale: 0.96 },
+  };
+
   return (
     <section className="py-20 md:py-28 bg-background border-t border-border/60">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-16">
 
-          {/* Main prose column */}
+          {/* Main prose column — slides in from the left */}
           <motion.div
             className="lg:col-span-2 space-y-14"
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
+            variants={fadeLeft}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: "-80px" }}
           >
-            {/* Lead block — dark-theme prose */}
-            <div>
-              <p className="text-primary text-sm font-semibold tracking-widest uppercase mb-3">
+            {/* Lead block — staggered prose */}
+            <motion.div
+              variants={container}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: "-80px" }}
+            >
+              <motion.p
+                className="text-primary text-sm font-semibold tracking-widest uppercase mb-3"
+                variants={fadeUp}
+              >
                 Your Local Plumber
-              </p>
-              <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-foreground mb-6">
+              </motion.p>
+              <motion.h2
+                className="text-3xl md:text-5xl font-bold tracking-tight text-foreground mb-6"
+                variants={fadeUp}
+              >
                 Trusted Across 6 Regions — Serving{" "}
                 <span className="text-primary">90+ Suburbs</span>
-              </h2>
+              </motion.h2>
               <div className="prose prose-invert max-w-none prose-p:text-muted-foreground prose-p:leading-relaxed prose-a:text-sky-400 prose-a:no-underline hover:prose-a:text-sky-300 hover:prose-a:underline prose-strong:text-foreground">
-                <p className="!text-lg !leading-relaxed">
+                <motion.p className="!text-lg !leading-relaxed" variants={fadeUp}>
                   {BUSINESS_INFO.name} proudly services Sutherland Shire, Wollondilly, the
                   Southern Highlands, Wollongong, Illawarra and the Southern Tablelands.
                   Whether you need an emergency plumber in Cronulla at 2am, a blocked drain
                   cleared in Picton, a hot water system replaced in Wollongong, or gas
                   fitting in Bowral — our team responds fast, quotes upfront, and backs
                   every job with a {BUSINESS_INFO.guarantee.toLowerCase()}.
-                </p>
-                <p>
+                </motion.p>
+                <motion.p variants={fadeUp}>
                   As a local plumber with deep roots across these communities, we understand
                   the specific plumbing challenges our region faces: salt-air corrosion on
                   the coast, ageing clay and cast-iron pipes in heritage homes, tree-root
                   intrusions, septic and rainwater systems on rural acreage, and the wear
                   that temperature extremes put on hot water systems.
-                </p>
+                </motion.p>
               </div>
-            </div>
+            </motion.div>
 
             {/* Services */}
             <div>
-              <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-foreground mb-8">
+              <motion.h2
+                className="text-2xl md:text-3xl font-bold tracking-tight text-foreground mb-8"
+                variants={fadeUp}
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, margin: "-80px" }}
+              >
                 Complete Plumbing Services Across All 6 Regions
-              </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              </motion.h2>
+              <motion.div
+                className="grid grid-cols-1 sm:grid-cols-2 gap-6"
+                variants={container}
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, margin: "-80px" }}
+              >
                 {SERVICE_COLUMNS.map((svc, index) => (
                   <motion.div
                     key={svc.href}
-                    className="bg-card rounded-2xl border border-border/60 shadow-card p-6 transition-all hover:-translate-y-1 hover:border-primary/40 hover:shadow-glow"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.4, delay: index * 0.05 }}
+                    className="bg-card rounded-2xl border border-border/60 shadow-card p-6 transition-all hover:border-primary/40 hover:shadow-glow"
+                    /* Alternate the card entry direction for visual interest */
+                    variants={index % 2 === 0 ? fadeLeft : fadeRight}
+                    whileHover={hoverCard}
                   >
                     <h3 className="text-lg font-semibold text-foreground mb-2">
                       <Link
@@ -155,17 +211,29 @@ export function SeoContent() {
                     </p>
                   </motion.div>
                 ))}
-              </div>
+              </motion.div>
             </div>
 
             {/* Why choose us */}
             <div>
-              <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-foreground mb-8">
+              <motion.h2
+                className="text-2xl md:text-3xl font-bold tracking-tight text-foreground mb-8"
+                variants={fadeUp}
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, margin: "-80px" }}
+              >
                 Why Local Homeowners Choose {BUSINESS_INFO.name}
-              </h2>
-              <div className="space-y-5">
+              </motion.h2>
+              <motion.div
+                className="space-y-5"
+                variants={tightContainer}
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, margin: "-80px" }}
+              >
                 {WHY_US.map((item) => (
-                  <div key={item.title} className="flex gap-4">
+                  <motion.div key={item.title} className="flex gap-4" variants={fadeUp}>
                     <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-2xl bg-primary/10 ring-1 ring-primary/20 text-primary text-xs font-bold">
                       ✓
                     </span>
@@ -175,148 +243,204 @@ export function SeoContent() {
                         {item.desc}
                       </span>
                     </div>
-                  </div>
+                  </motion.div>
                 ))}
-              </div>
+              </motion.div>
             </div>
 
             {/* Suburb links */}
-            <div>
-              <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-foreground mb-4">
+            <motion.div
+              variants={container}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: "-80px" }}
+            >
+              <motion.h2
+                className="text-2xl md:text-3xl font-bold tracking-tight text-foreground mb-4"
+                variants={fadeUp}
+              >
                 Plumbing Services Across Our 6 Regions — All Suburbs
-              </h2>
-              <p className="text-muted-foreground text-sm mb-6 max-w-prose leading-relaxed">
+              </motion.h2>
+              <motion.p
+                className="text-muted-foreground text-sm mb-6 max-w-prose leading-relaxed"
+                variants={fadeUp}
+              >
                 We service suburbs and towns across the Sutherland Shire, Wollondilly, the
                 Southern Highlands, Wollongong, the Illawarra and the Southern Tablelands:
-              </p>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-4 gap-y-2 text-sm text-muted-foreground">
+              </motion.p>
+              <motion.div
+                className="grid grid-cols-2 sm:grid-cols-3 gap-x-4 gap-y-2 text-sm text-muted-foreground"
+                variants={tightContainer}
+              >
                 {SUBURB_LINKS.map((loc) => {
                   const suburb = loc
                     .replace("Plumber ", "")
                     .toLowerCase()
                     .replace(/\s+/g, "-");
                   return (
-                    <Link
-                      key={loc}
-                      href={`/locations/${suburb}`}
-                      className="hover:text-primary transition-colors py-0.5"
-                    >
-                      {loc}
-                    </Link>
+                    <motion.div key={loc} variants={fadeUp}>
+                      <Link
+                        href={`/locations/${suburb}`}
+                        className="hover:text-primary transition-colors py-0.5"
+                      >
+                        {loc}
+                      </Link>
+                    </motion.div>
                   );
                 })}
-              </div>
-              <Link
-                href="/locations"
-                className="inline-flex items-center gap-1 mt-6 text-primary text-sm font-semibold hover:underline"
-              >
-                View all 90+ service areas
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-            </div>
+              </motion.div>
+              <motion.div variants={fadeUp} className="inline-block">
+                <Link
+                  href="/locations"
+                  className="inline-flex items-center gap-1 mt-6 text-primary text-sm font-semibold hover:underline"
+                >
+                  View all 90+ service areas
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              </motion.div>
+            </motion.div>
           </motion.div>
 
-          {/* Sidebar */}
+          {/* Sidebar — slides in from the right, cards stagger */}
           <motion.aside
             className="space-y-6"
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.1 }}
+            variants={fadeRight}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: "-80px" }}
           >
-            {/* Call direct */}
-            <div className="bg-card rounded-2xl border border-border/60 shadow-card p-6 md:p-8">
-              <h3 className="text-lg font-bold text-foreground mb-1">Call Direct — 24/7</h3>
-              <p className="text-muted-foreground text-sm mb-4">
-                For emergencies, call us directly. We answer every call.
-              </p>
-              <a
-                href={`tel:${phoneTel}`}
-                className="flex items-center justify-center gap-2 w-full bg-primary text-primary-foreground font-bold text-lg rounded-full px-6 py-4 shadow-glow hover:brightness-110 transition-all"
-                data-testid="seo-content-phone"
+            <motion.div
+              className="space-y-6"
+              variants={container}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: "-80px" }}
+            >
+              {/* Call direct */}
+              <motion.div
+                className="bg-card rounded-2xl border border-border/60 shadow-card p-6 md:p-8 transition-all hover:border-primary/40 hover:shadow-glow"
+                variants={fadeUp}
+                whileHover={hoverCard}
               >
-                <Phone className="h-5 w-5" />
-                {BUSINESS_INFO.phone}
-              </a>
-              <p className="text-center text-muted-foreground text-xs mt-3">
-                No call-out fee during business hours
-              </p>
-            </div>
+                <h3 className="text-lg font-bold text-foreground mb-1">Call Direct — 24/7</h3>
+                <p className="text-muted-foreground text-sm mb-4">
+                  For emergencies, call us directly. We answer every call.
+                </p>
+                <motion.a
+                  href={`tel:${phoneTel}`}
+                  className="flex items-center justify-center gap-2 w-full bg-primary text-primary-foreground font-bold text-lg rounded-full px-6 py-4 shadow-glow hover:brightness-110 transition-all"
+                  data-testid="seo-content-phone"
+                  {...hoverTap}
+                >
+                  <Phone className="h-5 w-5" />
+                  {BUSINESS_INFO.phone}
+                </motion.a>
+                <p className="text-center text-muted-foreground text-xs mt-3">
+                  No call-out fee during business hours
+                </p>
+              </motion.div>
 
-            {/* Our services */}
-            <div className="bg-card rounded-2xl border border-border/60 shadow-card p-6 md:p-8">
-              <h3 className="text-lg font-bold text-foreground mb-4">Our Services</h3>
-              <ul className="space-y-2.5">
-                {SERVICES.map((s) => (
-                  <li key={s.id}>
-                    <Link
-                      href={`/services/${s.slug}`}
-                      className="text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2"
-                    >
-                      <ChevronRight className="h-4 w-4 text-primary shrink-0" />
-                      {s.title}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Reviews on Google */}
-            <div className="bg-card rounded-2xl border border-border/60 shadow-card p-6 md:p-8">
-              <h3 className="text-lg font-bold text-foreground mb-2">What Our Customers Say</h3>
-              <p className="text-muted-foreground text-sm mb-4">
-                Read genuine reviews from local homeowners, or share your own experience.
-              </p>
-              <a
-                href={BUSINESS_INFO.googleReviewLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 w-full ring-1 ring-border hover:ring-primary text-foreground font-semibold rounded-full px-6 py-3 transition-all"
-                data-testid="seo-content-google-reviews"
+              {/* Our services */}
+              <motion.div
+                className="bg-card rounded-2xl border border-border/60 shadow-card p-6 md:p-8 transition-all hover:border-primary/40 hover:shadow-glow"
+                variants={fadeUp}
+                whileHover={hoverCard}
               >
-                <ExternalLink className="h-4 w-4 text-primary" />
-                See our reviews on Google
-              </a>
-            </div>
+                <h3 className="text-lg font-bold text-foreground mb-4">Our Services</h3>
+                <ul className="space-y-2.5">
+                  {SERVICES.map((s) => (
+                    <li key={s.id}>
+                      <Link
+                        href={`/services/${s.slug}`}
+                        className="group text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2"
+                      >
+                        <ChevronRight className="h-4 w-4 text-primary shrink-0 transition-transform group-hover:translate-x-0.5" />
+                        {s.title}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
 
-            {/* Emergency */}
-            <div className="bg-emergency/10 border border-emergency/20 rounded-2xl p-6 md:p-8">
-              <h3 className="text-lg font-bold text-foreground mb-2 flex items-center gap-2">
-                <Siren className="h-5 w-5 text-emergency" />
-                Plumbing Emergency?
-              </h3>
-              <p className="text-muted-foreground text-sm mb-4">
-                Burst pipe? Flooding? Sewage backup? Gas leak? Do not wait — call now.
-              </p>
-              <a
-                href={`tel:${phoneTel}`}
-                className="flex items-center justify-center gap-2 w-full bg-emergency text-white font-bold rounded-full px-4 py-3 hover:brightness-110 transition-all"
-                data-testid="seo-content-emergency"
+              {/* Reviews on Google */}
+              <motion.div
+                className="bg-card rounded-2xl border border-border/60 shadow-card p-6 md:p-8 transition-all hover:border-primary/40 hover:shadow-glow"
+                variants={fadeUp}
+                whileHover={hoverCard}
               >
-                <Phone className="h-4 w-4" />
-                {BUSINESS_INFO.phone}
-              </a>
-            </div>
+                <h3 className="text-lg font-bold text-foreground mb-2">What Our Customers Say</h3>
+                <p className="text-muted-foreground text-sm mb-4">
+                  Read genuine reviews from local homeowners, or share your own experience.
+                </p>
+                <motion.a
+                  href={BUSINESS_INFO.googleReviewLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 w-full ring-1 ring-border hover:ring-primary text-foreground font-semibold rounded-full px-6 py-3 transition-all"
+                  data-testid="seo-content-google-reviews"
+                  {...hoverTap}
+                >
+                  <ExternalLink className="h-4 w-4 text-primary" />
+                  See our reviews on Google
+                </motion.a>
+              </motion.div>
 
-            {/* Service areas */}
-            <div className="bg-card rounded-2xl border border-border/60 shadow-card p-6 md:p-8">
-              <h3 className="text-lg font-bold text-foreground mb-3">Service Areas</h3>
-              <div className="space-y-2">
-                {SERVICE_AREAS.map((area) => (
-                  <div key={area.name} className="flex justify-between gap-3 text-sm">
-                    <span className="text-foreground font-medium">{area.name}</span>
-                    <span className="text-muted-foreground text-right">{area.sub}</span>
-                  </div>
-                ))}
-              </div>
-              <Link
-                href="/locations"
-                className="inline-flex items-center gap-1 mt-4 text-primary text-sm font-semibold hover:underline"
+              {/* Emergency — gentle breathing pulse on the badge */}
+              <motion.div
+                className="bg-emergency/10 border border-emergency/20 rounded-2xl p-6 md:p-8"
+                variants={fadeUp}
+                whileHover={hoverCard}
               >
-                See all locations
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-            </div>
+                <h3 className="text-lg font-bold text-foreground mb-2 flex items-center gap-2">
+                  <motion.span
+                    className="inline-flex"
+                    animate={reduce ? undefined : { scale: [1, 1.18, 1], opacity: [0.85, 1, 0.85] }}
+                    transition={
+                      reduce ? undefined : { duration: 2, repeat: Infinity, ease: "easeInOut" }
+                    }
+                  >
+                    <Siren className="h-5 w-5 text-emergency" />
+                  </motion.span>
+                  Plumbing Emergency?
+                </h3>
+                <p className="text-muted-foreground text-sm mb-4">
+                  Burst pipe? Flooding? Sewage backup? Gas leak? Do not wait — call now.
+                </p>
+                <motion.a
+                  href={`tel:${phoneTel}`}
+                  className="flex items-center justify-center gap-2 w-full bg-emergency text-white font-bold rounded-full px-4 py-3 hover:brightness-110 transition-all"
+                  data-testid="seo-content-emergency"
+                  {...hoverTap}
+                >
+                  <Phone className="h-4 w-4" />
+                  {BUSINESS_INFO.phone}
+                </motion.a>
+              </motion.div>
+
+              {/* Service areas */}
+              <motion.div
+                className="bg-card rounded-2xl border border-border/60 shadow-card p-6 md:p-8 transition-all hover:border-primary/40 hover:shadow-glow"
+                variants={fadeUp}
+                whileHover={hoverCard}
+              >
+                <h3 className="text-lg font-bold text-foreground mb-3">Service Areas</h3>
+                <div className="space-y-2">
+                  {SERVICE_AREAS.map((area) => (
+                    <div key={area.name} className="flex justify-between gap-3 text-sm">
+                      <span className="text-foreground font-medium">{area.name}</span>
+                      <span className="text-muted-foreground text-right">{area.sub}</span>
+                    </div>
+                  ))}
+                </div>
+                <Link
+                  href="/locations"
+                  className="inline-flex items-center gap-1 mt-4 text-primary text-sm font-semibold hover:underline"
+                >
+                  See all locations
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              </motion.div>
+            </motion.div>
           </motion.aside>
 
         </div>

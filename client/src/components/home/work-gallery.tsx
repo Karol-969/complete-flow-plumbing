@@ -1,5 +1,10 @@
 import { useState, useCallback, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import {
+  motion,
+  AnimatePresence,
+  useReducedMotion,
+  type Variants,
+} from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { BUSINESS_INFO } from "@shared/schema";
 import {
@@ -55,11 +60,59 @@ const ALT_TEXT = `Completed plumbing job by ${BUSINESS_INFO.name}`;
 const SLIDE_WIDTH =
   "shrink-0 snap-start w-[78%] sm:w-[46%] md:w-[33%] lg:w-[25%]";
 
+const EASE = [0.22, 1, 0.36, 1] as const;
+
+const fadeUp: Variants = {
+  hidden: { opacity: 0, y: 50 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE } },
+};
+const zoomIn: Variants = {
+  hidden: { opacity: 0, scale: 0.92 },
+  show: { opacity: 1, scale: 1, transition: { duration: 0.6, ease: EASE } },
+};
+const fade: Variants = {
+  hidden: { opacity: 0 },
+  show: { opacity: 1, transition: { duration: 0.6, ease: EASE } },
+};
+
 export function WorkGallery() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const isOpen = activeIndex !== null;
   const total = GALLERY_IMAGES.length;
   const trackRef = useRef<HTMLDivElement>(null);
+  const reduce = useReducedMotion();
+
+  // When reduced motion is requested, fall back to a plain opacity fade.
+  const v = (motionVariant: Variants) => (reduce ? fade : motionVariant);
+
+  // Stagger the slide cards as the track scrolls into view.
+  const trackContainer: Variants = {
+    hidden: {},
+    show: {
+      transition: {
+        staggerChildren: reduce ? 0 : 0.07,
+        delayChildren: reduce ? 0 : 0.05,
+      },
+    },
+  };
+
+  // Hover lift/scale for each slide (spring), disabled under reduced motion.
+  const slideHover = reduce
+    ? undefined
+    : {
+        y: -6,
+        scale: 1.02,
+        transition: { type: "spring" as const, stiffness: 300, damping: 20 },
+      };
+
+  // CTA hover/tap, disabled under reduced motion.
+  const ctaHover = reduce ? undefined : { scale: 1.04 };
+  const ctaTap = reduce ? undefined : { scale: 0.96 };
+
+  // Subtle continuous float for the decorative glow blob.
+  const blobAnim = reduce
+    ? undefined
+    : { y: [0, -18, 0], opacity: [0.5, 0.8, 0.5] };
 
   const close = useCallback(() => setActiveIndex(null), []);
   const prev = useCallback(
@@ -102,20 +155,26 @@ export function WorkGallery() {
 
   return (
     <section className="relative py-20 md:py-28 bg-background overflow-hidden">
-      {/* Atmospheric sky glow behind the header */}
-      <div
+      {/* Atmospheric sky glow behind the header — gently floats */}
+      <motion.div
         aria-hidden="true"
         className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 h-80 w-[44rem] max-w-full bg-primary/10 blur-3xl rounded-full"
+        animate={blobAnim}
+        transition={
+          reduce
+            ? undefined
+            : { duration: 9, repeat: Infinity, ease: "easeInOut" }
+        }
       />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section header */}
+        {/* Section header — slides up */}
         <motion.div
           className="text-center mb-12 md:mb-16 max-w-3xl mx-auto"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          variants={v(fadeUp)}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-80px" }}
         >
           <p className="text-primary text-sm font-semibold tracking-widest uppercase mb-3">
             Our Recent Work
@@ -158,14 +217,20 @@ export function WorkGallery() {
             className="pointer-events-none absolute inset-y-0 right-0 z-10 w-12 bg-gradient-to-l from-background to-transparent hidden sm:block"
           />
 
-          {/* Scroll track */}
-          <div
+          {/* Scroll track — cards stagger in, each lifts on hover */}
+          <motion.div
             ref={trackRef}
             className="flex gap-4 md:gap-5 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-4 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
             data-testid="gallery-track"
+            variants={trackContainer}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: "-60px" }}
           >
             {/* Featured video slide */}
-            <div
+            <motion.div
+              variants={v(zoomIn)}
+              whileHover={slideHover}
               className={`group relative ${SLIDE_WIDTH} overflow-hidden rounded-2xl border border-border/60 bg-card shadow-card`}
               data-testid="gallery-video"
             >
@@ -185,22 +250,32 @@ export function WorkGallery() {
                   Watch
                 </span>
                 <span className="absolute bottom-3 left-3 flex items-center gap-2 text-sm font-medium text-white/90">
-                  <span className="relative flex h-2.5 w-2.5">
+                  <motion.span
+                    className="relative flex h-2.5 w-2.5"
+                    animate={reduce ? undefined : { scale: [1, 1.18, 1] }}
+                    transition={
+                      reduce
+                        ? undefined
+                        : { duration: 1.8, repeat: Infinity, ease: "easeInOut" }
+                    }
+                  >
                     <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75" />
                     <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-primary" />
-                  </span>
+                  </motion.span>
                   Live from the job
                 </span>
               </div>
-            </div>
+            </motion.div>
 
             {/* Photo slides */}
             {GALLERY_IMAGES.map((src, index) => (
-              <button
+              <motion.button
                 key={src}
                 type="button"
                 onClick={() => setActiveIndex(index)}
-                className={`group relative block ${SLIDE_WIDTH} overflow-hidden rounded-2xl border border-border/60 bg-card shadow-card text-left transition-all duration-300 hover:border-primary/40 hover:shadow-glow`}
+                variants={v(zoomIn)}
+                whileHover={slideHover}
+                className={`group relative block ${SLIDE_WIDTH} overflow-hidden rounded-2xl border border-border/60 bg-card shadow-card text-left transition-[border-color,box-shadow] duration-300 hover:border-primary/40 hover:shadow-glow`}
                 data-testid={`gallery-image-${index + 1}`}
                 aria-label={`View photo ${index + 1}: ${ALT_TEXT}`}
               >
@@ -218,9 +293,9 @@ export function WorkGallery() {
                     </span>
                   </div>
                 </div>
-              </button>
+              </motion.button>
             ))}
-          </div>
+          </motion.div>
 
           {/* Mobile arrows below the track */}
           <div className="mt-5 flex justify-center gap-3 md:hidden">
@@ -243,29 +318,31 @@ export function WorkGallery() {
           </div>
         </div>
 
-        {/* CTA */}
+        {/* CTA — slides up, button hover-scales */}
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          variants={v(fadeUp)}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-80px" }}
           className="mt-16 md:mt-20 flex flex-col items-center gap-4 text-center"
         >
           <p className="text-muted-foreground">
             Need a job done right? Licensed, fully insured and available 24/7.
           </p>
-          <Button
-            asChild
-            size="lg"
-            className="bg-primary text-primary-foreground rounded-full px-7 py-3.5 font-bold shadow-glow hover:brightness-110 transition"
-            data-testid="button-gallery-call"
-          >
-            <a href={`tel:${BUSINESS_INFO.phoneTel}`} data-testid="link-gallery-call">
-              <Phone className="h-5 w-5 mr-2" />
-              Call {BUSINESS_INFO.phone}
-              <ArrowRight className="h-5 w-5 ml-2" />
-            </a>
-          </Button>
+          <motion.div whileHover={ctaHover} whileTap={ctaTap} className="inline-flex">
+            <Button
+              asChild
+              size="lg"
+              className="bg-primary text-primary-foreground rounded-full px-7 py-3.5 font-bold shadow-glow hover:brightness-110 transition"
+              data-testid="button-gallery-call"
+            >
+              <a href={`tel:${BUSINESS_INFO.phoneTel}`} data-testid="link-gallery-call">
+                <Phone className="h-5 w-5 mr-2" />
+                Call {BUSINESS_INFO.phone}
+                <ArrowRight className="h-5 w-5 ml-2" />
+              </a>
+            </Button>
+          </motion.div>
         </motion.div>
       </div>
 

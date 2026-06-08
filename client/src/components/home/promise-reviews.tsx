@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion, useReducedMotion, type Variants } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { BUSINESS_INFO } from "@shared/schema";
 import promiseBg from "@assets/cfp-gallery-16.jpeg";
@@ -46,7 +46,46 @@ const promiseItems = [
   },
 ];
 
+const EASE = [0.22, 1, 0.36, 1] as const;
+
+const fadeUp: Variants = {
+  hidden: { opacity: 0, y: 50 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE } },
+};
+const fadeLeft: Variants = {
+  hidden: { opacity: 0, x: -60 },
+  show: { opacity: 1, x: 0, transition: { duration: 0.6, ease: EASE } },
+};
+const fadeRight: Variants = {
+  hidden: { opacity: 0, x: 60 },
+  show: { opacity: 1, x: 0, transition: { duration: 0.6, ease: EASE } },
+};
+const fade: Variants = {
+  hidden: { opacity: 0 },
+  show: { opacity: 1, transition: { duration: 0.6, ease: EASE } },
+};
+
 export function PromiseReviews() {
+  const reduce = useReducedMotion();
+
+  // When reduced motion is requested, fall back to a plain opacity fade.
+  const v = (motionVariant: Variants) => (reduce ? fade : motionVariant);
+
+  const container: Variants = {
+    hidden: {},
+    show: {
+      transition: { staggerChildren: reduce ? 0 : 0.1, delayChildren: reduce ? 0 : 0.05 },
+    },
+  };
+
+  const hoverLift = reduce
+    ? undefined
+    : {
+        y: -6,
+        scale: 1.02,
+        transition: { type: "spring" as const, stiffness: 300, damping: 20 },
+      };
+
   return (
     <section className="relative py-20 md:py-28 bg-background overflow-hidden">
       {/* Darkened, blurred real job photo as a subtle background texture */}
@@ -61,58 +100,115 @@ export function PromiseReviews() {
         aria-hidden
         className="pointer-events-none absolute inset-0 bg-gradient-to-b from-background/95 via-background/85 to-background"
       />
-      {/* Atmospheric sky glow behind the header */}
-      <div
+      {/* Atmospheric sky glow behind the header — gently floats */}
+      <motion.div
         aria-hidden
         className="pointer-events-none absolute left-1/2 top-0 -translate-x-1/2 h-80 w-[42rem] max-w-full rounded-full bg-primary/15 blur-3xl"
+        animate={
+          reduce ? undefined : { y: [0, -18, 0], opacity: [0.5, 0.8, 0.5] }
+        }
+        transition={
+          reduce
+            ? undefined
+            : { duration: 9, repeat: Infinity, ease: "easeInOut" }
+        }
       />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section header */}
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          variants={container}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-80px" }}
           className="text-center mb-14 md:mb-20 max-w-2xl mx-auto"
         >
-          <p className="text-primary text-sm font-semibold tracking-widest uppercase mb-3">
+          <motion.p
+            variants={v(fadeUp)}
+            className="text-primary text-sm font-semibold tracking-widest uppercase mb-3"
+          >
             Why Choose Us
-          </p>
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-foreground">
+          </motion.p>
+          <motion.h2
+            variants={v(fadeUp)}
+            className="text-3xl md:text-5xl font-bold tracking-tight text-foreground"
+          >
             The Complete Flow <span className="text-primary">Promise</span>
-          </h2>
-          <p className="mt-5 text-lg text-muted-foreground">
+          </motion.h2>
+          <motion.p
+            variants={v(fadeUp)}
+            className="mt-5 text-lg text-muted-foreground"
+          >
             Locally owned, fully licensed and insured. Real plumbers who do the
             job right and stand behind every visit.
-          </p>
+          </motion.p>
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 md:gap-10 items-stretch">
-          {/* LEFT: 2x3 promise grid */}
-          <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8">
-            {promiseItems.map((item, index) => (
-              <motion.div
-                key={item.label}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.45, delay: index * 0.06 }}
-                className="group flex flex-col bg-card rounded-2xl border border-border/60 shadow-card p-6 md:p-8 transition-all hover:-translate-y-1 hover:border-primary/40 hover:shadow-glow"
-                data-testid={`promise-${item.label.toLowerCase().replace(/\s+/g, "-")}`}
-              >
-                <span className="mb-5 inline-flex w-fit items-center justify-center rounded-2xl bg-primary/10 ring-1 ring-primary/20 text-primary p-3.5 transition-colors group-hover:bg-primary/20">
-                  <item.icon className="h-6 w-6" />
-                </span>
-                <h3 className="text-lg font-bold text-foreground leading-tight">
-                  {item.label}
-                </h3>
-                <p className="text-sm text-muted-foreground mt-2 leading-relaxed">
-                  {item.description}
-                </p>
-              </motion.div>
-            ))}
-          </div>
+          {/* LEFT: 2x3 promise grid — staggered, alternating directions */}
+          <motion.div
+            variants={container}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: "-80px" }}
+            className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8"
+          >
+            {promiseItems.map((item, index) => {
+              // Alternate reveal direction for visual interest:
+              // up / from-left / from-right cycling across the grid.
+              const dirVariant =
+                index % 3 === 0 ? fadeUp : index % 3 === 1 ? fadeLeft : fadeRight;
+              const isEmergency = item.label === "24/7 Emergency Service";
+              return (
+                <motion.div
+                  key={item.label}
+                  variants={v(dirVariant)}
+                  whileHover={hoverLift}
+                  className="group flex flex-col bg-card rounded-2xl border border-border/60 shadow-card p-6 md:p-8 transition-colors hover:border-primary/40 hover:shadow-glow"
+                  data-testid={`promise-${item.label.toLowerCase().replace(/\s+/g, "-")}`}
+                >
+                  <motion.span
+                    className="mb-5 inline-flex w-fit items-center justify-center rounded-2xl bg-primary/10 ring-1 ring-primary/20 text-primary p-3.5 transition-colors group-hover:bg-primary/20"
+                    whileHover={
+                      reduce
+                        ? undefined
+                        : {
+                            scale: 1.12,
+                            rotate: -6,
+                            transition: {
+                              type: "spring",
+                              stiffness: 300,
+                              damping: 15,
+                            },
+                          }
+                    }
+                    animate={
+                      reduce || !isEmergency
+                        ? undefined
+                        : { scale: [1, 1.08, 1] }
+                    }
+                    transition={
+                      reduce || !isEmergency
+                        ? undefined
+                        : {
+                            duration: 2.4,
+                            repeat: Infinity,
+                            ease: "easeInOut",
+                          }
+                    }
+                  >
+                    <item.icon className="h-6 w-6" />
+                  </motion.span>
+                  <h3 className="text-lg font-bold text-foreground leading-tight">
+                    {item.label}
+                  </h3>
+                  <p className="text-sm text-muted-foreground mt-2 leading-relaxed">
+                    {item.description}
+                  </p>
+                </motion.div>
+              );
+            })}
+          </motion.div>
 
           {/* RIGHT: honest reviews card.
               NOTE: This is an honest stand-in for a live Google reviews widget.
@@ -120,16 +216,21 @@ export function PromiseReviews() {
               reviews widget in here (it can read aggregate rating/count then).
               Until then we show NO star count or aggregate rating. */}
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.45, delay: 0.1 }}
-            className="group bg-card rounded-2xl border border-border/60 shadow-card p-8 md:p-10 flex flex-col justify-center transition-all hover:-translate-y-1 hover:border-primary/40 hover:shadow-glow"
+            variants={v(fadeRight)}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: "-80px" }}
+            whileHover={hoverLift}
+            className="group bg-card rounded-2xl border border-border/60 shadow-card p-8 md:p-10 flex flex-col justify-center transition-colors hover:border-primary/40 hover:shadow-glow"
             data-testid="card-reviews"
           >
-            <span className="mb-6 inline-flex w-fit items-center justify-center rounded-2xl bg-primary/10 ring-1 ring-primary/20 text-primary p-3.5 transition-colors group-hover:bg-primary/20">
+            <motion.span
+              className="mb-6 inline-flex w-fit items-center justify-center rounded-2xl bg-primary/10 ring-1 ring-primary/20 text-primary p-3.5 transition-colors group-hover:bg-primary/20"
+              whileHover={reduce ? undefined : { scale: 1.12, rotate: -6 }}
+              transition={{ type: "spring", stiffness: 300, damping: 15 }}
+            >
               <Star className="h-7 w-7" />
-            </span>
+            </motion.span>
             <h3 className="text-2xl md:text-3xl font-bold tracking-tight text-foreground mb-4">
               Rated by <span className="text-primary">local</span> customers
             </h3>
@@ -137,23 +238,29 @@ export function PromiseReviews() {
               We&apos;re building our Google review profile. See what local
               customers say, or leave us a review after your job.
             </p>
-            <Button
-              asChild
-              size="lg"
-              className="w-full sm:w-auto bg-primary text-primary-foreground rounded-full px-7 py-3.5 font-bold shadow-glow hover:brightness-110 transition"
-              data-testid="button-reviews-google"
+            <motion.div
+              className="w-full sm:w-fit"
+              whileHover={reduce ? undefined : { scale: 1.04 }}
+              whileTap={reduce ? undefined : { scale: 0.96 }}
             >
-              <a
-                href={BUSINESS_INFO.googleReviewLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2"
-                data-testid="link-reviews-google"
+              <Button
+                asChild
+                size="lg"
+                className="w-full sm:w-auto bg-primary text-primary-foreground rounded-full px-7 py-3.5 font-bold shadow-glow hover:brightness-110 transition"
+                data-testid="button-reviews-google"
               >
-                <ExternalLink className="h-5 w-5" />
-                See us on Google
-              </a>
-            </Button>
+                <a
+                  href={BUSINESS_INFO.googleReviewLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2"
+                  data-testid="link-reviews-google"
+                >
+                  <ExternalLink className="h-5 w-5" />
+                  See us on Google
+                </a>
+              </Button>
+            </motion.div>
           </motion.div>
         </div>
       </div>

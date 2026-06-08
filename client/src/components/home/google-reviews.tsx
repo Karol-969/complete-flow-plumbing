@@ -1,7 +1,22 @@
-import { motion } from "framer-motion";
+import { motion, useReducedMotion, type Variants } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { GOOGLE_REVIEWS, BUSINESS_INFO } from "@shared/schema";
 import { ExternalLink, PenLine } from "lucide-react";
+
+const EASE = [0.22, 1, 0.36, 1] as const;
+
+const fadeUp: Variants = {
+  hidden: { opacity: 0, y: 50 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE } },
+};
+const zoomIn: Variants = {
+  hidden: { opacity: 0, scale: 0.92 },
+  show: { opacity: 1, scale: 1, transition: { duration: 0.6, ease: EASE } },
+};
+const fade: Variants = {
+  hidden: { opacity: 0 },
+  show: { opacity: 1, transition: { duration: 0.6, ease: EASE } },
+};
 
 /**
  * Official 4-colour Google "G" logo as an inline SVG.
@@ -47,18 +62,43 @@ function GoogleStar({ className }: { className?: string }) {
   );
 }
 
-/** A row of `count` gold stars (out of 5). */
+/** A row of `count` gold stars (out of 5) with a subtle staggered pop-in. */
 function StarRow({ count = 5, className = "" }: { count?: number; className?: string }) {
+  const reduce = useReducedMotion();
   const full = Math.max(0, Math.min(5, Math.round(count)));
+
+  const starContainer: Variants = {
+    hidden: {},
+    show: {
+      transition: { staggerChildren: reduce ? 0 : 0.06, delayChildren: 0.05 },
+    },
+  };
+  const starItem: Variants = reduce
+    ? { hidden: { opacity: 0 }, show: { opacity: 1 } }
+    : {
+        hidden: { opacity: 0, scale: 0.4 },
+        show: {
+          opacity: 1,
+          scale: 1,
+          transition: { type: "spring", stiffness: 400, damping: 16 },
+        },
+      };
+
   return (
-    <div className={`flex items-center gap-0.5 ${className}`} aria-label={`${full} out of 5 stars`}>
+    <motion.div
+      className={`flex items-center gap-0.5 ${className}`}
+      aria-label={`${full} out of 5 stars`}
+      variants={starContainer}
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, margin: "-40px" }}
+    >
       {Array.from({ length: 5 }).map((_, i) => (
-        <GoogleStar
-          key={i}
-          className={`h-5 w-5 ${i < full ? "" : "opacity-25"}`}
-        />
+        <motion.span key={i} variants={starItem} className="inline-flex">
+          <GoogleStar className={`h-5 w-5 ${i < full ? "" : "opacity-25"}`} />
+        </motion.span>
       ))}
-    </div>
+    </motion.div>
   );
 }
 
@@ -73,8 +113,26 @@ const AVATAR_COLORS = [
 ];
 
 export function GoogleReviews() {
+  const reduce = useReducedMotion();
   const reviews = GOOGLE_REVIEWS;
   const hasReviews = reviews.length > 0;
+
+  const v = (motionVariant: Variants) => (reduce ? fade : motionVariant);
+
+  const container: Variants = {
+    hidden: {},
+    show: {
+      transition: { staggerChildren: reduce ? 0 : 0.1, delayChildren: reduce ? 0 : 0.05 },
+    },
+  };
+
+  const hoverLift = reduce
+    ? undefined
+    : {
+        y: -6,
+        scale: 1.02,
+        transition: { type: "spring" as const, stiffness: 300, damping: 20 },
+      };
 
   // Only ever derived from REAL data — never a hardcoded/fake number.
   const average = hasReviews
@@ -88,31 +146,52 @@ export function GoogleReviews() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-[#4285F4] via-[#EA4335] via-[#FBBC05] to-[#34A853]"
       />
-      {/* Soft Google-blue tint glow behind the header */}
-      <div
+      {/* Soft Google-blue tint glow behind the header — gently floats */}
+      <motion.div
         aria-hidden="true"
         className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 h-72 w-[42rem] max-w-full rounded-full bg-[#4285F4]/10 blur-3xl"
+        animate={
+          reduce ? undefined : { y: [0, -18, 0], opacity: [0.5, 0.8, 0.5] }
+        }
+        transition={
+          reduce
+            ? undefined
+            : { duration: 9, repeat: Infinity, ease: "easeInOut" }
+        }
       />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section header */}
         <motion.div
           className="text-center mb-14 md:mb-16 max-w-2xl mx-auto"
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          variants={container}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-80px" }}
         >
-          <p className="text-primary text-sm font-semibold tracking-widest uppercase mb-4">
+          <motion.p
+            variants={v(fadeUp)}
+            className="text-primary text-sm font-semibold tracking-widest uppercase mb-4"
+          >
             Rated on Google
-          </p>
+          </motion.p>
           <div className="flex items-center justify-center gap-3 mb-4">
-            <GoogleG className="h-9 w-9 md:h-10 md:w-10" />
-            <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-foreground">
+            <motion.span
+              variants={v(zoomIn)}
+              className="inline-flex"
+              whileHover={reduce ? undefined : { scale: 1.1, rotate: 6 }}
+              transition={{ type: "spring", stiffness: 300, damping: 14 }}
+            >
+              <GoogleG className="h-9 w-9 md:h-10 md:w-10" />
+            </motion.span>
+            <motion.h2
+              variants={v(zoomIn)}
+              className="text-3xl md:text-5xl font-bold tracking-tight text-foreground"
+            >
               Our Google Reviews
-            </h2>
+            </motion.h2>
           </div>
-          <div className="flex flex-col items-center gap-2">
+          <motion.div variants={v(fadeUp)} className="flex flex-col items-center gap-2">
             <StarRow count={hasReviews ? average : 5} />
             {/* Only show an average if it comes from REAL reviews. */}
             {hasReviews && (
@@ -121,13 +200,19 @@ export function GoogleReviews() {
                 rating from {BUSINESS_INFO.googleReviewCount}+ Google reviews
               </p>
             )}
-          </div>
+          </motion.div>
         </motion.div>
 
         {hasReviews ? (
           /* ---- Real reviews: Google-style review cards ---- */
           <>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
+            variants={container}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: "-80px" }}
+          >
             {reviews.map((review, index) => {
               const initial = (
                 review.initial ?? review.name.trim().charAt(0)
@@ -136,11 +221,9 @@ export function GoogleReviews() {
               return (
                 <motion.article
                   key={`${review.name}-${index}`}
-                  initial={{ opacity: 0, y: 24 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.45, delay: index * 0.06 }}
-                  className="relative flex flex-col rounded-2xl border border-border/60 bg-white p-6 md:p-7 shadow-card transition-all hover:-translate-y-1 hover:border-primary/40 hover:shadow-glow"
+                  variants={v(fadeUp)}
+                  whileHover={hoverLift}
+                  className="relative flex flex-col rounded-2xl border border-border/60 bg-white p-6 md:p-7 shadow-card transition-colors hover:border-primary/40 hover:shadow-glow"
                   data-testid={`google-review-${index}`}
                 >
                   {/* Google "G" glyph in the corner */}
@@ -174,25 +257,36 @@ export function GoogleReviews() {
                 </motion.article>
               );
             })}
-          </div>
-          <div className="mt-12 flex justify-center">
-            <Button
-              asChild
-              size="lg"
-              className="bg-primary text-primary-foreground rounded-full px-7 py-3.5 font-bold shadow-glow hover:brightness-110 transition"
-              data-testid="button-all-google-reviews"
+          </motion.div>
+          <motion.div
+            className="mt-12 flex justify-center"
+            initial={reduce ? { opacity: 0 } : { opacity: 0, y: 30 }}
+            whileInView={reduce ? { opacity: 1 } : { opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.6, ease: EASE }}
+          >
+            <motion.div
+              whileHover={reduce ? undefined : { scale: 1.04 }}
+              whileTap={reduce ? undefined : { scale: 0.96 }}
             >
-              <a
-                href={BUSINESS_INFO.googleReviewLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2"
+              <Button
+                asChild
+                size="lg"
+                className="bg-primary text-primary-foreground rounded-full px-7 py-3.5 font-bold shadow-glow hover:brightness-110 transition"
+                data-testid="button-all-google-reviews"
               >
-                <ExternalLink className="h-5 w-5" />
-                Read all our reviews on Google
-              </a>
-            </Button>
-          </div>
+                <a
+                  href={BUSINESS_INFO.googleReviewLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2"
+                >
+                  <ExternalLink className="h-5 w-5" />
+                  Read all our reviews on Google
+                </a>
+              </Button>
+            </motion.div>
+          </motion.div>
           </>
         ) : (
           /* ---- Empty state: Google-branded CTA card ----
@@ -200,16 +294,21 @@ export function GoogleReviews() {
              Google-branded CTA — a live widget (e.g. Trustindex) can also be
              embedded here. No fake rating number or review count is shown. */
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="mx-auto max-w-3xl rounded-2xl border border-border/60 bg-white p-8 md:p-12 text-center shadow-card"
+            variants={v(zoomIn)}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: "-80px" }}
+            whileHover={hoverLift}
+            className="mx-auto max-w-3xl rounded-2xl border border-border/60 bg-white p-8 md:p-12 text-center shadow-card transition-colors hover:border-primary/40 hover:shadow-glow"
             data-testid="google-reviews-cta"
           >
-            <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-[#4285F4]/10 ring-1 ring-[#4285F4]/20">
+            <motion.div
+              className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-[#4285F4]/10 ring-1 ring-[#4285F4]/20"
+              whileHover={reduce ? undefined : { scale: 1.1, rotate: 6 }}
+              transition={{ type: "spring", stiffness: 300, damping: 14 }}
+            >
               <GoogleG className="h-9 w-9" />
-            </div>
+            </motion.div>
             <h3 className="text-2xl md:text-3xl font-bold tracking-tight text-foreground">
               See what our customers say on Google
             </h3>
@@ -219,41 +318,53 @@ export function GoogleReviews() {
               plumber they can trust.
             </p>
             <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
-              <Button
-                asChild
-                size="lg"
-                className="w-full sm:w-auto bg-primary text-primary-foreground rounded-full px-7 py-3.5 font-bold shadow-glow hover:brightness-110 transition"
-                data-testid="button-read-google-reviews"
+              <motion.div
+                className="w-full sm:w-fit"
+                whileHover={reduce ? undefined : { scale: 1.04 }}
+                whileTap={reduce ? undefined : { scale: 0.96 }}
               >
-                <a
-                  href={BUSINESS_INFO.googleReviewLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2"
-                  data-testid="link-read-google-reviews"
+                <Button
+                  asChild
+                  size="lg"
+                  className="w-full sm:w-auto bg-primary text-primary-foreground rounded-full px-7 py-3.5 font-bold shadow-glow hover:brightness-110 transition"
+                  data-testid="button-read-google-reviews"
                 >
-                  <ExternalLink className="h-5 w-5" />
-                  Read our Google Reviews
-                </a>
-              </Button>
-              <Button
-                asChild
-                size="lg"
-                variant="ghost"
-                className="w-full sm:w-auto ring-1 ring-border hover:ring-primary text-foreground rounded-full px-7 py-3.5 font-semibold transition"
-                data-testid="button-leave-google-review"
+                  <a
+                    href={BUSINESS_INFO.googleReviewLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-2"
+                    data-testid="link-read-google-reviews"
+                  >
+                    <ExternalLink className="h-5 w-5" />
+                    Read our Google Reviews
+                  </a>
+                </Button>
+              </motion.div>
+              <motion.div
+                className="w-full sm:w-fit"
+                whileHover={reduce ? undefined : { scale: 1.04 }}
+                whileTap={reduce ? undefined : { scale: 0.96 }}
               >
-                <a
-                  href={BUSINESS_INFO.googleReviewLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2"
-                  data-testid="link-leave-google-review"
+                <Button
+                  asChild
+                  size="lg"
+                  variant="ghost"
+                  className="w-full sm:w-auto ring-1 ring-border hover:ring-primary text-foreground rounded-full px-7 py-3.5 font-semibold transition"
+                  data-testid="button-leave-google-review"
                 >
-                  <PenLine className="h-5 w-5" />
-                  Leave us a Review
-                </a>
-              </Button>
+                  <a
+                    href={BUSINESS_INFO.googleReviewLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-2"
+                    data-testid="link-leave-google-review"
+                  >
+                    <PenLine className="h-5 w-5" />
+                    Leave us a Review
+                  </a>
+                </Button>
+              </motion.div>
             </div>
           </motion.div>
         )}
