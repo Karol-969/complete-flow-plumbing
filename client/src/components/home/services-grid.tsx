@@ -2,6 +2,7 @@ import { Link } from "wouter";
 import { motion, useReducedMotion, type Variants } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { SERVICES, BUSINESS_INFO } from "@shared/schema";
+import { PipesBackground } from "@/components/effects/pipes-background";
 import {
   Siren,
   Droplets,
@@ -35,6 +36,19 @@ const TRUST_POINTS = [
   { icon: Clock, label: "24/7 Emergency · Same-Day" },
   { icon: BadgeCheck, label: BUSINESS_INFO.guarantee },
 ];
+
+// A distinct vivid colour per service so the grid reads as bold and graphical.
+const THEMES = [
+  { gradient: "from-rose-500 to-red-600", glow: "bg-rose-400/30", watermark: "text-rose-500/10" },
+  { gradient: "from-sky-500 to-blue-700", glow: "bg-sky-400/30", watermark: "text-sky-500/10" },
+  { gradient: "from-cyan-500 to-sky-600", glow: "bg-cyan-400/30", watermark: "text-cyan-500/10" },
+  { gradient: "from-violet-500 to-indigo-700", glow: "bg-violet-400/30", watermark: "text-violet-500/10" },
+  { gradient: "from-blue-500 to-indigo-600", glow: "bg-blue-400/30", watermark: "text-blue-500/10" },
+  { gradient: "from-orange-500 to-red-600", glow: "bg-orange-400/30", watermark: "text-orange-500/10" },
+  { gradient: "from-amber-500 to-orange-600", glow: "bg-amber-400/30", watermark: "text-amber-500/10" },
+  { gradient: "from-teal-500 to-emerald-600", glow: "bg-teal-400/30", watermark: "text-teal-500/10" },
+  { gradient: "from-sky-500 to-cyan-600", glow: "bg-sky-400/30", watermark: "text-sky-500/10" },
+] as const;
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -102,7 +116,29 @@ export function ServicesGrid() {
   };
 
   return (
-    <section className="relative py-20 md:py-28 bg-background overflow-hidden">
+    <section className="relative py-20 md:py-28 bg-gradient-to-b from-sky-50/50 via-background to-sky-50/40 overflow-hidden">
+      {/* Faint blueprint grid — a nod to plumbing schematics */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 opacity-60"
+        style={{
+          backgroundImage:
+            "linear-gradient(rgba(10,102,194,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(10,102,194,0.07) 1px, transparent 1px)",
+          backgroundSize: "46px 46px",
+          maskImage:
+            "radial-gradient(120% 100% at 50% 0%, #000 30%, transparent 85%)",
+          WebkitMaskImage:
+            "radial-gradient(120% 100% at 50% 0%, #000 30%, transparent 85%)",
+        }}
+      />
+      {/* Sparse animated pipe network (different layout to the section above) */}
+      <PipesBackground variant="b" className="opacity-55" />
+      {/* Readability wash so the cards stay crisp */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-background/30 via-background/20 to-background/45"
+      />
+
       {/* Atmospheric sky glow behind the header */}
       <motion.div
         aria-hidden="true"
@@ -175,6 +211,7 @@ export function ServicesGrid() {
         >
           {SERVICES.map((service, index) => {
             const IconComponent = iconMap[service.icon] || Wrench;
+            const theme = THEMES[index % THEMES.length];
             return (
               <motion.div
                 key={service.id}
@@ -185,9 +222,24 @@ export function ServicesGrid() {
               >
                 <Link
                   href={`/services/${service.slug}`}
-                  className="group flex h-full flex-col bg-card rounded-2xl border border-border/60 shadow-card p-6 md:p-8 transition-colors duration-300 hover:border-primary/40 hover:shadow-glow"
+                  className="group relative flex h-full flex-col overflow-hidden bg-card/95 backdrop-blur-sm rounded-2xl border border-border/60 shadow-card p-6 md:p-8 transition-colors duration-300 hover:border-primary/40 hover:shadow-glow"
                   data-testid={`service-card-${service.slug}`}
                 >
+                  {/* coloured corner glow on hover */}
+                  <span
+                    aria-hidden
+                    className={`pointer-events-none absolute -top-10 -right-10 h-32 w-32 rounded-full blur-2xl opacity-0 transition-opacity duration-500 group-hover:opacity-100 ${theme.glow}`}
+                  />
+                  {/* gradient accent bar */}
+                  <span
+                    aria-hidden
+                    className={`pointer-events-none absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${theme.gradient} opacity-80`}
+                  />
+                  {/* big faint watermark icon */}
+                  <IconComponent
+                    className={`pointer-events-none absolute -bottom-5 -right-3 h-32 w-32 ${theme.watermark}`}
+                  />
+
                   <motion.div
                     variants={
                       reduce
@@ -205,17 +257,17 @@ export function ServicesGrid() {
                             },
                           }
                     }
-                    className="mb-6 inline-flex w-fit items-center justify-center rounded-2xl bg-primary/10 ring-1 ring-primary/20 text-primary p-3.5 transition-colors group-hover:bg-primary/20"
+                    className={`relative mb-6 inline-flex w-fit items-center justify-center rounded-2xl bg-gradient-to-br ${theme.gradient} text-white p-3.5 shadow-lg`}
                   >
                     <IconComponent className="h-7 w-7" />
                   </motion.div>
-                  <h3 className="text-xl font-bold text-foreground mb-2.5 group-hover:text-primary transition-colors">
+                  <h3 className="relative text-xl font-bold text-foreground mb-2.5 group-hover:text-primary transition-colors">
                     {service.title}
                   </h3>
-                  <p className="text-muted-foreground text-[15px] leading-relaxed mb-5 line-clamp-2">
+                  <p className="relative text-muted-foreground text-[15px] leading-relaxed mb-5 line-clamp-2">
                     {service.shortDescription}
                   </p>
-                  <span className="mt-auto inline-flex items-center text-primary font-semibold text-sm">
+                  <span className="relative mt-auto inline-flex items-center text-primary font-semibold text-sm">
                     Learn More
                     <ArrowRight className="h-4 w-4 ml-1.5 transition-transform group-hover:translate-x-1" />
                   </span>

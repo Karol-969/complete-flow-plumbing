@@ -17,7 +17,7 @@ type Pipe = {
 };
 
 // Hand-laid so the pipes weave across the band and visibly interconnect.
-const PIPES: Pipe[] = [
+const PIPES_A: Pipe[] = [
   {
     pts: [
       [-0.05, 0.24], [0.22, 0.24], [0.22, 0.62], [0.46, 0.62],
@@ -50,7 +50,42 @@ const PIPES: Pipe[] = [
   },
 ];
 
-export function PipesBackground({ className }: { className?: string }) {
+// A sparser, differently-routed layout so adjacent sections don't look identical.
+const PIPES_B: Pipe[] = [
+  {
+    pts: [
+      [-0.05, 0.16], [0.3, 0.16], [0.3, 0.52], [0.6, 0.52],
+      [0.6, 0.22], [1.05, 0.22],
+    ],
+    kind: "water",
+    w: 13,
+    speed: 0.9,
+  },
+  {
+    pts: [
+      [-0.05, 0.62], [0.2, 0.62], [0.2, 0.9], [0.55, 0.9],
+      [0.55, 0.66], [0.82, 0.66], [0.82, 0.95], [1.05, 0.95],
+    ],
+    kind: "hot",
+    w: 12,
+    speed: 0.7,
+  },
+  {
+    pts: [[0.46, -0.05], [0.46, 0.36], [0.94, 0.36], [0.94, -0.05]],
+    kind: "water",
+    w: 11,
+    speed: 1.1,
+  },
+];
+
+export function PipesBackground({
+  className,
+  variant = "a",
+}: {
+  className?: string;
+  variant?: "a" | "b";
+}) {
+  const PIPES = variant === "b" ? PIPES_B : PIPES_A;
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [useFallback, setUseFallback] = useState(false);
 
