@@ -10,7 +10,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { BUSINESS_INFO, SERVICES } from "@shared/schema";
-import { Phone, Siren, Shield, Clock, BadgeCheck, CalendarClock } from "lucide-react";
+import { Phone, Siren, CalendarClock, DollarSign, FileText, Clock, ShieldCheck } from "lucide-react";
 import heroImage from "@assets/image_1766464585703.png";
 
 const PREFERRED_TIMES = [
@@ -18,6 +18,13 @@ const PREFERRED_TIMES = [
   { value: "morning", label: "Morning (8am – 12pm)" },
   { value: "afternoon", label: "Afternoon (12pm – 4pm)" },
   { value: "evening", label: "Evening" },
+];
+
+const TRUST_CLAIMS = [
+  { icon: DollarSign, label: "$0 Call-Out Fee" },
+  { icon: FileText, label: "Free Quotes" },
+  { icon: Clock, label: "Same-Day" },
+  { icon: ShieldCheck, label: "Licensed NSW" },
 ];
 
 function toTitleCase(input: string): string {
@@ -48,19 +55,19 @@ export function Hero() {
   };
 
   return (
-    <section className="relative flex min-h-[560px] items-center overflow-hidden md:min-h-[640px]">
+    <section className="relative flex min-h-[600px] items-center overflow-hidden md:min-h-[720px]">
       {/* Cinematic dark background image */}
       <div className="absolute inset-0">
         <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat brightness-[0.45] saturate-[0.7]"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat brightness-[0.4] saturate-[0.75]"
           style={{ backgroundImage: `url(${heroImage})` }}
         />
-        {/* Left-anchored gradient scrim from background */}
-        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/85 to-background/30" />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/40" />
-        {/* Sky radial blur blob for atmosphere */}
-        <div className="pointer-events-none absolute -left-24 top-1/4 h-72 w-72 rounded-full bg-primary/10 blur-3xl" />
-        <div className="pointer-events-none absolute right-10 top-10 h-80 w-80 rounded-full bg-primary/10 blur-3xl" />
+        {/* Clean dark gradient scrim — left-anchored for text legibility */}
+        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/90 to-background/40" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-background/60" />
+        {/* Subtle sky glow at the top for atmosphere */}
+        <div className="pointer-events-none absolute -top-32 left-1/4 h-96 w-96 -translate-x-1/2 rounded-full bg-primary/15 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-24 right-0 h-80 w-80 rounded-full bg-primary/10 blur-3xl" />
       </div>
 
       {/* Floating emergency badge */}
@@ -72,19 +79,19 @@ export function Hero() {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 mx-auto w-full max-w-7xl px-4 py-16 sm:px-6 md:py-24 lg:px-8">
-        <div className="grid items-center gap-10 lg:grid-cols-[1.15fr_0.85fr]">
+      <div className="relative z-10 mx-auto w-full max-w-7xl px-4 py-20 sm:px-6 md:py-28 lg:px-8">
+        <div className="grid items-center gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
           {/* Left: headline + CTAs */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
+            transition={{ duration: 0.55, ease: "easeOut" }}
           >
-            <p className="mb-4 text-sm font-semibold uppercase tracking-widest text-primary">
+            <p className="mb-5 text-sm font-semibold uppercase tracking-widest text-primary">
               Licensed NSW Plumber · Lic. {BUSINESS_INFO.licence}
             </p>
 
-            <h1 className="mb-5 text-4xl font-bold leading-tight tracking-tight text-foreground md:text-5xl lg:text-6xl">
+            <h1 className="mb-6 text-5xl font-bold leading-[1.05] tracking-tight text-foreground md:text-6xl lg:text-7xl">
               {suburb ? (
                 <>
                   Your Local <span className="text-primary">{suburb}</span> Plumber
@@ -92,23 +99,31 @@ export function Hero() {
               ) : (
                 <>
                   Your Local <span className="text-primary">Plumber</span>
-                  <span className="block text-3xl font-semibold text-foreground/90 md:text-4xl lg:text-5xl">
+                  <span className="mt-3 block text-2xl font-semibold leading-tight tracking-tight text-foreground/85 md:text-3xl lg:text-4xl">
                     Sutherland Shire to the Southern Highlands
                   </span>
                 </>
               )}
             </h1>
 
-            {/* Trust subline — true claims only */}
-            <p className="mb-8 max-w-xl text-base text-muted-foreground md:text-lg">
-              24/7 emergency · no call-out fee · licensed NSW · same-day service.
-            </p>
+            {/* Trust subline — clean inline row of TRUE claims */}
+            <div className="mb-9 flex flex-wrap items-center gap-x-6 gap-y-3">
+              {TRUST_CLAIMS.map(({ icon: Icon, label }) => (
+                <span
+                  key={label}
+                  className="flex items-center gap-2 text-sm font-medium text-foreground/90 md:text-base"
+                >
+                  <Icon className="h-4 w-4 shrink-0 text-primary" />
+                  {label}
+                </span>
+              ))}
+            </div>
 
             {/* Dominant dual CTA */}
-            <div className="mb-8 flex flex-col gap-4 sm:flex-row">
+            <div className="flex flex-col gap-4 sm:flex-row">
               <Button
                 asChild
-                className="rounded-full bg-primary px-6 py-3 text-base font-bold text-primary-foreground shadow-glow transition hover:brightness-110"
+                className="rounded-full bg-primary px-7 py-3.5 text-base font-bold text-primary-foreground shadow-glow transition hover:brightness-110"
                 data-testid="button-hero-book"
               >
                 <Link href="/contact" data-testid="link-hero-book">
@@ -118,11 +133,11 @@ export function Hero() {
               <Button
                 asChild
                 variant="ghost"
-                className="rounded-full px-6 py-3 text-base font-semibold text-foreground ring-1 ring-border transition hover:ring-primary"
+                className="rounded-full px-7 py-3.5 text-base font-semibold text-foreground ring-1 ring-border transition hover:ring-primary"
                 data-testid="button-hero-call"
               >
                 <a
-                  href={`tel:${BUSINESS_INFO.phone.replace(/\s+/g, "")}`}
+                  href={`tel:${BUSINESS_INFO.phoneTel}`}
                   className="flex items-center justify-center gap-2"
                   data-testid="link-hero-phone"
                 >
@@ -131,33 +146,17 @@ export function Hero() {
                 </a>
               </Button>
             </div>
-
-            {/* Trust badges row */}
-            <div className="flex flex-wrap gap-x-6 gap-y-3 text-sm text-muted-foreground">
-              <span className="flex items-center gap-2">
-                <Shield className="h-4 w-4 text-primary" />
-                Licensed &amp; insured
-              </span>
-              <span className="flex items-center gap-2">
-                <Clock className="h-4 w-4 text-primary" />
-                Same-day service
-              </span>
-              <span className="flex items-center gap-2">
-                <BadgeCheck className="h-4 w-4 text-primary" />
-                No call-out fee
-              </span>
-            </div>
           </motion.div>
 
           {/* Right: inline mini lead-capture card */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: "easeOut", delay: 0.15 }}
-            className="group rounded-xl2 border border-border bg-card p-6 shadow-card transition-all hover:border-primary/50 hover:shadow-glow md:p-7"
+            transition={{ duration: 0.55, ease: "easeOut", delay: 0.15 }}
+            className="group rounded-2xl border border-border/60 bg-card p-6 shadow-card transition-all hover:-translate-y-1 hover:border-primary/40 hover:shadow-glow md:p-8"
           >
-            <div className="mb-5 flex items-start gap-3">
-              <span className="rounded-xl bg-primary/10 p-3 text-primary ring-1 ring-primary/20">
+            <div className="mb-6 flex items-start gap-3.5">
+              <span className="rounded-2xl bg-primary/10 p-3.5 text-primary ring-1 ring-primary/20">
                 <CalendarClock className="h-5 w-5" />
               </span>
               <div>
@@ -170,7 +169,7 @@ export function Hero() {
               </div>
             </div>
 
-            <div className="space-y-4">
+            <div className="space-y-5">
               <div>
                 <label className="mb-1.5 block text-sm font-medium text-foreground">
                   Service type
@@ -215,7 +214,7 @@ export function Hero() {
 
               <Button
                 onClick={handleQuote}
-                className="w-full rounded-full bg-primary px-6 py-3 text-base font-bold text-primary-foreground shadow-glow transition hover:brightness-110"
+                className="w-full rounded-full bg-primary px-7 py-3.5 text-base font-bold text-primary-foreground shadow-glow transition hover:brightness-110"
                 data-testid="button-hero-quote"
               >
                 Get My Quote

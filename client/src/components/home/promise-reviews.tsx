@@ -15,81 +15,86 @@ import {
 const promiseItems = [
   {
     icon: Wallet,
-    label: "Honest Upfront Pricing",
-    description: "We tell you the price before we start.",
+    label: "No Call-Out Fee",
+    description: "Free quotes and honest upfront pricing — you know the cost before we start.",
   },
   {
     icon: Award,
     label: "Workmanship Guarantee",
-    description: BUSINESS_INFO.guarantee,
+    description: `Every job is backed by our ${BUSINESS_INFO.guarantee.toLowerCase()}.`,
   },
   {
     icon: Clock,
     label: "24/7 Emergency Service",
-    description: "Day or night, we answer the call.",
+    description: "Day or night, a local plumber answers the call.",
   },
   {
     icon: ShieldCheck,
     label: "Licensed NSW Experts",
-    description: `Lic. ${BUSINESS_INFO.licence}`,
+    description: `Fully licensed NSW plumbers — Lic. ${BUSINESS_INFO.licence}.`,
   },
   {
     icon: ShieldAlert,
     label: "Fully Insured",
-    description: "Total peace of mind on every job.",
+    description: "Comprehensive cover for total peace of mind on every job.",
   },
   {
     icon: Zap,
     label: "Same-Day Service",
-    description: "Fast local response when you need it.",
+    description: "Fast local response when you need a plumber today.",
   },
 ];
 
 export function PromiseReviews() {
   return (
-    <section className="relative py-16 md:py-24 bg-background overflow-hidden">
+    <section className="relative py-20 md:py-28 bg-background overflow-hidden">
       {/* Atmospheric sky glow behind the header */}
       <div
         aria-hidden
-        className="pointer-events-none absolute left-1/2 top-0 -translate-x-1/2 h-72 w-72 rounded-full bg-primary/10 blur-3xl"
+        className="pointer-events-none absolute left-1/2 top-0 -translate-x-1/2 h-80 w-[42rem] max-w-full rounded-full bg-primary/10 blur-3xl"
       />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-12 md:mb-16 max-w-2xl mx-auto"
+          className="text-center mb-14 md:mb-20 max-w-2xl mx-auto"
         >
           <p className="text-primary text-sm font-semibold tracking-widest uppercase mb-3">
             Why Choose Us
           </p>
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground">
-            The Complete Flow Promise
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-foreground">
+            The Complete Flow <span className="text-primary">Promise</span>
           </h2>
+          <p className="mt-5 text-lg text-muted-foreground">
+            Locally owned, fully licensed and insured. Real plumbers who do the
+            job right and stand behind every visit.
+          </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-10 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 md:gap-10 items-stretch">
           {/* LEFT: 2x3 promise grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 md:gap-6">
+          <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8">
             {promiseItems.map((item, index) => (
               <motion.div
                 key={item.label}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: index * 0.06 }}
-                className="group flex flex-col bg-card rounded-xl2 border border-border shadow-card p-6 transition-all hover:-translate-y-1 hover:border-primary/50 hover:shadow-glow"
+                transition={{ duration: 0.45, delay: index * 0.06 }}
+                className="group flex flex-col bg-card rounded-2xl border border-border/60 shadow-card p-6 md:p-8 transition-all hover:-translate-y-1 hover:border-primary/40 hover:shadow-glow"
                 data-testid={`promise-${item.label.toLowerCase().replace(/\s+/g, "-")}`}
               >
-                <span className="mb-4 inline-flex w-fit items-center justify-center rounded-xl bg-primary/10 ring-1 ring-primary/20 text-primary p-3 transition-colors group-hover:bg-primary/20">
+                <span className="mb-5 inline-flex w-fit items-center justify-center rounded-2xl bg-primary/10 ring-1 ring-primary/20 text-primary p-3.5 transition-colors group-hover:bg-primary/20">
                   <item.icon className="h-6 w-6" />
                 </span>
-                <h3 className="text-base font-bold text-foreground leading-tight">
+                <h3 className="text-lg font-bold text-foreground leading-tight">
                   {item.label}
                 </h3>
-                <p className="text-sm text-muted-foreground mt-1">
+                <p className="text-sm text-muted-foreground mt-2 leading-relaxed">
                   {item.description}
                 </p>
               </motion.div>
@@ -102,27 +107,27 @@ export function PromiseReviews() {
               reviews widget in here (it can read aggregate rating/count then).
               Until then we show NO star count or aggregate rating. */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.4, delay: 0.1 }}
-            className="bg-card rounded-xl2 border border-border shadow-card p-8 md:p-10 flex flex-col lg:h-full lg:justify-center"
+            transition={{ duration: 0.45, delay: 0.1 }}
+            className="group bg-card rounded-2xl border border-border/60 shadow-card p-8 md:p-10 flex flex-col justify-center transition-all hover:-translate-y-1 hover:border-primary/40 hover:shadow-glow"
             data-testid="card-reviews"
           >
-            <span className="mb-5 inline-flex w-fit items-center justify-center rounded-xl bg-primary/10 ring-1 ring-primary/20 text-primary p-3">
+            <span className="mb-6 inline-flex w-fit items-center justify-center rounded-2xl bg-primary/10 ring-1 ring-primary/20 text-primary p-3.5 transition-colors group-hover:bg-primary/20">
               <Star className="h-7 w-7" />
             </span>
             <h3 className="text-2xl md:text-3xl font-bold tracking-tight text-foreground mb-4">
-              Rated by local customers
+              Rated by <span className="text-primary">local</span> customers
             </h3>
-            <p className="text-muted-foreground mb-8">
-              We&apos;re building our Google review profile — see what customers
-              say or leave us a review.
+            <p className="text-muted-foreground leading-relaxed mb-8">
+              We&apos;re building our Google review profile. See what local
+              customers say, or leave us a review after your job.
             </p>
             <Button
               asChild
               size="lg"
-              className="w-full sm:w-auto bg-primary text-primary-foreground rounded-full px-6 py-3 font-bold shadow-glow hover:brightness-110 transition"
+              className="w-full sm:w-auto bg-primary text-primary-foreground rounded-full px-7 py-3.5 font-bold shadow-glow hover:brightness-110 transition"
               data-testid="button-reviews-google"
             >
               <a

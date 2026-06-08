@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { BUSINESS_INFO, SERVICES } from "@shared/schema";
 import { Phone, Siren, ExternalLink, ArrowRight, ChevronRight } from "lucide-react";
 
-const phoneTel = BUSINESS_INFO.phone.replace(/\s/g, "");
+const phoneTel = BUSINESS_INFO.phoneTel;
 
 const WHY_US = [
   {
@@ -87,27 +87,28 @@ const SERVICE_COLUMNS = [
 
 export function SeoContent() {
   return (
-    <section className="py-16 md:py-20 bg-background border-t border-border">
+    <section className="py-20 md:py-28 bg-background border-t border-border/60">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-16">
 
           {/* Main prose column */}
           <motion.div
-            className="lg:col-span-2 space-y-12"
-            initial={{ opacity: 0, y: 20 }}
+            className="lg:col-span-2 space-y-14"
+            initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.4 }}
+            transition={{ duration: 0.5 }}
           >
             {/* Lead block — dark-theme prose */}
             <div>
               <p className="text-primary text-sm font-semibold tracking-widest uppercase mb-3">
                 Your Local Plumber
               </p>
-              <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-foreground mb-5">
-                Trusted Across 6 Regions — Serving 90+ Suburbs
+              <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-foreground mb-6">
+                Trusted Across 6 Regions — Serving{" "}
+                <span className="text-primary">90+ Suburbs</span>
               </h2>
-              <div className="prose prose-invert max-w-prose prose-p:text-muted-foreground prose-a:text-primary prose-a:no-underline hover:prose-a:underline prose-strong:text-foreground">
+              <div className="prose prose-invert max-w-none prose-p:text-muted-foreground prose-p:leading-relaxed prose-a:text-sky-400 prose-a:no-underline hover:prose-a:text-sky-300 hover:prose-a:underline prose-strong:text-foreground">
                 <p className="!text-lg !leading-relaxed">
                   {BUSINESS_INFO.name} proudly services Sutherland Shire, Wollondilly, the
                   Southern Highlands, Wollongong, Illawarra and the Southern Tablelands.
@@ -128,12 +129,19 @@ export function SeoContent() {
 
             {/* Services */}
             <div>
-              <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-foreground mb-6">
+              <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-foreground mb-8">
                 Complete Plumbing Services Across All 6 Regions
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                {SERVICE_COLUMNS.map((svc) => (
-                  <div key={svc.href}>
+                {SERVICE_COLUMNS.map((svc, index) => (
+                  <motion.div
+                    key={svc.href}
+                    className="bg-card rounded-2xl border border-border/60 shadow-card p-6 transition-all hover:-translate-y-1 hover:border-primary/40 hover:shadow-glow"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: index * 0.05 }}
+                  >
                     <h3 className="text-lg font-semibold text-foreground mb-2">
                       <Link
                         href={svc.href}
@@ -145,20 +153,20 @@ export function SeoContent() {
                     <p className="text-muted-foreground text-sm leading-relaxed">
                       {svc.desc}
                     </p>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </div>
 
             {/* Why choose us */}
             <div>
-              <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-foreground mb-6">
+              <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-foreground mb-8">
                 Why Local Homeowners Choose {BUSINESS_INFO.name}
               </h2>
-              <div className="space-y-4">
+              <div className="space-y-5">
                 {WHY_US.map((item) => (
-                  <div key={item.title} className="flex gap-3">
-                    <span className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary/10 ring-1 ring-primary/20 text-primary text-xs font-bold">
+                  <div key={item.title} className="flex gap-4">
+                    <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-2xl bg-primary/10 ring-1 ring-primary/20 text-primary text-xs font-bold">
                       ✓
                     </span>
                     <div>
@@ -177,11 +185,11 @@ export function SeoContent() {
               <h2 className="text-2xl md:text-3xl font-bold tracking-tight text-foreground mb-4">
                 Plumbing Services Across Our 6 Regions — All Suburbs
               </h2>
-              <p className="text-muted-foreground text-sm mb-5 max-w-prose leading-relaxed">
+              <p className="text-muted-foreground text-sm mb-6 max-w-prose leading-relaxed">
                 We service suburbs and towns across the Sutherland Shire, Wollondilly, the
                 Southern Highlands, Wollongong, the Illawarra and the Southern Tablelands:
               </p>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-4 gap-y-1.5 text-sm text-muted-foreground">
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-4 gap-y-2 text-sm text-muted-foreground">
                 {SUBURB_LINKS.map((loc) => {
                   const suburb = loc
                     .replace("Plumber ", "")
@@ -200,7 +208,7 @@ export function SeoContent() {
               </div>
               <Link
                 href="/locations"
-                className="inline-flex items-center gap-1 mt-5 text-primary text-sm font-semibold hover:underline"
+                className="inline-flex items-center gap-1 mt-6 text-primary text-sm font-semibold hover:underline"
               >
                 View all 90+ service areas
                 <ArrowRight className="h-4 w-4" />
@@ -211,20 +219,20 @@ export function SeoContent() {
           {/* Sidebar */}
           <motion.aside
             className="space-y-6"
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.4, delay: 0.1 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
           >
             {/* Call direct */}
-            <div className="bg-card rounded-xl2 border border-border shadow-card p-6">
+            <div className="bg-card rounded-2xl border border-border/60 shadow-card p-6 md:p-8">
               <h3 className="text-lg font-bold text-foreground mb-1">Call Direct — 24/7</h3>
               <p className="text-muted-foreground text-sm mb-4">
                 For emergencies, call us directly. We answer every call.
               </p>
               <a
                 href={`tel:${phoneTel}`}
-                className="flex items-center justify-center gap-2 w-full bg-primary text-primary-foreground font-bold text-lg rounded-full px-6 py-4 shadow-glow hover:brightness-110 transition"
+                className="flex items-center justify-center gap-2 w-full bg-primary text-primary-foreground font-bold text-lg rounded-full px-6 py-4 shadow-glow hover:brightness-110 transition-all"
                 data-testid="seo-content-phone"
               >
                 <Phone className="h-5 w-5" />
@@ -236,9 +244,9 @@ export function SeoContent() {
             </div>
 
             {/* Our services */}
-            <div className="bg-card rounded-xl2 border border-border shadow-card p-6">
+            <div className="bg-card rounded-2xl border border-border/60 shadow-card p-6 md:p-8">
               <h3 className="text-lg font-bold text-foreground mb-4">Our Services</h3>
-              <ul className="space-y-2">
+              <ul className="space-y-2.5">
                 {SERVICES.map((s) => (
                   <li key={s.id}>
                     <Link
@@ -254,7 +262,7 @@ export function SeoContent() {
             </div>
 
             {/* Reviews on Google */}
-            <div className="bg-card rounded-xl2 border border-border shadow-card p-6">
+            <div className="bg-card rounded-2xl border border-border/60 shadow-card p-6 md:p-8">
               <h3 className="text-lg font-bold text-foreground mb-2">What Our Customers Say</h3>
               <p className="text-muted-foreground text-sm mb-4">
                 Read genuine reviews from local homeowners, or share your own experience.
@@ -263,7 +271,7 @@ export function SeoContent() {
                 href={BUSINESS_INFO.googleReviewLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 w-full ring-1 ring-border hover:ring-primary text-foreground font-semibold rounded-full px-6 py-3 transition"
+                className="flex items-center justify-center gap-2 w-full ring-1 ring-border hover:ring-primary text-foreground font-semibold rounded-full px-6 py-3 transition-all"
                 data-testid="seo-content-google-reviews"
               >
                 <ExternalLink className="h-4 w-4 text-primary" />
@@ -272,7 +280,7 @@ export function SeoContent() {
             </div>
 
             {/* Emergency */}
-            <div className="bg-emergency/10 border border-emergency/20 rounded-xl2 p-6">
+            <div className="bg-emergency/10 border border-emergency/20 rounded-2xl p-6 md:p-8">
               <h3 className="text-lg font-bold text-foreground mb-2 flex items-center gap-2">
                 <Siren className="h-5 w-5 text-emergency" />
                 Plumbing Emergency?
@@ -282,7 +290,7 @@ export function SeoContent() {
               </p>
               <a
                 href={`tel:${phoneTel}`}
-                className="flex items-center justify-center gap-2 w-full bg-emergency text-white font-bold rounded-full px-4 py-3 hover:brightness-110 transition"
+                className="flex items-center justify-center gap-2 w-full bg-emergency text-white font-bold rounded-full px-4 py-3 hover:brightness-110 transition-all"
                 data-testid="seo-content-emergency"
               >
                 <Phone className="h-4 w-4" />
@@ -291,9 +299,9 @@ export function SeoContent() {
             </div>
 
             {/* Service areas */}
-            <div className="bg-card rounded-xl2 border border-border shadow-card p-6">
+            <div className="bg-card rounded-2xl border border-border/60 shadow-card p-6 md:p-8">
               <h3 className="text-lg font-bold text-foreground mb-3">Service Areas</h3>
-              <div className="space-y-1.5">
+              <div className="space-y-2">
                 {SERVICE_AREAS.map((area) => (
                   <div key={area.name} className="flex justify-between gap-3 text-sm">
                     <span className="text-foreground font-medium">{area.name}</span>

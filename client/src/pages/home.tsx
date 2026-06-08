@@ -1,18 +1,14 @@
 import { Layout } from "@/components/layout/layout";
 import { Hero } from "@/components/home/hero";
-import { TrustSignals } from "@/components/home/trust-signals";
+import { FeatureCards } from "@/components/home/feature-cards";
 import { ServicesGrid } from "@/components/home/services-grid";
-import { EmergencyBanner } from "@/components/home/emergency-banner";
-import { ProcessSteps } from "@/components/home/process-steps";
-import { FAQSection } from "@/components/home/faq-section";
-import { CTASection } from "@/components/home/cta-section";
+import { MeetTheTeam } from "@/components/home/meet-the-team";
 import { WorkGallery } from "@/components/home/work-gallery";
+import { PromiseReviews } from "@/components/home/promise-reviews";
 import { ServiceAreaMap } from "@/components/home/service-area-map";
 import { SeoContent } from "@/components/home/seo-content";
-import { ValueBand } from "@/components/home/value-band";
-import { TeamBand } from "@/components/home/team-band";
-import { CallBar } from "@/components/home/call-bar";
-import { PromiseReviews } from "@/components/home/promise-reviews";
+import { FAQSection } from "@/components/home/faq-section";
+import { CTASection } from "@/components/home/cta-section";
 import { SEOHead } from "@/components/seo/seo-head";
 import { LocalBusinessSchema, FAQSchema, OrganizationSchema, WebsiteSchema } from "@/components/seo/structured-data";
 import { HOME_FAQS } from "@shared/schema";
@@ -54,18 +50,14 @@ export default function Home() {
       <OrganizationSchema />
       <WebsiteSchema />
       <FAQSchema faqs={HOME_FAQS} />
-      
+
       <Hero />
-      <TrustSignals />
+      <FeatureCards />
       <ServicesGrid />
-      <ValueBand />
-      <EmergencyBanner />
-      <ProcessSteps />
+      <MeetTheTeam />
       <WorkGallery />
-      <TeamBand />
-      <CallBar />
-      <ServiceAreaMap />
       <PromiseReviews />
+      <ServiceAreaMap />
       <SeoContent />
       <FAQSection />
       <CTASection />
