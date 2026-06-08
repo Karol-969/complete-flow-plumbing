@@ -200,7 +200,7 @@ export const BUSINESS_INFO = {
   googleRating: "5.0",
   googleReviewCount: 38, // real reviews collected; update to the exact current Google total
 
-  googleMapsUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d160000!2d150.5800!3d-34.6200!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6b12a5f2aa4a9cc1%3A0x5017d681632ccc0!2sWollongong%20to%20the%20Southern%20Highlands%2C%20NSW!5e0!3m2!1sen!2sau!4v1703000000000!5m2!1sen!2sau",
+  googleMapsUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d424146.1027831!2d150.7000!3d-34.0500!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6b12a5f2aa4a9cc1%3A0x5017d681632ccc0!2sSydney%2C%20Illawarra%20%26%20Southern%20Highlands%2C%20NSW!5e0!3m2!1sen!2sau!4v1703000000000!5m2!1sen!2sau",
   googleMapsSearchUrl: "https://www.google.com/maps/search/Complete+Flow+Plumbing",
   tagline: "Your Local Emergency & Same-Day Plumber",
   guarantee: "Workmanship Guarantee",

@@ -8,9 +8,14 @@ export default function Contact() {
   return (
     <Layout>
       {/* Hero */}
-      <section className="py-16 md:py-20 bg-primary">
-        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
+      <section className="relative overflow-hidden py-20 md:py-24 bg-gradient-to-br from-[#0a66c2] via-[#0a5598] to-[#063b66]">
+        <div aria-hidden className="pointer-events-none absolute -top-24 -left-20 h-72 w-72 rounded-full bg-white/10 blur-3xl" />
+        <div aria-hidden className="pointer-events-none absolute -bottom-24 right-0 h-80 w-80 rounded-full bg-[#00d4ff]/15 blur-3xl" />
+        <div className="relative max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <p className="text-[#9fe3ff] text-sm font-semibold tracking-widest uppercase mb-3">
+            Get In Touch
+          </p>
+          <h1 className="text-4xl md:text-6xl font-black tracking-tight text-white mb-5">
             Contact Us
           </h1>
           <p className="text-xl text-white/90 max-w-2xl mx-auto">
@@ -40,8 +45,22 @@ export default function Contact() {
       </section>
 
       {/* Contact Content */}
-      <section className="py-16 md:py-24 bg-background">
-        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="relative overflow-hidden py-16 md:py-24 bg-gradient-to-b from-primary/5 via-background to-primary/5">
+        {/* decorative background blobs */}
+        <div aria-hidden className="pointer-events-none absolute -top-16 -left-24 h-80 w-80 rounded-full bg-primary/10 blur-3xl" />
+        <div aria-hidden className="pointer-events-none absolute top-1/3 right-0 h-72 w-72 rounded-full bg-[#00d4ff]/10 blur-3xl" />
+        <div aria-hidden className="pointer-events-none absolute bottom-0 left-1/3 h-64 w-64 rounded-full bg-primary/5 blur-3xl" />
+        {/* subtle dotted texture */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 opacity-[0.4]"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle, rgba(10,102,194,0.10) 1px, transparent 1px)",
+            backgroundSize: "22px 22px",
+          }}
+        />
+        <div className="relative max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
             {/* Contact Info */}
             <div className="lg:col-span-1">
@@ -92,7 +111,7 @@ export default function Contact() {
                     <div>
                       <p className="font-semibold text-foreground">Service Area</p>
                       <p className="text-muted-foreground">{BUSINESS_INFO.address}</p>
-                      <p className="text-sm text-muted-foreground">Sutherland Shire, Wollondilly, Southern Highlands, Wollongong, Illawarra & Southern Tablelands</p>
+                      <p className="text-sm text-muted-foreground">11 regions across greater Sydney, the Illawarra, Southern Highlands & Southern Tablelands</p>
                     </div>
                   </div>
                 </Card>
@@ -120,17 +139,16 @@ export default function Contact() {
         </div>
       </section>
 
-      {/* Map placeholder */}
-      <section className="h-96 bg-muted relative">
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="text-center">
-            <MapPin className="h-16 w-16 text-primary mx-auto mb-4" />
-            <p className="text-lg font-semibold text-foreground">Service Area Map</p>
-            <p className="text-sm text-muted-foreground mt-2">
-              [EMBED GOOGLE MAP HERE showing service area]
-            </p>
-          </div>
-        </div>
+      {/* Service area map */}
+      <section className="relative">
+        <iframe
+          src={BUSINESS_INFO.googleMapsUrl}
+          title="Complete Flow Plumbing service area"
+          className="w-full h-[28rem] border-0 grayscale-[15%]"
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+          allowFullScreen
+        />
       </section>
     </Layout>
   );
