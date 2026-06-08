@@ -2,6 +2,7 @@ import { Layout } from "@/components/layout/layout";
 import { Hero } from "@/components/home/hero";
 import { FeatureCards } from "@/components/home/feature-cards";
 import { ServicesGrid } from "@/components/home/services-grid";
+import { HighlightCircles } from "@/components/home/highlight-circles";
 import { MeetTheTeam } from "@/components/home/meet-the-team";
 import { WorkGallery } from "@/components/home/work-gallery";
 import { PromiseReviews } from "@/components/home/promise-reviews";
@@ -55,6 +56,7 @@ export default function Home() {
       <Hero />
       <FeatureCards />
       <ServicesGrid />
+      <HighlightCircles />
       <MeetTheTeam />
       <WorkGallery />
       <PromiseReviews />
