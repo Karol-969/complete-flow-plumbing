@@ -16,16 +16,23 @@ import {
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
+  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { useToast } from "@/hooks/use-toast";
-import { quoteRequestSchema, type QuoteRequest, SERVICES, ALL_LOCATIONS } from "@shared/schema";
+import { quoteRequestSchema, type QuoteRequest, SERVICES, REGIONS, locationsByRegion } from "@shared/schema";
 import { apiRequest } from "@/lib/queryClient";
 import { Loader2, Send, CheckCircle } from "lucide-react";
 import { useState } from "react";
+
+// Paste your FREE Web3Forms access key here (get it at https://web3forms.com using
+// completeflowplumbing@gmail.com). When set, every quote request is emailed straight
+// to that inbox. Leave empty and submissions are still saved server-side.
+const WEB3FORMS_ACCESS_KEY = "";
 
 export function QuoteForm() {
   const { toast } = useToast();
@@ -46,7 +53,31 @@ export function QuoteForm() {
 
   const mutation = useMutation({
     mutationFn: async (data: QuoteRequest) => {
+      // 1) Save the lead server-side (admin record).
       const response = await apiRequest("POST", "/api/quotes", data);
+      // 2) Email it straight to the business inbox via Web3Forms (if configured).
+      if (WEB3FORMS_ACCESS_KEY) {
+        try {
+          await fetch("https://api.web3forms.com/submit", {
+            method: "POST",
+            headers: { "Content-Type": "application/json", Accept: "application/json" },
+            body: JSON.stringify({
+              access_key: WEB3FORMS_ACCESS_KEY,
+              subject: `New Quote Request — ${data.name} (${data.suburb})`,
+              from_name: "Complete Flow Plumbing Website",
+              name: data.name,
+              phone: data.phone,
+              email: data.email || "(not provided)",
+              suburb: data.suburb,
+              service: data.serviceType,
+              urgency: data.urgency,
+              message: data.message || "(none)",
+            }),
+          });
+        } catch {
+          /* email is best-effort; the lead is already saved above */
+        }
+      }
       return response;
     },
     onSuccess: () => {
@@ -170,12 +201,24 @@ export function QuoteForm() {
                         <SelectValue placeholder="Select your suburb" />
                       </SelectTrigger>
                     </FormControl>
-                    <SelectContent>
-                      {ALL_LOCATIONS.map((location) => (
-                        <SelectItem key={location.id} value={location.name}>
-                          {location.name}
-                        </SelectItem>
+                    <SelectContent className="max-h-72">
+                      {REGIONS.map((region) => (
+                        <SelectGroup key={region.slug}>
+                          <SelectLabel className="text-primary">
+                            {region.displayName}
+                          </SelectLabel>
+                          {locationsByRegion(region.slug).map((location) => (
+                            <SelectItem key={location.id} value={location.name}>
+                              {location.name}
+                            </SelectItem>
+                          ))}
+                        </SelectGroup>
                       ))}
+                      <SelectGroup>
+                        <SelectItem value="Other / Not listed">
+                          Other / My suburb isn&apos;t listed
+                        </SelectItem>
+                      </SelectGroup>
                     </SelectContent>
                   </Select>
                   <FormMessage />
@@ -201,6 +244,7 @@ export function QuoteForm() {
                           {service.title}
                         </SelectItem>
                       ))}
+                      <SelectItem value="Other">Other (something else)</SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />
