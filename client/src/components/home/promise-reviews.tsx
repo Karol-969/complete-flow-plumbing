@@ -144,7 +144,7 @@ export function PromiseReviews() {
               data-testid="button-reviews-google"
             >
               <a
-                href={BUSINESS_INFO.googleMapsSearchUrl}
+                href={BUSINESS_INFO.googleReviewLink}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2"

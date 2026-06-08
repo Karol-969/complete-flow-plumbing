@@ -6,6 +6,7 @@ import { MeetTheTeam } from "@/components/home/meet-the-team";
 import { WorkGallery } from "@/components/home/work-gallery";
 import { PromiseReviews } from "@/components/home/promise-reviews";
 import { ServiceAreaMap } from "@/components/home/service-area-map";
+import { GoogleReviews } from "@/components/home/google-reviews";
 import { SeoContent } from "@/components/home/seo-content";
 import { FAQSection } from "@/components/home/faq-section";
 import { CTASection } from "@/components/home/cta-section";
@@ -58,6 +59,7 @@ export default function Home() {
       <WorkGallery />
       <PromiseReviews />
       <ServiceAreaMap />
+      <GoogleReviews />
       <SeoContent />
       <FAQSection />
       <CTASection />
