@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { BUSINESS_INFO } from "@shared/schema";
+import promiseBg from "@assets/cfp-gallery-16.jpeg";
 import {
   Wallet,
   Award,
@@ -48,10 +49,22 @@ const promiseItems = [
 export function PromiseReviews() {
   return (
     <section className="relative py-20 md:py-28 bg-background overflow-hidden">
+      {/* Darkened, blurred real job photo as a subtle background texture */}
+      <img
+        src={promiseBg}
+        alt=""
+        aria-hidden
+        className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-[0.16] blur-[2px] scale-105"
+      />
+      {/* Gradient + vignette so the cards stay crisp and readable */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-background/95 via-background/85 to-background"
+      />
       {/* Atmospheric sky glow behind the header */}
       <div
         aria-hidden
-        className="pointer-events-none absolute left-1/2 top-0 -translate-x-1/2 h-80 w-[42rem] max-w-full rounded-full bg-primary/10 blur-3xl"
+        className="pointer-events-none absolute left-1/2 top-0 -translate-x-1/2 h-80 w-[42rem] max-w-full rounded-full bg-primary/15 blur-3xl"
       />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -131,7 +144,7 @@ export function PromiseReviews() {
               data-testid="button-reviews-google"
             >
               <a
-                href={BUSINESS_INFO.googleReviewLink}
+                href={BUSINESS_INFO.googleMapsSearchUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2"

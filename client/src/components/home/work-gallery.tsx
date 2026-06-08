@@ -1,96 +1,100 @@
 import { useState, useCallback, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
-import { WORK_IMAGES, BUSINESS_INFO } from "@shared/schema";
-import { X, ChevronLeft, ChevronRight, Phone, ArrowRight } from "lucide-react";
+import { BUSINESS_INFO } from "@shared/schema";
+import {
+  X,
+  ChevronLeft,
+  ChevronRight,
+  Phone,
+  ArrowRight,
+  Maximize2,
+  Play,
+} from "lucide-react";
 
-// Static @assets imports already present in the repo. WORK_IMAGES in the
-// schema reference these exact filenames; we bridge schema data -> resolved
-// module by id so the gallery is driven by real WORK_IMAGES without inventing
-// any new asset paths.
-import hotWater1 from "@assets/WhatsApp_Image_2025-12-18_at_6.50.35_PM_1766462914108.jpeg";
-import gasUnit from "@assets/WhatsApp_Image_2025-12-18_at_6.50.36_PM_1766462914109.jpeg";
-import drainCleaning from "@assets/WhatsApp_Image_2025-12-18_at_6.52.14_PM_1766462914110.jpeg";
-import toiletUnblock from "@assets/WhatsApp_Image_2025-12-18_at_6.52.15_PM_1766462914110.jpeg";
-import pvcPipe from "@assets/WhatsApp_Image_2025-12-18_at_6.52.13_PM_1766462914110.jpeg";
-import sewerLine from "@assets/WhatsApp_Image_2025-12-18_at_6.50.34_PM_(3)_1766462914110.jpeg";
-import outdoorTap from "@assets/WhatsApp_Image_2025-12-18_at_6.50.34_PM_(2)_1766462914111.jpeg";
-import pipeRepair from "@assets/WhatsApp_Image_2025-12-18_at_6.50.34_PM_(1)_1766462914111.jpeg";
-import waterPipe from "@assets/WhatsApp_Image_2025-12-18_at_6.50.34_PM_1766462914111.jpeg";
-import toiletSeat from "@assets/WhatsApp_Image_2025-12-18_at_6.50.33_PM_1766462914112.jpeg";
-import tapRepair from "@assets/WhatsApp_Image_2025-12-18_at_6.50.32_PM_(1)_1766462914112.jpeg";
-import bathroomReno from "@assets/WhatsApp_Image_2025-12-18_at_6.50.32_PM_1766462914112.jpeg";
+// Real completed-job photos, imported explicitly via the @assets alias so Vite
+// fingerprints and bundles them. Other components import @assets the same way.
+import g1 from "@assets/cfp-gallery-01.jpeg";
+import g2 from "@assets/cfp-gallery-02.jpeg";
+import g3 from "@assets/cfp-gallery-03.jpeg";
+import g4 from "@assets/cfp-gallery-04.jpeg";
+import g5 from "@assets/cfp-gallery-05.jpeg";
+import g6 from "@assets/cfp-gallery-06.jpeg";
+import g7 from "@assets/cfp-gallery-07.jpeg";
+import g8 from "@assets/cfp-gallery-08.jpeg";
+import g9 from "@assets/cfp-gallery-09.jpeg";
+import g10 from "@assets/cfp-gallery-10.jpeg";
+import g11 from "@assets/cfp-gallery-11.jpeg";
+import g12 from "@assets/cfp-gallery-12.jpeg";
+import g13 from "@assets/cfp-gallery-13.jpeg";
+import g14 from "@assets/cfp-gallery-14.jpeg";
+import g15 from "@assets/cfp-gallery-15.jpeg";
+import g16 from "@assets/cfp-gallery-16.jpeg";
+import g17 from "@assets/cfp-gallery-17.jpeg";
+import g18 from "@assets/cfp-gallery-18.jpeg";
+import g19 from "@assets/cfp-gallery-19.jpeg";
+import g20 from "@assets/cfp-gallery-20.jpeg";
+import g21 from "@assets/cfp-gallery-21.jpeg";
+import g22 from "@assets/cfp-gallery-22.jpeg";
+import g23 from "@assets/cfp-gallery-23.jpeg";
+import g24 from "@assets/cfp-gallery-24.jpeg";
+import g25 from "@assets/cfp-gallery-25.jpeg";
+import g26 from "@assets/cfp-gallery-26.jpeg";
+import workVideo from "@assets/cfp-work-video.mp4";
 
-// Map WORK_IMAGES.id -> resolved image module (build-safe, no new paths).
-const IMAGE_BY_ID: Record<string, string> = {
-  "1": hotWater1,
-  "2": gasUnit,
-  "3": drainCleaning,
-  "4": toiletUnblock,
-  "5": pvcPipe,
-  "6": sewerLine,
-  "7": outdoorTap,
-  "8": pipeRepair,
-  "9": waterPipe,
-  "10": toiletSeat,
-  "11": tapRepair,
-  "12": bathroomReno,
-};
+// Array of all 26 resolved image URLs, in order.
+const GALLERY_IMAGES: string[] = [
+  g1, g2, g3, g4, g5, g6, g7, g8, g9, g10, g11, g12, g13,
+  g14, g15, g16, g17, g18, g19, g20, g21, g22, g23, g24, g25, g26,
+];
 
-// Human-readable label for each schema category (truthful, descriptive only).
-const CATEGORY_LABEL: Record<string, string> = {
-  emergency: "Emergency",
-  "hot-water": "Hot Water",
-  gas: "Gas Fitting",
-  drainage: "Drainage",
-  "leak-detection": "Leak & Repair",
-};
+// Generic, truthful alt text — no invented details, names or counts.
+const ALT_TEXT = `Completed plumbing job by ${BUSINESS_INFO.name}`;
 
-interface GalleryItem {
-  id: string;
-  src: string;
-  alt: string;
-  caption: string;
-  category: string;
-}
-
-// Build the gallery straight from the real WORK_IMAGES data.
-const ITEMS: GalleryItem[] = WORK_IMAGES.filter((img) => IMAGE_BY_ID[img.id]).map(
-  (img) => ({
-    id: img.id,
-    src: IMAGE_BY_ID[img.id],
-    alt: img.alt,
-    caption: img.alt,
-    category: CATEGORY_LABEL[img.category] ?? "Plumbing",
-  }),
-);
+// How many photos to show before "View all our work" reveals the rest.
+const INITIAL_COUNT = 12;
 
 export function WorkGallery() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const [showAll, setShowAll] = useState(false);
   const isOpen = activeIndex !== null;
+  const total = GALLERY_IMAGES.length;
 
   const close = useCallback(() => setActiveIndex(null), []);
   const prev = useCallback(
-    () => setActiveIndex((i) => (i === null ? i : (i - 1 + ITEMS.length) % ITEMS.length)),
-    [],
+    () => setActiveIndex((i) => (i === null ? i : (i - 1 + total) % total)),
+    [total],
   );
   const next = useCallback(
-    () => setActiveIndex((i) => (i === null ? i : (i + 1) % ITEMS.length)),
-    [],
+    () => setActiveIndex((i) => (i === null ? i : (i + 1) % total)),
+    [total],
   );
 
+  // Keyboard: Escape closes, arrows navigate while the lightbox is open.
   useEffect(() => {
     if (!isOpen) return;
     const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") close();
       if (e.key === "ArrowLeft") prev();
       if (e.key === "ArrowRight") next();
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [isOpen, prev, next]);
+  }, [isOpen, close, prev, next]);
 
-  const active = activeIndex !== null ? ITEMS[activeIndex] : null;
+  // Lock body scroll while the lightbox is open.
+  useEffect(() => {
+    if (!isOpen) return;
+    const original = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = original;
+    };
+  }, [isOpen]);
+
+  const visibleImages = showAll
+    ? GALLERY_IMAGES
+    : GALLERY_IMAGES.slice(0, INITIAL_COUNT);
 
   return (
     <section className="relative py-20 md:py-28 bg-background overflow-hidden">
@@ -116,52 +120,108 @@ export function WorkGallery() {
             Real Jobs, <span className="text-primary">Real Results</span>
           </h2>
           <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
-            A look at recent jobs across the Sutherland Shire, Wollongong, the
-            Southern Highlands and beyond — from emergency dig-ups to hot water
-            installs and gas fitting.
+            A look at recent work from our own jobs — hot water systems, drains,
+            gas, sinks, toilets, water filters and pipework. Every photo is a
+            real job completed by {BUSINESS_INFO.name}.
           </p>
         </motion.div>
 
-        {/* Clean rounded-2xl photo grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-          {ITEMS.map((item, index) => (
+        {/* Premium responsive tile grid */}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
+          {/* Featured video tile — spans 2 columns on larger screens */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.5 }}
+            className="group relative col-span-2 row-span-1 overflow-hidden rounded-2xl border border-border/60 bg-card shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-glow"
+            data-testid="gallery-video"
+          >
+            <div className="relative aspect-[4/3] sm:aspect-[16/9] overflow-hidden">
+              <video
+                src={workVideo}
+                autoPlay
+                muted
+                loop
+                playsInline
+                aria-label={`Short clip of a real plumbing job by ${BUSINESS_INFO.name}`}
+                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              {/* Gradient for badge legibility */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/10" />
+              {/* Live clip badge */}
+              <span className="absolute top-3 left-3 inline-flex items-center gap-1.5 rounded-full bg-primary/90 px-3 py-1 text-xs font-bold uppercase tracking-wide text-primary-foreground shadow-glow backdrop-blur-sm">
+                <Play className="h-3.5 w-3.5 fill-current" />
+                Watch
+              </span>
+              <span className="absolute bottom-3 left-3 flex items-center gap-2 text-sm font-medium text-white/90">
+                <span className="relative flex h-2.5 w-2.5">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75" />
+                  <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-primary" />
+                </span>
+                Live from the job
+              </span>
+            </div>
+          </motion.div>
+
+          {/* Photo tiles */}
+          {visibleImages.map((src, index) => (
             <motion.button
-              key={item.id}
+              key={src}
               type="button"
               onClick={() => setActiveIndex(index)}
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.45, delay: Math.min(index, 6) * 0.06 }}
+              transition={{
+                duration: 0.45,
+                delay: Math.min(index, 8) * 0.05,
+              }}
               className="group relative block overflow-hidden rounded-2xl border border-border/60 bg-card shadow-card text-left transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-glow"
-              data-testid={`gallery-image-${item.id}`}
-              aria-label={`View ${item.alt}`}
+              data-testid={`gallery-image-${index + 1}`}
+              aria-label={`View photo ${index + 1}: ${ALT_TEXT}`}
             >
-              <div className="relative aspect-[4/3] overflow-hidden">
+              <div className="relative aspect-square md:aspect-[4/3] overflow-hidden">
                 <img
-                  src={item.src}
-                  alt={item.alt}
+                  src={src}
+                  alt={ALT_TEXT}
                   loading="lazy"
                   className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
-                {/* Subtle gradient for caption legibility */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
-
-                {/* Category chip */}
-                <span className="absolute top-3 left-3 inline-flex items-center rounded-full bg-primary/15 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-primary ring-1 ring-primary/30 backdrop-blur-sm">
-                  {item.category}
-                </span>
-
-                {/* Subtle caption */}
-                <div className="absolute inset-x-0 bottom-0 p-4 md:p-5">
-                  <p className="text-sm md:text-[15px] font-medium leading-snug text-white">
-                    {item.caption}
-                  </p>
+                {/* Hover overlay: dark gradient + maximize icon */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/0 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                  <span className="flex h-11 w-11 items-center justify-center rounded-full bg-primary/90 text-primary-foreground shadow-glow ring-1 ring-white/20 backdrop-blur-sm">
+                    <Maximize2 className="h-5 w-5" />
+                  </span>
                 </div>
               </div>
             </motion.button>
           ))}
         </div>
+
+        {/* View all our work */}
+        {!showAll && total > INITIAL_COUNT && (
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.4 }}
+            className="mt-10 flex justify-center"
+          >
+            <Button
+              type="button"
+              variant="outline"
+              size="lg"
+              onClick={() => setShowAll(true)}
+              className="rounded-full border-primary/40 px-7 py-3.5 font-semibold text-foreground hover:border-primary hover:bg-primary/10 hover:text-primary transition"
+              data-testid="button-view-all-work"
+            >
+              View all our work
+              <ArrowRight className="h-5 w-5 ml-2" />
+            </Button>
+          </motion.div>
+        )}
 
         {/* CTA */}
         <motion.div
@@ -187,68 +247,86 @@ export function WorkGallery() {
             </a>
           </Button>
         </motion.div>
-
-        {/* Lightbox */}
-        <Dialog open={isOpen} onOpenChange={(open) => !open && close()}>
-          <DialogContent
-            className="max-w-4xl p-0 bg-black border-0 overflow-hidden rounded-2xl"
-            aria-describedby={undefined}
-          >
-            <DialogTitle className="sr-only">{active?.alt ?? "Gallery image"}</DialogTitle>
-            {active && (
-              <div className="relative">
-                <img
-                  src={active.src}
-                  alt={active.alt}
-                  className="w-full h-auto max-h-[80vh] object-contain"
-                />
-
-                <div className="absolute inset-x-0 bottom-0 p-5 bg-gradient-to-t from-black/85 to-transparent">
-                  <span className="inline-flex items-center rounded-full bg-primary/15 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-primary ring-1 ring-primary/30 mb-2">
-                    {active.category}
-                  </span>
-                  <p className="text-white text-sm md:text-base font-medium">
-                    {active.caption}
-                  </p>
-                </div>
-
-                {ITEMS.length > 1 && (
-                  <>
-                    <button
-                      type="button"
-                      onClick={prev}
-                      aria-label="Previous image"
-                      data-testid="gallery-prev"
-                      className="absolute left-3 top-1/2 -translate-y-1/2 rounded-full bg-black/50 p-2.5 text-white transition hover:bg-black/80"
-                    >
-                      <ChevronLeft className="h-6 w-6" />
-                    </button>
-                    <button
-                      type="button"
-                      onClick={next}
-                      aria-label="Next image"
-                      data-testid="gallery-next"
-                      className="absolute right-3 top-1/2 -translate-y-1/2 rounded-full bg-black/50 p-2.5 text-white transition hover:bg-black/80"
-                    >
-                      <ChevronRight className="h-6 w-6" />
-                    </button>
-                  </>
-                )}
-
-                <button
-                  type="button"
-                  onClick={close}
-                  aria-label="Close"
-                  data-testid="gallery-close-button"
-                  className="absolute top-3 right-3 rounded-full bg-black/50 p-2 text-white transition hover:bg-white/20"
-                >
-                  <X className="h-6 w-6" />
-                </button>
-              </div>
-            )}
-          </DialogContent>
-        </Dialog>
       </div>
+
+      {/* Lightbox */}
+      <AnimatePresence>
+        {isOpen && activeIndex !== null && (
+          <motion.div
+            key="lightbox"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            role="dialog"
+            aria-modal="true"
+            aria-label={ALT_TEXT}
+            onClick={close}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md p-4 sm:p-8"
+            data-testid="gallery-lightbox"
+          >
+            {/* Close */}
+            <button
+              type="button"
+              onClick={close}
+              aria-label="Close"
+              data-testid="gallery-close-button"
+              className="absolute top-4 right-4 z-10 rounded-full bg-white/10 p-2.5 text-white transition hover:bg-white/25"
+            >
+              <X className="h-6 w-6" />
+            </button>
+
+            {/* Prev */}
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                prev();
+              }}
+              aria-label="Previous image"
+              data-testid="gallery-prev"
+              className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 z-10 rounded-full bg-white/10 p-2.5 sm:p-3 text-white transition hover:bg-primary hover:text-primary-foreground"
+            >
+              <ChevronLeft className="h-6 w-6 sm:h-7 sm:w-7" />
+            </button>
+
+            {/* Next */}
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                next();
+              }}
+              aria-label="Next image"
+              data-testid="gallery-next"
+              className="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 z-10 rounded-full bg-white/10 p-2.5 sm:p-3 text-white transition hover:bg-primary hover:text-primary-foreground"
+            >
+              <ChevronRight className="h-6 w-6 sm:h-7 sm:w-7" />
+            </button>
+
+            {/* Image — stop propagation so clicking it doesn't close */}
+            <motion.div
+              key={activeIndex}
+              initial={{ opacity: 0, scale: 0.97 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.2 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative flex max-h-full max-w-5xl flex-col items-center"
+            >
+              <img
+                src={GALLERY_IMAGES[activeIndex]}
+                alt={ALT_TEXT}
+                className="max-h-[82vh] w-auto max-w-full rounded-xl object-contain shadow-2xl"
+              />
+              <p className="mt-4 text-sm text-white/70">
+                {ALT_TEXT} · {activeIndex + 1} / {total}
+              </p>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }
+
+export default WorkGallery;
