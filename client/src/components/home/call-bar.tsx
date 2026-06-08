@@ -13,7 +13,7 @@ export function CallBar() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.4 }}
-        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 md:py-6"
+        className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-5 md:py-6"
       >
         <a
           href={`tel:${BUSINESS_INFO.phoneTel}`}

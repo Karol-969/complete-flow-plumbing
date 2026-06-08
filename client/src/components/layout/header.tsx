@@ -169,15 +169,15 @@ export function Header() {
         data-testid="site-header"
         data-scrolled={scrolled}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-24">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-20">
             {/* Logo + Google rating */}
             <div className="flex items-center gap-3 lg:gap-5">
               <Link href="/" className="flex items-center gap-3" data-testid="header-logo-link">
                 <img
                   src={logoImage}
                   alt="Complete Flow Plumbing"
-                  className="h-16 md:h-20 w-auto"
+                  className="h-12 md:h-14 w-auto"
                   data-testid="header-logo"
                 />
               </Link>

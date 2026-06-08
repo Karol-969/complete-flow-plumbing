@@ -12,7 +12,7 @@ export function Testimonials() {
         className="pointer-events-none absolute left-1/2 top-0 -translate-x-1/2 w-[40rem] h-[40rem] bg-primary/10 blur-3xl rounded-full"
       />
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           className="text-center mb-12 max-w-2xl mx-auto"
           initial={{ opacity: 0, y: 20 }}

@@ -48,17 +48,25 @@ const promiseItems = [
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
+// Springy "pop" — overshoots slightly so cards bounce in one-by-one.
+const POP = { type: "spring" as const, stiffness: 240, damping: 15, mass: 0.7 };
+
 const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 50 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE } },
+  hidden: { opacity: 0, y: 24, scale: 0.88 },
+  show: { opacity: 1, y: 0, scale: 1, transition: POP },
 };
 const fadeLeft: Variants = {
-  hidden: { opacity: 0, x: -60 },
-  show: { opacity: 1, x: 0, transition: { duration: 0.6, ease: EASE } },
+  hidden: { opacity: 0, x: -24, scale: 0.88 },
+  show: { opacity: 1, x: 0, scale: 1, transition: POP },
 };
 const fadeRight: Variants = {
-  hidden: { opacity: 0, x: 60 },
-  show: { opacity: 1, x: 0, transition: { duration: 0.6, ease: EASE } },
+  hidden: { opacity: 0, x: 24, scale: 0.88 },
+  show: { opacity: 1, x: 0, scale: 1, transition: POP },
+};
+// Heading pop — scales up from 0.9 with the same springy overshoot.
+const popHeading: Variants = {
+  hidden: { opacity: 0, scale: 0.9 },
+  show: { opacity: 1, scale: 1, transition: POP },
 };
 const fade: Variants = {
   hidden: { opacity: 0 },
@@ -78,11 +86,12 @@ export function PromiseReviews() {
     },
   };
 
+  // Spring pop on interactive cards — lift + slight scale overshoot.
   const hoverLift = reduce
     ? undefined
     : {
+        scale: 1.03,
         y: -6,
-        scale: 1.02,
         transition: { type: "spring" as const, stiffness: 300, damping: 20 },
       };
 
@@ -114,7 +123,7 @@ export function PromiseReviews() {
         }
       />
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section header */}
         <motion.div
           variants={container}
@@ -130,7 +139,7 @@ export function PromiseReviews() {
             Why Choose Us
           </motion.p>
           <motion.h2
-            variants={v(fadeUp)}
+            variants={v(popHeading)}
             className="text-3xl md:text-5xl font-bold tracking-tight text-foreground"
           >
             The Complete Flow <span className="text-primary">Promise</span>
@@ -240,8 +249,22 @@ export function PromiseReviews() {
             </p>
             <motion.div
               className="w-full sm:w-fit"
-              whileHover={reduce ? undefined : { scale: 1.04 }}
-              whileTap={reduce ? undefined : { scale: 0.96 }}
+              whileHover={
+                reduce
+                  ? undefined
+                  : {
+                      scale: 1.05,
+                      transition: { type: "spring", stiffness: 400, damping: 17 },
+                    }
+              }
+              whileTap={
+                reduce
+                  ? undefined
+                  : {
+                      scale: 0.9,
+                      transition: { type: "spring", stiffness: 400, damping: 17 },
+                    }
+              }
             >
               <Button
                 asChild

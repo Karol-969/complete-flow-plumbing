@@ -14,13 +14,16 @@ const benefits = [
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
+// Springy overshoot — elements pop/bounce slightly as they reveal.
+const POP_SPRING = { type: "spring" as const, stiffness: 240, damping: 15, mass: 0.7 };
+
 const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 50 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE } },
+  hidden: { opacity: 0, y: 24, scale: 0.88 },
+  show: { opacity: 1, y: 0, scale: 1, transition: POP_SPRING },
 };
 const zoomIn: Variants = {
-  hidden: { opacity: 0, scale: 0.92 },
-  show: { opacity: 1, scale: 1, transition: { duration: 0.6, ease: EASE } },
+  hidden: { opacity: 0, scale: 0.9 },
+  show: { opacity: 1, scale: 1, transition: POP_SPRING },
 };
 const fade: Variants = {
   hidden: { opacity: 0 },
@@ -42,7 +45,7 @@ export function CTASection() {
 
   return (
     <section className="bg-background py-20 md:py-28">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           variants={v(fadeUp)}
           initial="hidden"
@@ -110,8 +113,9 @@ export function CTASection() {
               className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10"
             >
               <motion.div
-                whileHover={reduce ? undefined : { scale: 1.04 }}
-                whileTap={reduce ? undefined : { scale: 0.96 }}
+                whileHover={reduce ? undefined : { scale: 1.05 }}
+                whileTap={reduce ? undefined : { scale: 0.9 }}
+                transition={reduce ? undefined : { type: "spring", stiffness: 400, damping: 17 }}
                 className="w-full sm:w-auto"
               >
                 <Button
@@ -131,8 +135,9 @@ export function CTASection() {
                 </Button>
               </motion.div>
               <motion.div
-                whileHover={reduce ? undefined : { scale: 1.04 }}
-                whileTap={reduce ? undefined : { scale: 0.96 }}
+                whileHover={reduce ? undefined : { scale: 1.05 }}
+                whileTap={reduce ? undefined : { scale: 0.9 }}
+                transition={reduce ? undefined : { type: "spring", stiffness: 400, damping: 17 }}
                 className="w-full sm:w-auto"
               >
                 <Button

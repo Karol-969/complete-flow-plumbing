@@ -22,7 +22,7 @@ export function Breadcrumbs({ items }: BreadcrumbsProps) {
         className="py-3 px-4 sm:px-6 lg:px-8 bg-muted/30"
         data-testid="nav-breadcrumbs"
       >
-        <ol className="flex items-center flex-wrap gap-1 text-sm max-w-7xl mx-auto">
+        <ol className="flex items-center flex-wrap gap-1 text-sm max-w-[1600px] mx-auto">
           {allItems.map((item, index) => {
             const isLast = index === allItems.length - 1;
             

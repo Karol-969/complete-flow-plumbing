@@ -62,13 +62,19 @@ const SLIDE_WIDTH =
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
+const POP_SPRING = {
+  type: "spring" as const,
+  stiffness: 240,
+  damping: 15,
+  mass: 0.7,
+};
 const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 50 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE } },
+  hidden: { opacity: 0, y: 24, scale: 0.9 },
+  show: { opacity: 1, y: 0, scale: 1, transition: POP_SPRING },
 };
 const zoomIn: Variants = {
-  hidden: { opacity: 0, scale: 0.92 },
-  show: { opacity: 1, scale: 1, transition: { duration: 0.6, ease: EASE } },
+  hidden: { opacity: 0, y: 24, scale: 0.88 },
+  show: { opacity: 1, y: 0, scale: 1, transition: POP_SPRING },
 };
 const fade: Variants = {
   hidden: { opacity: 0 },
@@ -96,18 +102,20 @@ export function WorkGallery() {
     },
   };
 
-  // Hover lift/scale for each slide (spring), disabled under reduced motion.
+  // Hover lift/scale for each slide (springy pop), disabled under reduced motion.
   const slideHover = reduce
     ? undefined
     : {
         y: -6,
-        scale: 1.02,
+        scale: 1.03,
         transition: { type: "spring" as const, stiffness: 300, damping: 20 },
       };
+  const slideTap = reduce ? undefined : { scale: 0.97 };
 
-  // CTA hover/tap, disabled under reduced motion.
-  const ctaHover = reduce ? undefined : { scale: 1.04 };
-  const ctaTap = reduce ? undefined : { scale: 0.96 };
+  // CTA hover/tap (snappy bounce), disabled under reduced motion.
+  const ctaHover = reduce ? undefined : { scale: 1.05 };
+  const ctaTap = reduce ? undefined : { scale: 0.9 };
+  const ctaSpring = { type: "spring" as const, stiffness: 400, damping: 17 };
 
   // Subtle continuous float for the decorative glow blob.
   const blobAnim = reduce
@@ -167,7 +175,7 @@ export function WorkGallery() {
         }
       />
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section header — slides up */}
         <motion.div
           className="text-center mb-12 md:mb-16 max-w-3xl mx-auto"
@@ -231,6 +239,7 @@ export function WorkGallery() {
             <motion.div
               variants={v(zoomIn)}
               whileHover={slideHover}
+              whileTap={slideTap}
               className={`group relative ${SLIDE_WIDTH} overflow-hidden rounded-2xl border border-border/60 bg-card shadow-card`}
               data-testid="gallery-video"
             >
@@ -275,6 +284,7 @@ export function WorkGallery() {
                 onClick={() => setActiveIndex(index)}
                 variants={v(zoomIn)}
                 whileHover={slideHover}
+                whileTap={slideTap}
                 className={`group relative block ${SLIDE_WIDTH} overflow-hidden rounded-2xl border border-border/60 bg-card shadow-card text-left transition-[border-color,box-shadow] duration-300 hover:border-primary/40 hover:shadow-glow`}
                 data-testid={`gallery-image-${index + 1}`}
                 aria-label={`View photo ${index + 1}: ${ALT_TEXT}`}
@@ -329,7 +339,12 @@ export function WorkGallery() {
           <p className="text-muted-foreground">
             Need a job done right? Licensed, fully insured and available 24/7.
           </p>
-          <motion.div whileHover={ctaHover} whileTap={ctaTap} className="inline-flex">
+          <motion.div
+            whileHover={ctaHover}
+            whileTap={ctaTap}
+            transition={ctaSpring}
+            className="inline-flex"
+          >
             <Button
               asChild
               size="lg"

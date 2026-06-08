@@ -6,25 +6,32 @@ import { MapPin, Phone, ArrowRight } from "lucide-react";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
+// Springy "pop" transition — overshoots slightly so elements bounce in.
+const POP_SPRING = { type: "spring", stiffness: 240, damping: 15, mass: 0.7 } as const;
+// Snappy bounce for interactive taps/hovers.
+const TAP_SPRING = { type: "spring", stiffness: 400, damping: 17 } as const;
+
 export function ServiceAreaMap() {
   const reduce = useReducedMotion();
 
-  // When reduced motion is requested, every reveal collapses to a plain fade.
+  // When reduced motion is requested, every reveal collapses to a plain fade
+  // (no scale / offset) and pop springs are disabled.
+  const popTransition = reduce ? { duration: 0.6, ease: EASE } : POP_SPRING;
   const fadeUp: Variants = {
-    hidden: { opacity: 0, y: reduce ? 0 : 50 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE } },
+    hidden: { opacity: 0, y: reduce ? 0 : 24, scale: reduce ? 1 : 0.88 },
+    show: { opacity: 1, y: 0, scale: 1, transition: popTransition },
   };
   const fadeLeft: Variants = {
-    hidden: { opacity: 0, x: reduce ? 0 : -60 },
-    show: { opacity: 1, x: 0, transition: { duration: 0.6, ease: EASE } },
+    hidden: { opacity: 0, x: reduce ? 0 : -24, scale: reduce ? 1 : 0.88 },
+    show: { opacity: 1, x: 0, scale: 1, transition: popTransition },
   };
   const fadeRight: Variants = {
-    hidden: { opacity: 0, x: reduce ? 0 : 60 },
-    show: { opacity: 1, x: 0, transition: { duration: 0.6, ease: EASE } },
+    hidden: { opacity: 0, x: reduce ? 0 : 24, scale: reduce ? 1 : 0.88 },
+    show: { opacity: 1, x: 0, scale: 1, transition: popTransition },
   };
   const zoomIn: Variants = {
-    hidden: { opacity: 0, scale: reduce ? 1 : 0.92 },
-    show: { opacity: 1, scale: 1, transition: { duration: 0.6, ease: EASE } },
+    hidden: { opacity: 0, scale: reduce ? 1 : 0.9 },
+    show: { opacity: 1, scale: 1, transition: popTransition },
   };
   const container: Variants = {
     hidden: {},
@@ -37,10 +44,17 @@ export function ServiceAreaMap() {
 
   const hoverCard = reduce
     ? undefined
-    : { y: -6, scale: 1.02, transition: { type: "spring" as const, stiffness: 300, damping: 20 } };
+    : { y: -6, scale: 1.03, transition: { type: "spring" as const, stiffness: 300, damping: 20 } };
   const hoverPill = reduce
     ? undefined
-    : { y: -4, scale: 1.04, transition: { type: "spring" as const, stiffness: 300, damping: 20 } };
+    : { y: -6, scale: 1.03, transition: { type: "spring" as const, stiffness: 300, damping: 20 } };
+
+  // Snappy bounce for CTA buttons on hover / tap.
+  const tapPop = {
+    whileHover: reduce ? undefined : { scale: 1.05 },
+    whileTap: reduce ? undefined : { scale: 0.9 },
+    transition: TAP_SPRING,
+  };
 
   return (
     <section className="relative py-20 md:py-28 bg-background overflow-hidden">
@@ -52,7 +66,7 @@ export function ServiceAreaMap() {
         transition={reduce ? undefined : { duration: 9, repeat: Infinity, ease: "easeInOut" }}
       />
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section header */}
         <motion.div
           className="text-center mb-14 md:mb-20 max-w-3xl mx-auto"
@@ -167,8 +181,7 @@ export function ServiceAreaMap() {
                 <motion.a
                   href={`tel:${BUSINESS_INFO.phoneTel}`}
                   className="flex items-center gap-2"
-                  whileHover={reduce ? undefined : { scale: 1.04 }}
-                  whileTap={reduce ? undefined : { scale: 0.96 }}
+                  {...tapPop}
                 >
                   <Phone className="h-4 w-4" />
                   {BUSINESS_INFO.phone}
@@ -179,10 +192,7 @@ export function ServiceAreaMap() {
                 variant="ghost"
                 className="ring-1 ring-border hover:ring-primary text-foreground rounded-full px-7 py-3.5 font-semibold transition"
               >
-                <motion.div
-                  whileHover={reduce ? undefined : { scale: 1.04 }}
-                  whileTap={reduce ? undefined : { scale: 0.96 }}
-                >
+                <motion.div {...tapPop}>
                   <Link href="/locations" className="flex items-center gap-2">
                     View All Areas
                     <ArrowRight className="h-4 w-4" />

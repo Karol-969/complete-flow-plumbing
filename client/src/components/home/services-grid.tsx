@@ -49,11 +49,14 @@ export function ServicesGrid() {
   };
 
   const headerItem: Variants = {
-    hidden: reduce ? { opacity: 0 } : { opacity: 0, y: 50 },
+    hidden: reduce ? { opacity: 0 } : { opacity: 0, y: 24, scale: 0.9 },
     show: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.6, ease: EASE },
+      scale: 1,
+      transition: reduce
+        ? { duration: 0.6, ease: EASE }
+        : { type: "spring", stiffness: 240, damping: 15, mass: 0.7 },
     },
   };
 
@@ -71,22 +74,29 @@ export function ServicesGrid() {
       return {
         hidden: { opacity: 0 },
         show: { opacity: 1, transition: { duration: 0.6, ease: EASE } },
+        hover: {},
       };
     }
     const dir = index % 3;
     const hidden =
       dir === 0
-        ? { opacity: 0, y: 50 }
+        ? { opacity: 0, y: 24, scale: 0.88 }
         : dir === 1
-          ? { opacity: 0, x: -28, y: 24 }
-          : { opacity: 0, x: 28, y: 24 };
+          ? { opacity: 0, x: -24, y: 24, scale: 0.88 }
+          : { opacity: 0, x: 24, y: 24, scale: 0.88 };
     return {
       hidden,
       show: {
         opacity: 1,
         x: 0,
         y: 0,
-        transition: { duration: 0.6, ease: EASE },
+        scale: 1,
+        transition: { type: "spring", stiffness: 240, damping: 15, mass: 0.7 },
+      },
+      hover: {
+        y: -6,
+        scale: 1.03,
+        transition: { type: "spring", stiffness: 300, damping: 20 },
       },
     };
   };
@@ -107,7 +117,7 @@ export function ServicesGrid() {
         }
       />
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section header */}
         <motion.div
           variants={headerContainer}
@@ -169,8 +179,8 @@ export function ServicesGrid() {
               <motion.div
                 key={service.id}
                 variants={cardVariants(index)}
-                whileHover={reduce ? undefined : { y: -6, scale: 1.02 }}
-                transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                whileHover={reduce ? undefined : "hover"}
+                whileTap={reduce ? undefined : { scale: 0.97 }}
                 className="h-full"
               >
                 <Link
@@ -178,9 +188,27 @@ export function ServicesGrid() {
                   className="group flex h-full flex-col bg-card rounded-2xl border border-border/60 shadow-card p-6 md:p-8 transition-colors duration-300 hover:border-primary/40 hover:shadow-glow"
                   data-testid={`service-card-${service.slug}`}
                 >
-                  <div className="mb-6 inline-flex w-fit items-center justify-center rounded-2xl bg-primary/10 ring-1 ring-primary/20 text-primary p-3.5 transition-colors group-hover:bg-primary/20 group-hover:scale-110 group-hover:-rotate-3 motion-safe:duration-300 motion-safe:transition-transform">
+                  <motion.div
+                    variants={
+                      reduce
+                        ? undefined
+                        : {
+                            hover: {
+                              scale: 1.12,
+                              rotate: -3,
+                              transition: {
+                                type: "spring",
+                                stiffness: 320,
+                                damping: 12,
+                                mass: 0.6,
+                              },
+                            },
+                          }
+                    }
+                    className="mb-6 inline-flex w-fit items-center justify-center rounded-2xl bg-primary/10 ring-1 ring-primary/20 text-primary p-3.5 transition-colors group-hover:bg-primary/20"
+                  >
                     <IconComponent className="h-7 w-7" />
-                  </div>
+                  </motion.div>
                   <h3 className="text-xl font-bold text-foreground mb-2.5 group-hover:text-primary transition-colors">
                     {service.title}
                   </h3>
@@ -199,17 +227,23 @@ export function ServicesGrid() {
 
         {/* CTA */}
         <motion.div
-          initial={reduce ? { opacity: 0 } : { opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={reduce ? { opacity: 0 } : { opacity: 0, y: 24, scale: 0.9 }}
+          whileInView={
+            reduce ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }
+          }
           viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.6, ease: EASE }}
+          transition={
+            reduce
+              ? { duration: 0.6, ease: EASE }
+              : { type: "spring", stiffness: 240, damping: 15, mass: 0.7 }
+          }
           className="text-center mt-16 md:mt-20"
         >
           <motion.div
             className="inline-block"
-            whileHover={reduce ? undefined : { scale: 1.04 }}
-            whileTap={reduce ? undefined : { scale: 0.96 }}
-            transition={{ type: "spring", stiffness: 300, damping: 20 }}
+            whileHover={reduce ? undefined : { scale: 1.05 }}
+            whileTap={reduce ? undefined : { scale: 0.9 }}
+            transition={{ type: "spring", stiffness: 400, damping: 17 }}
           >
             <Button
               asChild

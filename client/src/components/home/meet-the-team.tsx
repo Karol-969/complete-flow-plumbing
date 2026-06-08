@@ -18,17 +18,25 @@ const TRUST_TICKS = [
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
+// Springy "pop" — overshoots slightly so elements bounce in on entry.
+const POP = { type: "spring" as const, stiffness: 240, damping: 15, mass: 0.7 };
+
 const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 50 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE } },
+  hidden: { opacity: 0, y: 24, scale: 0.88 },
+  show: { opacity: 1, y: 0, scale: 1, transition: POP },
 };
 const fadeLeft: Variants = {
-  hidden: { opacity: 0, x: -60 },
-  show: { opacity: 1, x: 0, transition: { duration: 0.6, ease: EASE } },
+  hidden: { opacity: 0, x: -24, scale: 0.88 },
+  show: { opacity: 1, x: 0, scale: 1, transition: POP },
 };
 const fadeRight: Variants = {
-  hidden: { opacity: 0, x: 60 },
-  show: { opacity: 1, x: 0, transition: { duration: 0.6, ease: EASE } },
+  hidden: { opacity: 0, x: 24, scale: 0.88 },
+  show: { opacity: 1, x: 0, scale: 1, transition: POP },
+};
+// Heading pop — scales up from 0.9 with the same springy overshoot.
+const popHeading: Variants = {
+  hidden: { opacity: 0, scale: 0.9 },
+  show: { opacity: 1, scale: 1, transition: POP },
 };
 const fade: Variants = {
   hidden: { opacity: 0 },
@@ -58,20 +66,19 @@ export function MeetTheTeam() {
     },
   };
 
+  // Snappy spring bounce for CTAs — pop up on hover, squash on tap.
+  const ctaSpring = { type: "spring" as const, stiffness: 400, damping: 17 };
   const hoverScale = reduce
     ? undefined
-    : {
-        scale: 1.04,
-        transition: { type: "spring" as const, stiffness: 300, damping: 20 },
-      };
-  const tapScale = reduce ? undefined : { scale: 0.96 };
+    : { scale: 1.05, transition: ctaSpring };
+  const tapScale = reduce ? undefined : { scale: 0.9, transition: ctaSpring };
 
   return (
     <section
       className="bg-background py-20 md:py-28"
       data-testid="section-meet-the-team"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center"
           variants={container}
@@ -86,6 +93,7 @@ export function MeetTheTeam() {
                 reduce
                   ? undefined
                   : {
+                      scale: 1.03,
                       y: -6,
                       transition: { type: "spring", stiffness: 300, damping: 20 },
                     }
@@ -123,10 +131,16 @@ export function MeetTheTeam() {
             <p className="text-primary text-sm font-semibold tracking-widest uppercase mb-3">
               Familiar Faces
             </p>
-            <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-foreground">
+            <motion.h2
+              className="text-3xl md:text-5xl font-bold tracking-tight text-foreground"
+              variants={v(popHeading)}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, margin: "-60px" }}
+            >
               Meet <span className="text-primary">David Taha</span>, Your Local
               Plumber
-            </h2>
+            </motion.h2>
             <p className="mt-3 text-base font-semibold text-foreground">
               Owner &amp; Licensed Plumber · Qualified Supervisor ·{" "}
               <span className="text-primary">

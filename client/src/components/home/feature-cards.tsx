@@ -32,40 +32,53 @@ export function FeatureCards() {
     },
   };
 
+  // Springy pop-in: scale up from 0.88 with a small directional offset and
+  // a spring that overshoots so each card visibly "pops" on entry.
+  const popTransition = {
+    type: "spring" as const,
+    stiffness: 240,
+    damping: 15,
+    mass: 0.7,
+  };
+
   // Alternate directions across the 3 cards: left / up / right.
   const cardVariants: Variants[] = [
     {
-      hidden: reduce ? { opacity: 0 } : { opacity: 0, x: -60 },
+      hidden: reduce ? { opacity: 0 } : { opacity: 0, scale: 0.88, x: -24 },
       show: {
         opacity: 1,
+        scale: 1,
         x: 0,
-        transition: { duration: 0.6, ease: EASE },
+        transition: reduce ? { duration: 0.4, ease: EASE } : popTransition,
       },
     },
     {
-      hidden: reduce ? { opacity: 0 } : { opacity: 0, y: 50 },
+      hidden: reduce ? { opacity: 0 } : { opacity: 0, scale: 0.88, y: 24 },
       show: {
         opacity: 1,
+        scale: 1,
         y: 0,
-        transition: { duration: 0.6, ease: EASE },
+        transition: reduce ? { duration: 0.4, ease: EASE } : popTransition,
       },
     },
     {
-      hidden: reduce ? { opacity: 0 } : { opacity: 0, x: 60 },
+      hidden: reduce ? { opacity: 0 } : { opacity: 0, scale: 0.88, x: 24 },
       show: {
         opacity: 1,
+        scale: 1,
         x: 0,
-        transition: { duration: 0.6, ease: EASE },
+        transition: reduce ? { duration: 0.4, ease: EASE } : popTransition,
       },
     },
   ];
 
   const trustVariants: Variants = {
-    hidden: reduce ? { opacity: 0 } : { opacity: 0, y: 16 },
+    hidden: reduce ? { opacity: 0 } : { opacity: 0, scale: 0.9, y: 16 },
     show: {
       opacity: 1,
+      scale: 1,
       y: 0,
-      transition: { duration: 0.6, ease: EASE },
+      transition: reduce ? { duration: 0.4, ease: EASE } : popTransition,
     },
   };
 
@@ -74,7 +87,7 @@ export function FeatureCards() {
       className="relative bg-background py-20 md:py-28"
       data-testid="section-feature-cards"
     >
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-8">
         <motion.div
           className="grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-8"
           variants={container}
@@ -87,9 +100,14 @@ export function FeatureCards() {
               key={feature.title}
               variants={cardVariants[index % cardVariants.length]}
               whileHover={
-                reduce ? undefined : { y: -6, scale: 1.02 }
+                reduce
+                  ? undefined
+                  : {
+                      scale: 1.03,
+                      y: -6,
+                      transition: { type: "spring", stiffness: 300, damping: 20 },
+                    }
               }
-              transition={{ type: "spring", stiffness: 300, damping: 20 }}
               className="group rounded-2xl border border-border/60 bg-card p-6 shadow-card transition-colors hover:border-primary/40 hover:shadow-glow md:p-8"
               data-testid={`card-feature-${index}`}
             >

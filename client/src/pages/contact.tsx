@@ -9,7 +9,7 @@ export default function Contact() {
     <Layout>
       {/* Hero */}
       <section className="py-16 md:py-20 bg-primary">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
             Contact Us
           </h1>
@@ -21,7 +21,7 @@ export default function Contact() {
 
       {/* Emergency Banner */}
       <section className="py-4 bg-emergency">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row items-center justify-center gap-4 text-white">
             <div className="flex items-center gap-2">
               <Siren className="h-5 w-5" />
@@ -41,7 +41,7 @@ export default function Contact() {
 
       {/* Contact Content */}
       <section className="py-16 md:py-24 bg-background">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
             {/* Contact Info */}
             <div className="lg:col-span-1">

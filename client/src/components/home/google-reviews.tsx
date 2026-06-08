@@ -5,13 +5,18 @@ import { ExternalLink, PenLine } from "lucide-react";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
+// Springy "pop" transition — overshoots slightly so elements bounce in.
+const POP_SPRING = { type: "spring", stiffness: 240, damping: 15, mass: 0.7 } as const;
+// Snappy bounce for interactive taps/hovers.
+const TAP_SPRING = { type: "spring", stiffness: 400, damping: 17 } as const;
+
 const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 50 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE } },
+  hidden: { opacity: 0, y: 24, scale: 0.88 },
+  show: { opacity: 1, y: 0, scale: 1, transition: POP_SPRING },
 };
 const zoomIn: Variants = {
-  hidden: { opacity: 0, scale: 0.92 },
-  show: { opacity: 1, scale: 1, transition: { duration: 0.6, ease: EASE } },
+  hidden: { opacity: 0, scale: 0.9 },
+  show: { opacity: 1, scale: 1, transition: POP_SPRING },
 };
 const fade: Variants = {
   hidden: { opacity: 0 },
@@ -130,9 +135,16 @@ export function GoogleReviews() {
     ? undefined
     : {
         y: -6,
-        scale: 1.02,
+        scale: 1.03,
         transition: { type: "spring" as const, stiffness: 300, damping: 20 },
       };
+
+  // Snappy bounce for CTA buttons on hover / tap.
+  const tapPop = {
+    whileHover: reduce ? undefined : { scale: 1.05 },
+    whileTap: reduce ? undefined : { scale: 0.9 },
+    transition: TAP_SPRING,
+  };
 
   // Only ever derived from REAL data — never a hardcoded/fake number.
   const average = hasReviews
@@ -160,7 +172,7 @@ export function GoogleReviews() {
         }
       />
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section header */}
         <motion.div
           className="text-center mb-14 md:mb-16 max-w-2xl mx-auto"
@@ -260,15 +272,12 @@ export function GoogleReviews() {
           </motion.div>
           <motion.div
             className="mt-12 flex justify-center"
-            initial={reduce ? { opacity: 0 } : { opacity: 0, y: 30 }}
-            whileInView={reduce ? { opacity: 1 } : { opacity: 1, y: 0 }}
+            initial={reduce ? { opacity: 0 } : { opacity: 0, y: 24, scale: 0.88 }}
+            whileInView={reduce ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
             viewport={{ once: true, margin: "-60px" }}
-            transition={{ duration: 0.6, ease: EASE }}
+            transition={reduce ? { duration: 0.6, ease: EASE } : POP_SPRING}
           >
-            <motion.div
-              whileHover={reduce ? undefined : { scale: 1.04 }}
-              whileTap={reduce ? undefined : { scale: 0.96 }}
-            >
+            <motion.div {...tapPop}>
               <Button
                 asChild
                 size="lg"
@@ -318,11 +327,7 @@ export function GoogleReviews() {
               plumber they can trust.
             </p>
             <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
-              <motion.div
-                className="w-full sm:w-fit"
-                whileHover={reduce ? undefined : { scale: 1.04 }}
-                whileTap={reduce ? undefined : { scale: 0.96 }}
-              >
+              <motion.div className="w-full sm:w-fit" {...tapPop}>
                 <Button
                   asChild
                   size="lg"
@@ -341,11 +346,7 @@ export function GoogleReviews() {
                   </a>
                 </Button>
               </motion.div>
-              <motion.div
-                className="w-full sm:w-fit"
-                whileHover={reduce ? undefined : { scale: 1.04 }}
-                whileTap={reduce ? undefined : { scale: 0.96 }}
-              >
+              <motion.div className="w-full sm:w-fit" {...tapPop}>
                 <Button
                   asChild
                   size="lg"

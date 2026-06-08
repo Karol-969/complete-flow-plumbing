@@ -108,7 +108,7 @@ export default function ServiceDetail() {
 
       {/* Hero */}
       <section className="py-16 md:py-20 bg-primary">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
             {service.title}
           </h1>
@@ -134,7 +134,7 @@ export default function ServiceDetail() {
 
       {/* Emergency CTA */}
       <section className="py-4 bg-emergency">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row items-center justify-center gap-4 text-white">
             <span className="font-semibold">Need urgent {service.title.toLowerCase()}?</span>
             <a 
@@ -151,7 +151,7 @@ export default function ServiceDetail() {
 
       {/* Main Content */}
       <section className="py-16 md:py-24 bg-background">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
             {/* Content */}
             <div className="lg:col-span-2 space-y-12">

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation, useSearch } from "wouter";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -39,12 +39,42 @@ function toTitleCase(input: string): string {
 export function Hero() {
   const search = useSearch();
   const [, navigate] = useLocation();
+  const reduce = useReducedMotion();
 
   const suburbParam = new URLSearchParams(search).get("suburb");
   const suburb = suburbParam ? toTitleCase(suburbParam) : null;
 
   const [serviceType, setServiceType] = useState("");
   const [preferredTime, setPreferredTime] = useState("");
+
+  // Springy pop-in entrance for the two hero columns.
+  const popIn = (offsetX: number, offsetY: number, delay = 0) =>
+    reduce
+      ? {
+          initial: { opacity: 0 },
+          animate: { opacity: 1 },
+          transition: { duration: 0.4, delay },
+        }
+      : {
+          initial: { opacity: 0, scale: 0.88, x: offsetX, y: offsetY },
+          animate: { opacity: 1, scale: 1, x: 0, y: 0 },
+          transition: {
+            type: "spring" as const,
+            stiffness: 240,
+            damping: 15,
+            mass: 0.7,
+            delay,
+          },
+        };
+
+  // Snappy bounce for primary CTAs on hover/tap.
+  const ctaPop = reduce
+    ? {}
+    : {
+        whileHover: { scale: 1.05 },
+        whileTap: { scale: 0.9 },
+        transition: { type: "spring" as const, stiffness: 400, damping: 17 },
+      };
 
   const handleQuote = () => {
     const params = new URLSearchParams();
@@ -79,19 +109,30 @@ export function Hero() {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 mx-auto w-full max-w-7xl px-4 py-20 sm:px-6 md:py-28 lg:px-8">
+      <div className="relative z-10 mx-auto w-full max-w-[1600px] px-4 py-20 sm:px-6 md:py-28 lg:px-8">
         <div className="grid items-center gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
           {/* Left: headline + CTAs */}
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, ease: "easeOut" }}
-          >
+          <motion.div {...popIn(-24, 24)}>
             <p className="mb-5 text-sm font-semibold uppercase tracking-widest text-primary">
               Licensed NSW Plumber · Lic. {BUSINESS_INFO.licence}
             </p>
 
-            <h1 className="mb-6 text-5xl font-bold leading-[1.05] tracking-tight text-foreground md:text-6xl lg:text-7xl">
+            <motion.h1
+              className="mb-6 text-5xl font-bold leading-[1.05] tracking-tight text-foreground md:text-6xl lg:text-7xl"
+              initial={reduce ? { opacity: 0 } : { opacity: 0, scale: 0.9 }}
+              animate={reduce ? { opacity: 1 } : { opacity: 1, scale: 1 }}
+              transition={
+                reduce
+                  ? { duration: 0.4, delay: 0.05 }
+                  : {
+                      type: "spring",
+                      stiffness: 240,
+                      damping: 15,
+                      mass: 0.7,
+                      delay: 0.1,
+                    }
+              }
+            >
               {suburb ? (
                 <>
                   Your Local <span className="text-primary">{suburb}</span> Plumber
@@ -104,7 +145,7 @@ export function Hero() {
                   </span>
                 </>
               )}
-            </h1>
+            </motion.h1>
 
             {/* Trust subline — clean inline row of TRUE claims */}
             <div className="mb-9 flex flex-wrap items-center gap-x-6 gap-y-3">
@@ -121,38 +162,40 @@ export function Hero() {
 
             {/* Dominant dual CTA */}
             <div className="flex flex-col gap-4 sm:flex-row">
-              <Button
-                asChild
-                className="rounded-full bg-primary px-7 py-3.5 text-base font-bold text-primary-foreground shadow-glow transition hover:brightness-110"
-                data-testid="button-hero-book"
-              >
-                <Link href="/contact" data-testid="link-hero-book">
-                  Book Now
-                </Link>
-              </Button>
-              <Button
-                asChild
-                variant="ghost"
-                className="rounded-full px-7 py-3.5 text-base font-semibold text-foreground ring-1 ring-border transition hover:ring-primary"
-                data-testid="button-hero-call"
-              >
-                <a
-                  href={`tel:${BUSINESS_INFO.phoneTel}`}
-                  className="flex items-center justify-center gap-2"
-                  data-testid="link-hero-phone"
+              <motion.div className="inline-flex" {...ctaPop}>
+                <Button
+                  asChild
+                  className="rounded-full bg-primary px-7 py-3.5 text-base font-bold text-primary-foreground shadow-glow transition hover:brightness-110"
+                  data-testid="button-hero-book"
                 >
-                  <Phone className="h-5 w-5 text-primary" />
-                  Call {BUSINESS_INFO.phone}
-                </a>
-              </Button>
+                  <Link href="/contact" data-testid="link-hero-book">
+                    Book Now
+                  </Link>
+                </Button>
+              </motion.div>
+              <motion.div className="inline-flex" {...ctaPop}>
+                <Button
+                  asChild
+                  variant="ghost"
+                  className="rounded-full px-7 py-3.5 text-base font-semibold text-foreground ring-1 ring-border transition hover:ring-primary"
+                  data-testid="button-hero-call"
+                >
+                  <a
+                    href={`tel:${BUSINESS_INFO.phoneTel}`}
+                    className="flex items-center justify-center gap-2"
+                    data-testid="link-hero-phone"
+                  >
+                    <Phone className="h-5 w-5 text-primary" />
+                    Call {BUSINESS_INFO.phone}
+                  </a>
+                </Button>
+              </motion.div>
             </div>
           </motion.div>
 
           {/* Right: inline mini lead-capture card */}
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, ease: "easeOut", delay: 0.15 }}
+            {...popIn(24, 24, 0.2)}
             className="group rounded-2xl border border-border/60 bg-card p-6 shadow-card transition-all hover:-translate-y-1 hover:border-primary/40 hover:shadow-glow md:p-8"
           >
             <div className="mb-6 flex items-start gap-3.5">
@@ -212,13 +255,15 @@ export function Hero() {
                 </Select>
               </div>
 
-              <Button
-                onClick={handleQuote}
-                className="w-full rounded-full bg-primary px-7 py-3.5 text-base font-bold text-primary-foreground shadow-glow transition hover:brightness-110"
-                data-testid="button-hero-quote"
-              >
-                Get My Quote
-              </Button>
+              <motion.div className="flex w-full" {...ctaPop}>
+                <Button
+                  onClick={handleQuote}
+                  className="w-full rounded-full bg-primary px-7 py-3.5 text-base font-bold text-primary-foreground shadow-glow transition hover:brightness-110"
+                  data-testid="button-hero-quote"
+                >
+                  Get My Quote
+                </Button>
+              </motion.div>
 
               <p className="text-center text-xs text-muted-foreground">
                 {BUSINESS_INFO.guarantee} · Fully insured · Local NSW team

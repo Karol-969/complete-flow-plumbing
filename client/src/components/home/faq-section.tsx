@@ -10,13 +10,16 @@ import {
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
+// Springy overshoot — elements pop/bounce slightly as they reveal.
+const POP_SPRING = { type: "spring" as const, stiffness: 240, damping: 15, mass: 0.7 };
+
 const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 50 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE } },
+  hidden: { opacity: 0, y: 24, scale: 0.88 },
+  show: { opacity: 1, y: 0, scale: 1, transition: POP_SPRING },
 };
 const fadeLeft: Variants = {
-  hidden: { opacity: 0, x: -60 },
-  show: { opacity: 1, x: 0, transition: { duration: 0.6, ease: EASE } },
+  hidden: { opacity: 0, x: -24, scale: 0.88 },
+  show: { opacity: 1, x: 0, scale: 1, transition: POP_SPRING },
 };
 const fade: Variants = {
   hidden: { opacity: 0 },
@@ -120,8 +123,9 @@ export function FAQSection() {
             href={`tel:${BUSINESS_INFO.phoneTel}`}
             data-testid="faq-call-cta"
             className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground rounded-full px-7 py-3.5 font-bold shadow-glow hover:brightness-110 transition-all"
-            whileHover={reduce ? undefined : { scale: 1.04 }}
-            whileTap={reduce ? undefined : { scale: 0.96 }}
+            whileHover={reduce ? undefined : { scale: 1.05 }}
+            whileTap={reduce ? undefined : { scale: 0.9 }}
+            transition={reduce ? undefined : { type: "spring", stiffness: 400, damping: 17 }}
           >
             <Phone className="h-5 w-5" />
             Call {BUSINESS_INFO.phone}

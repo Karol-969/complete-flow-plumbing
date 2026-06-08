@@ -238,7 +238,7 @@ export default function LocationDetail() {
       {/* Hero */}
       <section className="relative overflow-hidden bg-background py-16 md:py-24">
         <div className="pointer-events-none absolute -top-24 left-1/2 -translate-x-1/2 w-[40rem] h-[40rem] bg-primary/10 blur-3xl rounded-full" />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="relative max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div initial="hidden" animate="show" variants={fadeUp} className="max-w-3xl">
             <p className="text-primary text-sm font-semibold tracking-widest uppercase mb-3">
               {regionDisplayName} · NSW
@@ -292,7 +292,7 @@ export default function LocationDetail() {
 
       {/* Emergency Banner */}
       <section className="py-4 bg-emergency">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row items-center justify-center gap-4 text-white">
             <span className="font-semibold">Need a plumber in {location.name} now?</span>
             <a
@@ -309,7 +309,7 @@ export default function LocationDetail() {
 
       {/* Main Content */}
       <section className="py-16 md:py-24 bg-background">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
             {/* Content */}
             <div className="lg:col-span-2 space-y-16">

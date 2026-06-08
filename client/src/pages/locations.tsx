@@ -21,38 +21,62 @@ import {
   PhoneCall,
   Sparkles,
 } from "lucide-react";
-import { motion, type Variants } from "framer-motion";
+import { motion, useReducedMotion, type Variants } from "framer-motion";
+
+// Springy overshoot — cards/items pop/bounce slightly as they reveal.
+const POP_SPRING = { type: "spring" as const, stiffness: 240, damping: 15, mass: 0.7 };
+
+// Plain opacity fade used when the visitor prefers reduced motion.
+const fade: Variants = {
+  hidden: { opacity: 0 },
+  show: { opacity: 1, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
+};
 
 const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 0, y: 24, scale: 0.88 },
   show: (i: number = 0) => ({
     opacity: 1,
     y: 0,
-    transition: { duration: 0.45, delay: i * 0.04, ease: [0.22, 1, 0.36, 1] },
+    scale: 1,
+    transition: { ...POP_SPRING, delay: i * 0.05 },
   }),
 };
 
 const heroIn: Variants = {
-  hidden: { opacity: 0, y: 24 },
+  hidden: { opacity: 0, y: 24, scale: 0.9 },
   show: (i: number = 0) => ({
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6, delay: 0.15 + i * 0.12, ease: [0.22, 1, 0.36, 1] },
+    scale: 1,
+    transition: { ...POP_SPRING, delay: 0.15 + i * 0.12 },
   }),
 };
 
-// Region cards reveal from alternating directions for richer motion.
+// Region cards pop in from alternating directions for richer motion.
 const regionCardIn: Variants = {
   hidden: (i: number = 0) => ({
     opacity: 0,
-    x: i % 2 === 0 ? -36 : 36,
+    x: i % 2 === 0 ? -24 : 24,
     y: 24,
+    scale: 0.88,
   }),
   show: (i: number = 0) => ({
     opacity: 1,
     x: 0,
     y: 0,
-    transition: { duration: 0.55, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] },
+    scale: 1,
+    transition: { ...POP_SPRING, delay: i * 0.08 },
+  }),
+};
+
+// Suburb result cards pop in staggered with the same spring overshoot.
+const suburbCardIn: Variants = {
+  hidden: { opacity: 0, y: 16, scale: 0.88 },
+  show: (i: number = 0) => ({
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { ...POP_SPRING, delay: Math.min(i, 8) * 0.04 },
   }),
 };
 
@@ -64,6 +88,25 @@ export default function Locations() {
   const [search, setSearch] = useState("");
   const [activeRegion, setActiveRegion] = useState<string>(ALL_REGIONS_KEY);
   const [activeLetter, setActiveLetter] = useState<string>(ALL_LETTERS_KEY);
+
+  const reduce = useReducedMotion();
+
+  // When reduced motion is requested, fall back to a plain opacity fade and
+  // disable the spring scale/tap pops.
+  const v = (motionVariant: Variants) => (reduce ? fade : motionVariant);
+  const hoverPop = reduce
+    ? undefined
+    : { y: -6, scale: 1.03, transition: { type: "spring" as const, stiffness: 300, damping: 20 } };
+  const tapPop = reduce
+    ? undefined
+    : { scale: 0.95, transition: { type: "spring" as const, stiffness: 400, damping: 17 } };
+  const buttonPop = reduce
+    ? {}
+    : {
+        whileHover: { scale: 1.05 },
+        whileTap: { scale: 0.9 },
+        transition: { type: "spring" as const, stiffness: 400, damping: 17 },
+      };
 
   const activeRegionData =
     activeRegion === ALL_REGIONS_KEY ? undefined : regionBySlug(activeRegion);
@@ -168,12 +211,12 @@ export default function Locations() {
         <div className="absolute inset-0 bg-gradient-to-b from-[#03132c]/70 via-[#041027]/60 to-[#03132c]/85" />
         <div className="absolute inset-0 bg-[radial-gradient(120%_120%_at_50%_-10%,transparent_30%,rgba(3,19,44,0.9)_100%)]" />
 
-        <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28">
+        <div className="relative z-10 w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28">
           <motion.p
             initial="hidden"
             animate="show"
             custom={0}
-            variants={heroIn}
+            variants={v(heroIn)}
             className="inline-flex items-center gap-2 text-cyan-300/90 text-xs sm:text-sm font-semibold tracking-[0.25em] uppercase mb-5"
           >
             <Sparkles className="h-4 w-4" />
@@ -184,7 +227,7 @@ export default function Locations() {
             initial="hidden"
             animate="show"
             custom={1}
-            variants={heroIn}
+            variants={v(heroIn)}
             className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-white max-w-4xl leading-[1.05]"
           >
             Search Your{" "}
@@ -197,7 +240,7 @@ export default function Locations() {
             initial="hidden"
             animate="show"
             custom={2}
-            variants={heroIn}
+            variants={v(heroIn)}
             className="mt-6 text-lg md:text-xl text-slate-200/90 max-w-3xl"
           >
             {serviceAreaSentence}
@@ -208,7 +251,7 @@ export default function Locations() {
             initial="hidden"
             animate="show"
             custom={3}
-            variants={heroIn}
+            variants={v(heroIn)}
             className="mt-9 max-w-2xl"
           >
             <div className="group relative">
@@ -225,15 +268,16 @@ export default function Locations() {
                   className="w-full rounded-2xl border border-white/15 bg-white/95 backdrop-blur pl-12 pr-12 py-4 text-base text-slate-900 placeholder:text-slate-400 shadow-2xl shadow-cyan-900/30 outline-none transition focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/40"
                 />
                 {search && (
-                  <button
+                  <motion.button
                     type="button"
                     onClick={() => setSearch("")}
                     aria-label="Clear search"
                     data-testid="locations-search-clear"
                     className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center justify-center rounded-full p-1.5 text-slate-500 hover:bg-slate-100 hover:text-slate-900 transition"
+                    {...buttonPop}
                   >
                     <X className="h-5 w-5" />
-                  </button>
+                  </motion.button>
                 )}
               </div>
             </div>
@@ -256,12 +300,12 @@ export default function Locations() {
 
       {/* ====================== INTERACTIVE REGION GRID ===================== */}
       <section className="relative bg-background py-16 md:py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, margin: "-80px" }}
-            variants={fadeUp}
+            variants={v(fadeUp)}
             className="max-w-2xl mb-10 md:mb-14"
           >
             <p className="text-primary text-sm font-semibold tracking-widest uppercase mb-3">
@@ -284,9 +328,9 @@ export default function Locations() {
               initial="hidden"
               whileInView="show"
               viewport={{ once: true, margin: "-60px" }}
-              variants={regionCardIn}
-              whileHover={{ y: -6, scale: 1.015 }}
-              whileTap={{ scale: 0.99 }}
+              variants={v(regionCardIn)}
+              whileHover={hoverPop}
+              whileTap={tapPop}
               onClick={() => selectRegion(ALL_REGIONS_KEY)}
               data-testid="region-card-all"
               aria-pressed={activeRegion === ALL_REGIONS_KEY}
@@ -324,9 +368,9 @@ export default function Locations() {
                   initial="hidden"
                   whileInView="show"
                   viewport={{ once: true, margin: "-60px" }}
-                  variants={regionCardIn}
-                  whileHover={{ y: -6, scale: 1.015 }}
-                  whileTap={{ scale: 0.99 }}
+                  variants={v(regionCardIn)}
+                  whileHover={hoverPop}
+                  whileTap={tapPop}
                   className={`group relative flex h-full flex-col overflow-hidden rounded-2xl border bg-card p-6 shadow-card transition-shadow ${
                     isActive
                       ? "border-primary/60 ring-2 ring-primary shadow-glow"
@@ -382,13 +426,13 @@ export default function Locations() {
 
       {/* =================== FILTER BAR + RESULTS LIST ===================== */}
       <section className="relative bg-card py-16 md:py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
           {/* Filter controls card */}
           <motion.div
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, margin: "-80px" }}
-            variants={fadeUp}
+            variants={v(fadeUp)}
             className="rounded-2xl border border-border bg-background shadow-card p-5 md:p-6"
           >
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -409,15 +453,16 @@ export default function Locations() {
                 </p>
               </div>
               {hasActiveFilters && (
-                <button
+                <motion.button
                   type="button"
                   onClick={clearAll}
                   data-testid="locations-clear-all"
                   className="inline-flex w-fit items-center gap-1.5 rounded-full border border-border bg-card px-4 py-2 text-sm font-semibold text-primary transition hover:border-primary/50"
+                  {...buttonPop}
                 >
                   <X className="h-4 w-4" />
                   Clear filters
-                </button>
+                </motion.button>
               )}
             </div>
 
@@ -427,7 +472,7 @@ export default function Locations() {
               role="group"
               aria-label="Filter by first letter"
             >
-              <button
+              <motion.button
                 type="button"
                 onClick={() => setActiveLetter(ALL_LETTERS_KEY)}
                 data-testid="letter-all"
@@ -437,14 +482,15 @@ export default function Locations() {
                     ? "bg-primary text-primary-foreground shadow-glow"
                     : "bg-card border border-border text-foreground hover:border-primary/50"
                 }`}
+                {...buttonPop}
               >
                 Show All
-              </button>
+              </motion.button>
               {ALPHABET.map((letter) => {
                 const enabled = availableLetters.has(letter);
                 const isActive = activeLetter === letter;
                 return (
-                  <button
+                  <motion.button
                     key={letter}
                     type="button"
                     disabled={!enabled}
@@ -455,12 +501,13 @@ export default function Locations() {
                       isActive
                         ? "bg-primary text-primary-foreground shadow-glow"
                         : enabled
-                          ? "bg-card border border-border text-foreground hover:border-primary/50 hover:-translate-y-0.5"
+                          ? "bg-card border border-border text-foreground hover:border-primary/50"
                           : "bg-muted/40 text-muted-foreground/40 cursor-not-allowed"
                     }`}
+                    {...(enabled ? buttonPop : {})}
                   >
                     {letter}
-                  </button>
+                  </motion.button>
                 );
               })}
             </div>
@@ -472,7 +519,7 @@ export default function Locations() {
               key={activeRegionData.slug}
               initial="hidden"
               animate="show"
-              variants={fadeUp}
+              variants={v(fadeUp)}
               className="mt-8 flex flex-col gap-4 rounded-2xl border border-primary/30 bg-gradient-to-r from-primary/5 to-sky-500/5 p-5 shadow-card sm:flex-row sm:items-center sm:justify-between"
             >
               <div>
@@ -483,19 +530,21 @@ export default function Locations() {
                   {activeRegionData.blurb}
                 </p>
               </div>
-              <Button
-                asChild
-                className="shrink-0 rounded-full bg-primary px-5 py-2.5 font-semibold text-primary-foreground shadow-glow transition hover:brightness-110"
-                data-testid={`region-hub-cta-${activeRegionData.slug}`}
-              >
-                <Link
-                  href={`/locations/region/${activeRegionData.slug}`}
-                  className="flex items-center gap-2"
+              <motion.div className="shrink-0" {...buttonPop}>
+                <Button
+                  asChild
+                  className="rounded-full bg-primary px-5 py-2.5 font-semibold text-primary-foreground shadow-glow transition hover:brightness-110"
+                  data-testid={`region-hub-cta-${activeRegionData.slug}`}
                 >
-                  View {activeRegionData.displayName} hub
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-              </Button>
+                  <Link
+                    href={`/locations/region/${activeRegionData.slug}`}
+                    className="flex items-center gap-2"
+                  >
+                    View {activeRegionData.displayName} hub
+                    <ArrowRight className="h-4 w-4" />
+                  </Link>
+                </Button>
+              </motion.div>
             </motion.div>
           )}
 
@@ -506,7 +555,7 @@ export default function Locations() {
               <motion.div
                 initial="hidden"
                 animate="show"
-                variants={fadeUp}
+                variants={v(fadeUp)}
                 className="rounded-2xl border border-border bg-background shadow-card p-8 md:p-12 text-center"
                 data-testid="locations-empty"
               >
@@ -527,9 +576,10 @@ export default function Locations() {
                   </a>{" "}
                   and we'll let you know.
                 </p>
+                <motion.div className="mt-6 inline-flex" {...buttonPop}>
                 <Button
                   asChild
-                  className="mt-6 rounded-full bg-primary px-6 py-3 font-bold text-primary-foreground shadow-glow transition hover:brightness-110"
+                  className="rounded-full bg-primary px-6 py-3 font-bold text-primary-foreground shadow-glow transition hover:brightness-110"
                 >
                   <a
                     href={`tel:${BUSINESS_INFO.phoneTel}`}
@@ -539,6 +589,7 @@ export default function Locations() {
                     Call {BUSINESS_INFO.phone}
                   </a>
                 </Button>
+                </motion.div>
               </motion.div>
             ) : (
               /* Grouped alphabetical suburb list */
@@ -550,7 +601,7 @@ export default function Locations() {
                     initial="hidden"
                     whileInView="show"
                     viewport={{ once: true, margin: "-60px" }}
-                    variants={fadeUp}
+                    variants={v(fadeUp)}
                     data-testid={`letter-group-${letter}`}
                   >
                     <div className="mb-4 flex items-center gap-3">
@@ -563,14 +614,11 @@ export default function Locations() {
                       {suburbs.map((suburb, i) => (
                         <motion.li
                           key={suburb.id}
-                          initial={{ opacity: 0, y: 12 }}
-                          whileInView={{ opacity: 1, y: 0 }}
+                          custom={i}
+                          initial="hidden"
+                          whileInView="show"
                           viewport={{ once: true }}
-                          transition={{
-                            duration: 0.35,
-                            delay: Math.min(i, 8) * 0.03,
-                            ease: [0.22, 1, 0.36, 1],
-                          }}
+                          variants={v(suburbCardIn)}
                         >
                           <Link
                             href={`/locations/${suburb.slug}`}
@@ -606,26 +654,28 @@ export default function Locations() {
             initial="hidden"
             whileInView="show"
             viewport={{ once: true }}
-            variants={fadeUp}
+            variants={v(fadeUp)}
             className="mt-14 flex flex-col items-center gap-4 rounded-2xl border border-border bg-gradient-to-br from-background to-primary/5 shadow-card p-8 text-center md:p-10"
           >
             <p className="text-lg font-semibold text-foreground">
               Can't find your suburb? We may still be able to help.
             </p>
-            <Button
-              asChild
-              size="lg"
-              className="rounded-full bg-primary px-6 py-3 font-bold text-primary-foreground shadow-glow transition hover:brightness-110"
-              data-testid="locations-cta-call"
-            >
-              <a
-                href={`tel:${BUSINESS_INFO.phoneTel}`}
-                className="flex items-center gap-2"
+            <motion.div className="inline-flex" {...buttonPop}>
+              <Button
+                asChild
+                size="lg"
+                className="rounded-full bg-primary px-6 py-3 font-bold text-primary-foreground shadow-glow transition hover:brightness-110"
+                data-testid="locations-cta-call"
               >
-                <Phone className="h-5 w-5" />
-                Call: {BUSINESS_INFO.phone}
-              </a>
-            </Button>
+                <a
+                  href={`tel:${BUSINESS_INFO.phoneTel}`}
+                  className="flex items-center gap-2"
+                >
+                  <Phone className="h-5 w-5" />
+                  Call: {BUSINESS_INFO.phone}
+                </a>
+              </Button>
+            </motion.div>
           </motion.div>
         </div>
       </section>
