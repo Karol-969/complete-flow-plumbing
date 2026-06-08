@@ -127,6 +127,7 @@ export function GoogleReviews() {
 
         {hasReviews ? (
           /* ---- Real reviews: Google-style review cards ---- */
+          <>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {reviews.map((review, index) => {
               const initial = (
@@ -175,6 +176,25 @@ export function GoogleReviews() {
               );
             })}
           </div>
+          <div className="mt-12 flex justify-center">
+            <Button
+              asChild
+              size="lg"
+              className="bg-primary text-primary-foreground rounded-full px-7 py-3.5 font-bold shadow-glow hover:brightness-110 transition"
+              data-testid="button-all-google-reviews"
+            >
+              <a
+                href={BUSINESS_INFO.googleReviewLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2"
+              >
+                <ExternalLink className="h-5 w-5" />
+                Read all our reviews on Google
+              </a>
+            </Button>
+          </div>
+          </>
         ) : (
           /* ---- Empty state: Google-branded CTA card ----
              Real reviews go in GOOGLE_REVIEWS (schema.ts). Until then we show the

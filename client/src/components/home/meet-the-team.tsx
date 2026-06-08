@@ -70,12 +70,14 @@ export function MeetTheTeam() {
               Familiar Faces
             </p>
             <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-foreground">
-              Meet Your <span className="text-primary">Local Plumber</span>
+              Meet <span className="text-primary">David</span>, Your Local
+              Plumber
             </h2>
             <p className="mt-5 text-lg text-muted-foreground max-w-prose">
-              When you call Complete Flow Plumbing you deal directly with a
-              licensed local plumber who turns up, does the job right, and stands
-              behind it — no call centres, no subcontractors you have never met.
+              When you call Complete Flow Plumbing you deal directly with David —
+              a licensed local plumber who turns up, does the job right, and
+              stands behind it. No call centres, no subcontractors you have never
+              met — just honest, reliable work from someone who knows your area.
             </p>
 
             {/* Trust ticks */}

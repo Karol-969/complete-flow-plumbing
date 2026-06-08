@@ -99,7 +99,81 @@ export interface GoogleReview {
 
 // Real Google reviews for the business.
 // IMPORTANT: keep this truthful — only the client's REAL Google reviews go here.
-export const GOOGLE_REVIEWS: GoogleReview[] = []; // TODO: populate with the client's real Google reviews once provided
+// Real, verbatim customer reviews from Complete Flow Plumbing's Google listing.
+export const GOOGLE_REVIEWS: GoogleReview[] = [
+  {
+    name: "Nikki Riesel",
+    rating: 5,
+    date: "8 months ago",
+    text: "The most incredible, professional plumbing service I have ever used! I genuinely couldn't recommend Complete Flow Plumbing more. They replaced a new toilet in my bathroom that was complex to install, however the team made the whole process feel seamless. They were extremely accommodating and easy to communicate with. Thank you again for the excellent work!",
+  },
+  {
+    name: "Suraj Sitaula",
+    rating: 5,
+    date: "8 months ago",
+    text: "I had a problem with my water pressure and called a couple of plumbers, but it was so hard to get one asap. I called Complete Flow Plumbing and David answered, well spoken, and within 30 mins was at my house sorting it out for me. David, you are a champion. My wife and kids are happy now.",
+  },
+  {
+    name: "Alexander Pegios",
+    rating: 5,
+    date: "8 months ago",
+    text: "I needed a plumber ASAP and David understood my urgency. I rang a couple of other companies who didn't treat my problem like it was important enough. David came out, was swift in identifying and solving the problem and was incredibly easy to deal with. I am 100% going to use David again. Would highly recommend!",
+  },
+  {
+    name: "Jahirul Islam",
+    rating: 5,
+    date: "8 months ago",
+    text: "David from Complete Flow Plumbing provided exceptional service repairing a busted pipe at my home. He was punctual, knowledgeable, and meticulous, ensuring the issue was resolved efficiently and effectively. I highly recommend David and Complete Flow Plumbing for anyone seeking reliable, high-quality plumbing services.",
+  },
+  {
+    name: "Eucharist Pati",
+    rating: 5,
+    date: "8 months ago",
+    text: "David from Complete Flow Plumbing did a fantastic job helping my uncle with his plumbing needs. He was prompt, professional, and explained everything clearly so my uncle knew what was going on. The work was done quickly and to a really high standard. We couldn't be happier with the service – thanks again, David!",
+  },
+  {
+    name: "Mark Supple",
+    rating: 5,
+    date: "8 months ago",
+    text: "I cannot talk highly enough of the service and quality of work I received from David at Complete Flow Plumbing. He was helpful on the phone, quick to come out, fast to locate and fix the issue, and was in and out in under an hour. Highly recommended.",
+  },
+  {
+    name: "Jane Liou",
+    rating: 5,
+    date: "a year ago",
+    text: "Couldn't be happier with the work David did with the plumbing of my new home that needed lots of fixing. He was so professional, honest and communicated so efficiently with me. Wouldn't recommend anyone else. Thank you again, David!",
+  },
+  {
+    name: "T Hart",
+    rating: 5,
+    date: "8 months ago",
+    text: "A week ago, I started having issues with my taps always leaking, made a call, and David came out within 30 mins. He found the issue and replaced what had to be done. I am one happy customer. Thanks again, David!",
+  },
+  {
+    name: "Debbie Ayrey",
+    rating: 5,
+    date: "8 months ago",
+    text: "My experience with David was awesome. Honest, friendly and very knowledgeable. Do yourself a favour and give these guys a go for anything you may need help with. I highly recommend 100%.",
+  },
+  {
+    name: "Courtney Pryor",
+    rating: 5,
+    date: "8 months ago",
+    text: "Would definitely recommend David for all plumbing services. He was very professional and his rates were very reasonable. Would hire him again when needed.",
+  },
+  {
+    name: "Yasin Arafat",
+    rating: 5,
+    date: "8 months ago",
+    text: "David from Complete Flow Plumbing came out today and helped me with my drain issue. He did such a great job, and I appreciate it, mate. Thanks again!",
+  },
+  {
+    name: "Kaniz Fatema",
+    rating: 5,
+    date: "8 months ago",
+    text: "I needed my bathroom renovated. I called so many plumbers and the prices were crazy. I called David and he came out and checked the job. His price was amazing — I gave him the job on the spot. Well recommended to anyone!",
+  },
+];
 
 // FAQ type
 export interface FAQ {
