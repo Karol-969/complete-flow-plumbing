@@ -92,8 +92,8 @@ export default function ServiceDetail() {
   return (
     <Layout>
       <SEOHead
-        title={`${service.title} Sydney | Licensed Same-Day | Complete Flow Plumbing`}
-        description={`${service.shortDescription} Trusted ${service.title.toLowerCase()} in Sydney & Southern Highlands. No call-out fee, upfront pricing, 60-min emergency response. Call 0468 723 029.`}
+        title={`${service.title} | Licensed Same-Day | Complete Flow Plumbing`}
+        description={`${service.shortDescription} Trusted ${service.title.toLowerCase()} across the Illawarra, Southern Highlands & Southern Tablelands. No call-out fee, upfront pricing, fast emergency response. Call 0468 723 029.`}
         canonical={`/services/${service.slug}`}
         keywords={seoKeywords}
       />

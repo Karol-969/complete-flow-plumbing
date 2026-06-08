@@ -39,7 +39,7 @@ const serviceCategories = [
     title: "Emergency",
     icon: Siren,
     items: [
-      { href: "/services/emergency-plumber-sydney", label: "Emergency Plumber 24/7" },
+      { href: "/services/emergency-plumber", label: "Emergency Plumber 24/7" },
       { href: "/services/burst-pipe-emergency", label: "Burst Pipe Emergency" },
     ],
   },

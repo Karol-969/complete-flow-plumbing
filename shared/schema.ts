@@ -192,7 +192,7 @@ export const BUSINESS_INFO = {
   address: "Sutherland Shire to the Southern Highlands, NSW",
   serviceHours: "24/7 Emergency Service",
   googleReviewLink: "https://share.google/MlV4FnguDrFbQd3mm",
-  googleMapsUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d424146.1027831!2d150.3500!3d-34.4700!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6b12a5f2aa4a9cc1%3A0x5017d681632ccc0!2sSouthern%20Highlands%2C%20NSW!5e0!3m2!1sen!2sau!4v1703000000000!5m2!1sen!2sau",
+  googleMapsUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d160000!2d150.5800!3d-34.6200!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6b12a5f2aa4a9cc1%3A0x5017d681632ccc0!2sWollongong%20to%20the%20Southern%20Highlands%2C%20NSW!5e0!3m2!1sen!2sau!4v1703000000000!5m2!1sen!2sau",
   googleMapsSearchUrl: "https://www.google.com/maps/search/Complete+Flow+Plumbing",
   tagline: "Your Local Emergency & Same-Day Plumber",
   guarantee: "Workmanship Guarantee",
@@ -216,7 +216,7 @@ export const WORK_IMAGES = [
 
 // Services data
 export const SERVICES: Service[] = [
-  { id: "1", slug: "emergency-plumber-sydney", title: "Emergency Plumber Sydney (24/7)", shortDescription: "Immediate response for urgent plumbing emergencies, available around the clock.", icon: "Siren", category: "emergency" },
+  { id: "1", slug: "emergency-plumber", title: "Emergency Plumber (24/7)", shortDescription: "Immediate response for urgent plumbing emergencies, available around the clock.", icon: "Siren", category: "emergency" },
   { id: "2", slug: "blocked-drains", title: "Blocked Drains & Drain Cleaning", shortDescription: "Fast, effective drain clearing using the latest equipment.", icon: "PipeSolid", category: "drainage" },
   { id: "3", slug: "hydro-jetting", title: "Hydro Jetting", shortDescription: "High-pressure water jetting to clear stubborn blockages.", icon: "Droplets", category: "drainage" },
   { id: "4", slug: "cctv-drain-inspection", title: "CCTV Drain Camera Inspection", shortDescription: "See exactly what's happening inside your pipes.", icon: "Camera", category: "drainage" },
@@ -237,7 +237,7 @@ export const REGIONS: Region[] = [
     blurb:
       "Licensed local plumbers servicing the entire Sutherland Shire, from Cronulla to Menai, with fast emergency callouts, blocked drains, hot water and gas fitting.",
     localAngle:
-      "Coastal/beachside Sydney. Salt-air corrosion of pipes and fittings, older fibro and brick homes, pool and outdoor plumbing, stormwater near the Royal National Park and Port Hacking.",
+      "Coastal/beachside Sutherland Shire. Salt-air corrosion of pipes and fittings, older fibro and brick homes, pool and outdoor plumbing, stormwater near the Royal National Park and Port Hacking.",
     commonIssues: [
       "Salt-corroded copper pipework near the coast",
       "Blocked stormwater from heavy beachside rain",

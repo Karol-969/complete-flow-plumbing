@@ -77,7 +77,7 @@ export function SEOHead({
     updateLink('canonical', canonicalUrl);
 
     updateMeta('geo.region', 'AU-NSW');
-    updateMeta('geo.placename', 'Sydney');
+    updateMeta('geo.placename', 'Wollongong, NSW');
 
     return () => {
     };

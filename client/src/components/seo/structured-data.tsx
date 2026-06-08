@@ -43,14 +43,14 @@ export function LocalBusinessSchema({ additionalType }: LocalBusinessSchemaProps
     ],
     hasOfferCatalog: {
       "@type": "OfferCatalog",
-      name: "Plumbing Services Across Southern Sydney, the Illawarra & Southern Highlands",
+      name: "Plumbing Services Across the Illawarra, Southern Highlands & Southern Tablelands",
       itemListElement: [
-        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Emergency Plumbing Sydney", description: "24/7 emergency plumber available across Sydney and Southern Highlands" } },
-        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Blocked Drains Sydney", description: "Fast blocked drain clearing using CCTV and hydro jetting" } },
-        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Hot Water Systems Sydney", description: "Hot water system repair, replacement and installation" } },
-        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Gas Fitting Sydney", description: "Licensed gas plumber for all gas fitting and repairs" } },
-        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Leak Detection Sydney", description: "Advanced leak detection to find and fix hidden water leaks" } },
-        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Pipe Relining Sydney", description: "No-dig pipe relining to repair damaged pipes without excavation" } },
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Emergency Plumbing", description: "24/7 emergency plumber available across all our service regions" } },
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Blocked Drains", description: "Fast blocked drain clearing using CCTV and hydro jetting" } },
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Hot Water Systems", description: "Hot water system repair, replacement and installation" } },
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Gas Fitting", description: "Licensed gas plumber for all gas fitting and repairs" } },
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Leak Detection", description: "Advanced leak detection to find and fix hidden water leaks" } },
+        { "@type": "Offer", itemOffered: { "@type": "Service", name: "Pipe Relining", description: "No-dig pipe relining to repair damaged pipes without excavation" } },
         { "@type": "Offer", itemOffered: { "@type": "Service", name: "CCTV Drain Inspection", description: "Camera drain inspection to identify blockages and pipe damage" } }
       ]
     }
