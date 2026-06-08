@@ -1,7 +1,7 @@
 import { Link } from "wouter";
 import { motion } from "framer-motion";
 import { BUSINESS_INFO, SERVICES, REGIONS, locationsByRegion } from "@shared/schema";
-import logoImage from "@assets/logo_1766462914112.jpeg";
+import logoImage from "@assets/logo-dark.png";
 import {
   Phone,
   Mail,

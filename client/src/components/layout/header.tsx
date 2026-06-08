@@ -3,7 +3,7 @@ import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 import { BUSINESS_INFO } from "@shared/schema";
-import logoImage from "@assets/logo_1766462914112.jpeg";
+import logoImage from "@assets/logo-dark.png";
 import {
   Phone,
   Menu,

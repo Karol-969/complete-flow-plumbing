@@ -12,9 +12,9 @@ export default {
         xl2: "1.25rem",
       },
       boxShadow: {
-        glow: "0 0 40px -8px hsl(197 100% 50% / 0.45)",
-        card: "0 8px 30px -12px rgba(0,0,0,0.6)",
-        lift: "0 16px 40px -16px rgba(0,0,0,0.7)",
+        glow: "0 0 40px -10px hsl(197 100% 45% / 0.35)",
+        card: "0 8px 30px -14px rgba(15,23,42,0.18)",
+        lift: "0 16px 40px -18px rgba(15,23,42,0.22)",
       },
       colors: {
         // Flat / base colors (regular buttons)
