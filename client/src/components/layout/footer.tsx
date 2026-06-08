@@ -87,9 +87,11 @@ export function Footer() {
               />
             </Link>
             <p className="text-white/85 text-sm leading-relaxed mb-5 max-w-md">
-              Complete Flow Plumbing proudly services Sutherland Shire,
-              Wollondilly, the Southern Highlands, Wollongong, Illawarra and the
-              Southern Tablelands.
+              Complete Flow Plumbing proudly services the Southern Highlands,
+              Wollondilly, Macarthur, the Sutherland Shire, St George, Bayside,
+              the Eastern Suburbs, Wollongong &amp; Illawarra, the Blue
+              Mountains, Western Sydney, and Goulburn &amp; the Southern
+              Tablelands.
             </p>
             <div className="flex flex-wrap gap-x-4 gap-y-2 mb-6">
               <span className="inline-flex items-center gap-1.5 text-xs font-medium text-white/90">

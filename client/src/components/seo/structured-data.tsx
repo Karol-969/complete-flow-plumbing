@@ -43,7 +43,7 @@ export function LocalBusinessSchema({ additionalType }: LocalBusinessSchemaProps
     ],
     hasOfferCatalog: {
       "@type": "OfferCatalog",
-      name: "Plumbing Services Across the Illawarra, Southern Highlands & Southern Tablelands",
+      name: "Plumbing Services Across Sydney, the Illawarra, Southern Highlands & Southern Tablelands",
       itemListElement: [
         { "@type": "Offer", itemOffered: { "@type": "Service", name: "Emergency Plumbing", description: "24/7 emergency plumber available across all our service regions" } },
         { "@type": "Offer", itemOffered: { "@type": "Service", name: "Blocked Drains", description: "Fast blocked drain clearing using CCTV and hydro jetting" } },
