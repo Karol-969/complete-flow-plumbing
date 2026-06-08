@@ -1,22 +1,32 @@
 import { motion, useReducedMotion, type Variants } from "framer-motion";
 import { Clock, Wallet, ClipboardCheck, ShieldCheck } from "lucide-react";
 import { BUSINESS_INFO } from "@shared/schema";
+import { PipesBackground } from "@/components/effects/pipes-background";
 
 const FEATURES = [
   {
     icon: Clock,
     title: "Fast Same-Day Service",
     line: "Local plumbers, on the way today",
+    gradient: "from-sky-500 to-blue-700",
+    glow: "bg-sky-400/30",
+    watermark: "text-sky-500/10",
   },
   {
     icon: Wallet,
     title: "$0 Call-Out Fee",
     line: "No call-out fee during business hours",
+    gradient: "from-emerald-500 to-teal-600",
+    glow: "bg-emerald-400/30",
+    watermark: "text-emerald-500/10",
   },
   {
     icon: ClipboardCheck,
     title: "Free Quotes, Upfront Pricing",
     line: "Know the price before we start",
+    gradient: "from-amber-500 to-orange-600",
+    glow: "bg-amber-400/30",
+    watermark: "text-amber-500/10",
   },
 ] as const;
 
@@ -84,10 +94,18 @@ export function FeatureCards() {
 
   return (
     <section
-      className="relative bg-background py-20 md:py-28"
+      className="relative overflow-hidden bg-gradient-to-b from-sky-50/70 via-background to-background py-20 md:py-28"
       data-testid="section-feature-cards"
     >
-      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-8">
+      {/* Animated plumbing pipe network behind the cards */}
+      <PipesBackground className="opacity-100" />
+      {/* Light readability wash so the cards stay crisp over the pipes */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-background/10 via-transparent to-background/35"
+      />
+
+      <div className="relative mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-8">
         <motion.div
           className="grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-8"
           variants={container}
@@ -108,22 +126,38 @@ export function FeatureCards() {
                       transition: { type: "spring", stiffness: 300, damping: 20 },
                     }
               }
-              className="group rounded-2xl border border-border/60 bg-card p-6 shadow-card transition-colors hover:border-primary/40 hover:shadow-glow md:p-8"
+              className="group relative overflow-hidden rounded-2xl border border-border/60 bg-card/95 p-6 shadow-card backdrop-blur-sm transition-colors hover:border-primary/40 hover:shadow-glow md:p-8"
               data-testid={`card-feature-${index}`}
             >
+              {/* coloured corner glow on hover */}
+              <span
+                aria-hidden
+                className={`pointer-events-none absolute -top-10 -right-10 h-32 w-32 rounded-full blur-2xl opacity-0 transition-opacity duration-500 group-hover:opacity-100 ${feature.glow}`}
+              />
+              {/* gradient accent bar */}
+              <span
+                aria-hidden
+                className={`pointer-events-none absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${feature.gradient} opacity-80`}
+              />
+              {/* big faint watermark icon */}
+              <feature.icon
+                aria-hidden
+                className={`pointer-events-none absolute -bottom-5 -right-3 h-32 w-32 ${feature.watermark}`}
+              />
+
               <motion.span
-                className="mb-5 inline-flex rounded-2xl bg-primary/10 p-3.5 text-primary ring-1 ring-primary/20"
-                whileHover={
-                  reduce ? undefined : { scale: 1.12, rotate: -6 }
-                }
+                className={`relative mb-5 inline-flex rounded-2xl bg-gradient-to-br ${feature.gradient} p-3.5 text-white shadow-lg`}
+                whileHover={reduce ? undefined : { scale: 1.12, rotate: -6 }}
                 transition={{ type: "spring", stiffness: 320, damping: 14 }}
               >
                 <feature.icon className="h-6 w-6" />
               </motion.span>
-              <h3 className="mb-2 text-xl font-bold tracking-tight text-foreground md:text-2xl">
+              <h3 className="relative mb-2 text-xl font-bold tracking-tight text-foreground md:text-2xl">
                 {feature.title}
               </h3>
-              <p className="text-base text-muted-foreground">{feature.line}</p>
+              <p className="relative text-base text-muted-foreground">
+                {feature.line}
+              </p>
             </motion.article>
           ))}
         </motion.div>

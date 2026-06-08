@@ -294,3 +294,21 @@
     inset: -1px;
   }
 }
+
+/* --- Custom plumbing pipe cursor (desktop / fine-pointer only) --- */
+@media (pointer: fine) {
+  html {
+    cursor: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%2728%27%20height%3D%2728%27%20viewBox%3D%270%200%2028%2028%27%3E%3Cpath%20d%3D%27M6%203%20V14%20a6%206%200%200%200%206%206%20H25%27%20fill%3D%27none%27%20stroke%3D%27%23063b66%27%20stroke-width%3D%279%27%20stroke-linecap%3D%27round%27%2F%3E%3Cpath%20d%3D%27M6%203%20V14%20a6%206%200%200%200%206%206%20H25%27%20fill%3D%27none%27%20stroke%3D%27%230a66c2%27%20stroke-width%3D%276%27%20stroke-linecap%3D%27round%27%2F%3E%3Cpath%20d%3D%27M6%204%20V13%27%20fill%3D%27none%27%20stroke%3D%27%23bfe8ff%27%20stroke-width%3D%271.6%27%20stroke-linecap%3D%27round%27%2F%3E%3Crect%20x%3D%271.5%27%20y%3D%271.5%27%20width%3D%279%27%20height%3D%274%27%20rx%3D%271.5%27%20fill%3D%27%23063b66%27%2F%3E%3C%2Fsvg%3E") 6 3, auto;
+  }
+  a, button, [role="button"], summary, label[for], select,
+  .cursor-pointer, .hover-elevate, [data-testid^="button"],
+  [data-testid^="link"], [data-testid*="-cta"] {
+    cursor: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%2730%27%20height%3D%2730%27%20viewBox%3D%270%200%2030%2030%27%3E%3Cpath%20d%3D%27M7%204%20V15%20a6%206%200%200%200%206%206%20H26%27%20fill%3D%27none%27%20stroke%3D%27%23063b66%27%20stroke-width%3D%2710%27%20stroke-linecap%3D%27round%27%2F%3E%3Cpath%20d%3D%27M7%204%20V15%20a6%206%200%200%200%206%206%20H26%27%20fill%3D%27none%27%20stroke%3D%27%230ea5e9%27%20stroke-width%3D%276.5%27%20stroke-linecap%3D%27round%27%2F%3E%3Cpath%20d%3D%27M7%205%20V14%27%20fill%3D%27none%27%20stroke%3D%27%23e0f6ff%27%20stroke-width%3D%271.8%27%20stroke-linecap%3D%27round%27%2F%3E%3Crect%20x%3D%272%27%20y%3D%272%27%20width%3D%2710%27%20height%3D%274.5%27%20rx%3D%272%27%20fill%3D%27%23063b66%27%2F%3E%3Ccircle%20cx%3D%2726%27%20cy%3D%2721%27%20r%3D%273.4%27%20fill%3D%27%230ea5e9%27%20stroke%3D%27%23ffffff%27%20stroke-width%3D%271.4%27%2F%3E%3C%2Fsvg%3E") 7 4, pointer;
+  }
+  input, textarea, [contenteditable="true"] {
+    cursor: text;
+  }
+  button:disabled, [aria-disabled="true"], [disabled] {
+    cursor: not-allowed;
+  }
+}

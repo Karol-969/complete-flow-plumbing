@@ -209,7 +209,7 @@ export function GoogleReviews() {
             {hasReviews && (
               <p className="text-sm text-muted-foreground">
                 <span className="font-bold text-foreground">{BUSINESS_INFO.googleRating}</span>{" "}
-                rating from {BUSINESS_INFO.googleReviewCount}+ Google reviews
+                rating from {BUSINESS_INFO.googleReviewCount} Google reviews
               </p>
             )}
           </motion.div>
