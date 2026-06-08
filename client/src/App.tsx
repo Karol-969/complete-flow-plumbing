@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Switch, Route, useLocation } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
@@ -22,6 +23,12 @@ import NotFound from "@/pages/not-found";
 function Router() {
   const [location] = useLocation();
   const isAdmin = location.startsWith("/admin");
+
+  // Scroll back to the top whenever the route (path) changes, so navigating
+  // to a new page never lands the visitor mid-section.
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location]);
 
   return (
     <>
