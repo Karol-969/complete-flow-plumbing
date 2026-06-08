@@ -1,6 +1,6 @@
 import { Link } from "wouter";
 import { motion } from "framer-motion";
-import { BUSINESS_INFO, SERVICES, REGIONS, locationsByRegion } from "@shared/schema";
+import { BUSINESS_INFO, SERVICES, REGIONS } from "@shared/schema";
 import logoImage from "@assets/logo-dark.png";
 import {
   Phone,
@@ -208,15 +208,15 @@ export function Footer() {
           </motion.div>
         </div>
 
-        {/* Service Areas — grouped by region for SEO internal linking */}
+        {/* Service Areas — compact region links (full searchable directory lives on /locations) */}
         <div className="mt-14 pt-10 border-t border-border">
           <h3 className="text-base font-bold text-foreground mb-2">
             Plumber Services Across Sutherland Shire, Wollondilly, the Southern Highlands, Wollongong, Illawarra & the Southern Tablelands
           </h3>
-          <p className="text-sm text-muted-foreground mb-8">
-            Emergency plumber, blocked drains, hot water systems & gas fitting available across all suburbs.
+          <p className="text-sm text-muted-foreground mb-6">
+            Emergency plumber, blocked drains, hot water systems & gas fitting available across all 6 regions.
           </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-8">
+          <div className="flex flex-wrap gap-2.5">
             {REGIONS.map((region, i) => (
               <motion.div
                 key={region.slug}
@@ -225,34 +225,21 @@ export function Footer() {
                 initial="hidden"
                 whileInView="show"
                 viewport={{ once: true }}
-                data-testid={`footer-region-${region.slug}`}
               >
                 <Link
                   href={`/locations/region/${region.slug}`}
-                  className="block font-semibold text-sm text-foreground hover:text-primary transition-colors mb-3"
-                  data-testid={`footer-region-link-${region.slug}`}
+                  className="inline-flex items-center gap-1.5 rounded-full bg-card border border-border px-4 py-2 text-sm font-medium text-foreground transition-colors hover:border-primary hover:text-primary"
+                  data-testid={`footer-region-${region.slug}`}
                 >
+                  <MapPin className="h-4 w-4 text-primary" />
                   {region.displayName}
                 </Link>
-                <ul className="space-y-1.5">
-                  {locationsByRegion(region.slug).map((suburb) => (
-                    <li key={suburb.id}>
-                      <Link
-                        href={`/locations/${suburb.slug}`}
-                        className="text-xs text-muted-foreground hover:text-primary transition-colors truncate block"
-                        data-testid={`footer-suburb-${suburb.slug}`}
-                      >
-                        Plumber {suburb.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
               </motion.div>
             ))}
           </div>
           <Link
             href="/locations"
-            className="inline-flex items-center gap-1 mt-8 text-sm font-semibold text-primary hover:gap-2 transition-all"
+            className="inline-flex items-center gap-1 mt-7 text-sm font-semibold text-primary hover:gap-2 transition-all"
             data-testid="footer-all-areas"
           >
             View all service areas
