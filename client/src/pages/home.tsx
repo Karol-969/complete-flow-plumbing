@@ -1,11 +1,12 @@
 import { Layout } from "@/components/layout/layout";
-import { Hero } from "@/components/home/hero";
-import { FeatureCards } from "@/components/home/feature-cards";
-import { ServicesGrid } from "@/components/home/services-grid";
+import { HeroFullBleed } from "@/components/home/hero-fullbleed";
+import { TrustBand } from "@/components/home/trust-band";
+import { ThreeCardRow } from "@/components/home/three-card-row";
+import { ServicesShowcase } from "@/components/home/services-showcase";
+import { OwnerMessage } from "@/components/home/owner-message";
 import { HighlightCircles } from "@/components/home/highlight-circles";
-import { MeetTheTeam } from "@/components/home/meet-the-team";
 import { WorkGallery } from "@/components/home/work-gallery";
-import { PromiseReviews } from "@/components/home/promise-reviews";
+import { PromiseBand } from "@/components/home/promise-band";
 import { ServiceAreaMap } from "@/components/home/service-area-map";
 import { GoogleReviews } from "@/components/home/google-reviews";
 import { SeoContent } from "@/components/home/seo-content";
@@ -53,13 +54,14 @@ export default function Home() {
       <WebsiteSchema />
       <FAQSchema faqs={HOME_FAQS} />
 
-      <Hero />
-      <FeatureCards />
-      <ServicesGrid />
-      <HighlightCircles />
-      <MeetTheTeam />
+      <HeroFullBleed />
+      <TrustBand />
+      <ThreeCardRow />
+      <ServicesShowcase />
+      <OwnerMessage />
       <WorkGallery />
-      <PromiseReviews />
+      <HighlightCircles />
+      <PromiseBand />
       <ServiceAreaMap />
       <GoogleReviews />
       <SeoContent />
