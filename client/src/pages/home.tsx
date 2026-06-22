@@ -57,10 +57,10 @@ export default function Home() {
       <HeroFullBleed />
       <TrustBand />
       <ThreeCardRow />
+      <HighlightCircles />
       <ServicesShowcase />
       <OwnerMessage />
       <WorkGallery />
-      <HighlightCircles />
       <PromiseBand />
       <ServiceAreaMap />
       <GoogleReviews />
