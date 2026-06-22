@@ -25,7 +25,7 @@ const CIRCLES: Circle[] = [
     desc: "No call-out fee during business hours.",
     cta: { label: "Call Now", href: `tel:${BUSINESS_INFO.phoneTel}` },
     photo: owner,
-    photoAlt: "David Taha, Complete Flow Plumbing",
+    photoAlt: "Complete Flow Plumbing",
   },
   {
     tone: "blue",

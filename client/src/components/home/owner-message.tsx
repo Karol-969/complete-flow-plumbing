@@ -58,7 +58,7 @@ export function OwnerMessage() {
             <div className="relative overflow-hidden rounded-3xl shadow-2xl ring-1 ring-primary/10">
               <img
                 src={ownerImg}
-                alt="David Taha, owner and licensed plumber at Complete Flow Plumbing, in a branded shirt"
+                alt="A licensed Complete Flow Plumbing plumber in a branded shirt"
                 className="aspect-[4/5] w-full object-cover"
                 loading="lazy"
               />
@@ -89,19 +89,19 @@ export function OwnerMessage() {
             viewport={{ once: true, margin: "-80px" }}
           >
             <p className="text-primary text-sm font-semibold tracking-widest uppercase mb-3">
-              A Message From The Owner
+              A Message From Our Team
             </p>
             <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-foreground">
-              Hi, I&apos;m David — and I&apos;ll treat your home like my own
+              We&apos;ll treat your home like our own
             </h2>
 
             <div className="mt-6 space-y-5 text-lg text-muted-foreground max-w-prose">
               <p>
-                I started Complete Flow Plumbing because I believe every job
+                We built Complete Flow Plumbing on a simple belief: every job
                 deserves a fully licensed plumber who actually shows up, does it
                 properly, and stands behind the work. When you call, you deal
-                with me and my team directly — never a call centre or a
-                subcontractor you&apos;ve never met.
+                with our team directly — never a call centre or a subcontractor
+                you&apos;ve never met.
               </p>
               <p>
                 That means honest, upfront pricing with no surprises, tidy
@@ -114,8 +114,8 @@ export function OwnerMessage() {
               </p>
               <p>
                 Whether you&apos;re in the Southern Highlands, the Illawarra, or
-                right through to the Eastern Suburbs, I&apos;d be glad to help —
-                and I&apos;ll always give you straight answers about what your
+                right through to the Eastern Suburbs, we&apos;d be glad to help —
+                and we&apos;ll always give you straight answers about what your
                 home actually needs.
               </p>
             </div>
@@ -123,13 +123,13 @@ export function OwnerMessage() {
             {/* signature */}
             <div className="mt-8">
               <p
-                className="font-heading italic text-primary text-4xl md:text-5xl"
+                className="font-heading italic text-primary text-3xl md:text-4xl"
                 data-testid="text-owner-signature"
               >
-                David Taha
+                The Complete Flow Team
               </p>
               <p className="mt-1 text-sm font-medium text-muted-foreground">
-                Owner, {BUSINESS_INFO.name}
+                {BUSINESS_INFO.name} · NSW Lic {BUSINESS_INFO.licence}
               </p>
             </div>
 

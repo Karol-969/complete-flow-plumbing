@@ -133,9 +133,9 @@ export function HeroFullBleed() {
             variants={item}
             className="mt-6 max-w-xl text-lg md:text-xl text-white/90"
           >
-            Licensed NSW plumber David Taha and the Complete Flow Plumbing team
-            handle emergencies, blocked drains, hot water and gas fitting across
-            11 regions — from the Southern Highlands to the Eastern Suburbs.
+            Licensed, local NSW plumbers handling emergencies, blocked drains,
+            hot water and gas fitting across 11 regions — from the Southern
+            Highlands to the Eastern Suburbs.
           </motion.p>
 
           {/* Value-prop row */}

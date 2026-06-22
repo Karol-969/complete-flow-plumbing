@@ -130,7 +130,7 @@ export function Footer() {
               Our Services
             </h3>
             <ul className="space-y-3 text-sm">
-              {SERVICES.slice(0, 7).map((s) => (
+              {SERVICES.slice(0, 4).map((s) => (
                 <FooterLink key={s.id} href={`/services/${s.slug}`} label={s.title} />
               ))}
               <FooterLink href="/services" label="View all services" />
@@ -169,13 +169,14 @@ export function Footer() {
               Areas We Service
             </h3>
             <ul className="space-y-3 text-sm">
-              {REGIONS.map((r) => (
+              {REGIONS.slice(0, 5).map((r) => (
                 <FooterLink
                   key={r.slug}
                   href={`/locations/region/${r.slug}`}
                   label={r.displayName}
                 />
               ))}
+              <FooterLink href="/locations" label="View all areas" />
             </ul>
           </motion.div>
 

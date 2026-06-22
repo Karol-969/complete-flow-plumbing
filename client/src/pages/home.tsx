@@ -1,15 +1,14 @@
 import { Layout } from "@/components/layout/layout";
 import { HeroFullBleed } from "@/components/home/hero-fullbleed";
 import { TrustBand } from "@/components/home/trust-band";
-import { ThreeCardRow } from "@/components/home/three-card-row";
 import { ServicesShowcase } from "@/components/home/services-showcase";
 import { OwnerMessage } from "@/components/home/owner-message";
 import { HighlightCircles } from "@/components/home/highlight-circles";
+import { HowItWorks } from "@/components/home/how-it-works";
 import { WorkGallery } from "@/components/home/work-gallery";
 import { PromiseBand } from "@/components/home/promise-band";
 import { ServiceAreaMap } from "@/components/home/service-area-map";
 import { GoogleReviews } from "@/components/home/google-reviews";
-import { SeoContent } from "@/components/home/seo-content";
 import { FAQSection } from "@/components/home/faq-section";
 import { CTASection } from "@/components/home/cta-section";
 import { SEOHead } from "@/components/seo/seo-head";
@@ -56,15 +55,14 @@ export default function Home() {
 
       <HeroFullBleed />
       <TrustBand />
-      <ThreeCardRow />
       <HighlightCircles />
+      <HowItWorks />
       <ServicesShowcase />
       <OwnerMessage />
       <WorkGallery />
       <PromiseBand />
       <ServiceAreaMap />
       <GoogleReviews />
-      <SeoContent />
       <FAQSection />
       <CTASection />
     </Layout>
