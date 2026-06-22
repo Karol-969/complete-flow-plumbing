@@ -2,7 +2,6 @@ import { Layout } from "@/components/layout/layout";
 import { HeroFullBleed } from "@/components/home/hero-fullbleed";
 import { TrustBand } from "@/components/home/trust-band";
 import { ServicesShowcase } from "@/components/home/services-showcase";
-import { OwnerMessage } from "@/components/home/owner-message";
 import { HighlightCircles } from "@/components/home/highlight-circles";
 import { HowItWorks } from "@/components/home/how-it-works";
 import { WorkGallery } from "@/components/home/work-gallery";
@@ -58,7 +57,6 @@ export default function Home() {
       <HighlightCircles />
       <HowItWorks />
       <ServicesShowcase />
-      <OwnerMessage />
       <WorkGallery />
       <PromiseBand />
       <ServiceAreaMap />
