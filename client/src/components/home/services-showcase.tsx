@@ -12,17 +12,29 @@ import {
 import { SERVICES, REGIONS } from "@shared/schema";
 import { Search, ArrowRight, MapPin, Wrench } from "lucide-react";
 
-import g1 from "@assets/cfp-gallery-01.jpeg";
-import g2 from "@assets/cfp-gallery-02.jpeg";
-import g3 from "@assets/cfp-gallery-03.jpeg";
-import g4 from "@assets/cfp-gallery-04.jpeg";
-import g5 from "@assets/cfp-gallery-05.jpeg";
-import g6 from "@assets/cfp-gallery-06.jpeg";
-import g7 from "@assets/cfp-gallery-07.jpeg";
-import g8 from "@assets/cfp-gallery-08.jpeg";
-import g9 from "@assets/cfp-gallery-09.jpeg";
+// Real job photos chosen to MATCH each service.
+import imgEmergency from "@assets/cfp-gallery-18.jpeg";
+import imgDrains from "@assets/cfp-gallery-01.jpeg";
+import imgHydro from "@assets/cfp-gallery-07.jpeg";
+import imgCctv from "@assets/cfp-gallery-23.jpeg";
+import imgRelining from "@assets/cfp-gallery-04.jpeg";
+import imgHotWater from "@assets/cfp-gallery-08.jpeg";
+import imgGas from "@assets/cfp-gallery-03.jpeg";
+import imgLeak from "@assets/cfp-gallery-11.jpeg";
+import imgToilet from "@assets/cfp-gallery-20.jpeg";
 
-const PHOTOS = [g1, g2, g3, g4, g5, g6, g7, g8, g9];
+// Map each service slug to a photo that actually depicts that work.
+const PHOTO_BY_SLUG: Record<string, string> = {
+  "emergency-plumber": imgEmergency,
+  "blocked-drains": imgDrains,
+  "hydro-jetting": imgHydro,
+  "cctv-drain-inspection": imgCctv,
+  "pipe-relining": imgRelining,
+  "hot-water-systems": imgHotWater,
+  "gas-fitting": imgGas,
+  "leak-detection": imgLeak,
+  "toilet-repair": imgToilet,
+};
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -187,8 +199,8 @@ export function ServicesShowcase() {
           viewport={{ once: true, margin: "-80px" }}
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
         >
-          {SERVICES.map((s, index) => {
-            const photo = PHOTOS[index % PHOTOS.length];
+          {SERVICES.map((s) => {
+            const photo = PHOTO_BY_SLUG[s.slug] ?? imgEmergency;
             return (
               <motion.div key={s.id} variants={cardVariants} className="h-full">
                 <Link
