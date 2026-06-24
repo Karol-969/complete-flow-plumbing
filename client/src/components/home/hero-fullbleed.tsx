@@ -3,7 +3,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { BUSINESS_INFO } from "@shared/schema";
 import { Phone, Star, CheckCircle2, ArrowRight } from "lucide-react";
-import bgImg from "@assets/cfp-gallery-05.jpeg";
+import bgImg from "@assets/cfp-truck-hero.jpeg";
 
 function GoogleG({ className }: { className?: string }) {
   return (
