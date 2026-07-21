@@ -11,6 +11,7 @@ import {
   Wrench, 
   Camera,
   Bath,
+  Filter,
   ArrowRight
 } from "lucide-react";
 
@@ -24,6 +25,7 @@ const iconMap: { [key: string]: React.ComponentType<{ className?: string }> } = 
   Fuel,
   Search,
   Bath,
+  Filter,
 };
 
 export function ServicesGrid() {

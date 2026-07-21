@@ -45,10 +45,10 @@ const serviceCategories = [
     title: "Drainage", 
     icon: Droplets,
     items: [
-      { href: "/services/blocked-drains", label: "Blocked Drains" },
+      { href: "/services/water-mains", label: "Water Mains" },
       { href: "/services/hydro-jetting", label: "Hydro Jetting" },
-      { href: "/services/cctv-drain-inspection", label: "CCTV Drain Inspection" },
-      { href: "/services/pipe-relining", label: "Pipe Relining" },
+      { href: "/services/water-filter", label: "Water Filter" },
+      { href: "/services/drainage", label: "Drainage" },
     ]
   },
   { 
@@ -72,7 +72,7 @@ const serviceCategories = [
     title: "Leak Detection", 
     icon: Search,
     items: [
-      { href: "/services/leak-detection", label: "Leak Detection" },
+      { href: "/services/kitchen-tap-mixer", label: "Kitchen Tap Mixer" },
       { href: "/services/leaking-tap-repair", label: "Leaking Tap Repair" },
       { href: "/services/toilet-repair", label: "Toilet Repair" },
     ]

@@ -37,12 +37,12 @@ export function SeoContent() {
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold text-foreground mb-2">
-                    <Link href="/services/blocked-drains" className="hover:text-primary transition-colors">
-                      Blocked Drains Sydney
+                    <Link href="/services/water-mains" className="hover:text-primary transition-colors">
+                      Water Mains Sydney
                     </Link>
                   </h3>
                   <p className="text-muted-foreground text-sm leading-relaxed">
-                    CCTV drain camera inspection to find the exact cause, followed by hydro jet clearing. We fix the root cause — not just the symptom. Tree root intrusion specialists for Sydney's older suburbs.
+                    Repair, replacement and installation of water main supply lines. From burst mains to new connections, we restore your water supply fast with minimal disruption across Sydney and the Southern Highlands.
                   </p>
                 </div>
                 <div>
@@ -67,22 +67,22 @@ export function SeoContent() {
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold text-foreground mb-2">
-                    <Link href="/services/pipe-relining" className="hover:text-primary transition-colors">
-                      Pipe Relining Sydney
+                    <Link href="/services/drainage" className="hover:text-primary transition-colors">
+                      Drainage Sydney
                     </Link>
                   </h3>
                   <p className="text-muted-foreground text-sm leading-relaxed">
-                    No-dig pipe relining repairs damaged sewer and drain pipes from the inside. No excavation, no disruption to gardens or driveways. 50-year product warranty. Ideal for Sydney's clay pipe systems.
+                    Complete drainage solutions — drain clearing, repairs and new drain installation. We diagnose the root cause and fix it for good, from blocked stormwater to collapsed sewer lines across Sydney's older suburbs.
                   </p>
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold text-foreground mb-2">
-                    <Link href="/services/leak-detection" className="hover:text-primary transition-colors">
-                      Leak Detection Sydney
+                    <Link href="/services/kitchen-tap-mixer" className="hover:text-primary transition-colors">
+                      Kitchen Tap Mixer Sydney
                     </Link>
                   </h3>
                   <p className="text-muted-foreground text-sm leading-relaxed">
-                    Advanced electronic leak detection finds hidden water leaks in walls, slabs, and underground pipes without destructive searching. Stop water damage before it becomes a major repair.
+                    Supply, repair and replacement of kitchen taps and mixer taps. From dripping washers to full mixer upgrades, we install quality tapware that lasts — no leaks, no fuss.
                   </p>
                 </div>
               </div>

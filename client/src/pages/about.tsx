@@ -3,7 +3,8 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 import { BUSINESS_INFO } from "@shared/schema";
-import teamVanImage from "@assets/image_1766464585703.png";
+import hotWaterInstall from "@assets/WhatsApp_Image_2025-12-18_at_6.50.35_PM_1766462914108.jpeg";
+import plumberAtWork from "@assets/WhatsApp_Image_2025-12-18_at_6.52.14_PM_1766462914110.jpeg";
 import { 
   Shield, 
   Award, 
@@ -105,9 +106,9 @@ export default function About() {
             </div>
 
             <div className="relative rounded-lg border border-border overflow-hidden">
-              <img 
-                src={teamVanImage} 
-                alt="Complete Flow Plumbing team and service van" 
+              <img
+                src={hotWaterInstall}
+                alt="Complete Flow Plumbing hot water system installation"
                 className="w-full h-auto object-cover"
                 data-testid="team-photo"
               />
@@ -153,9 +154,9 @@ export default function About() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="relative rounded-lg border border-border overflow-hidden order-2 lg:order-1">
-              <img 
-                src={teamVanImage} 
-                alt="Complete Flow Plumbing fully equipped service van" 
+              <img
+                src={plumberAtWork}
+                alt="Complete Flow Plumbing plumber clearing a blocked drain on site"
                 className="w-full h-auto object-cover"
                 data-testid="van-photo"
               />
