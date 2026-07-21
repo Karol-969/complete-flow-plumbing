@@ -66,9 +66,9 @@ const SERVICE_COLUMNS = [
     desc: "24/7 emergency plumbing across all 11 regions. Burst pipes, flooding, sewage overflow — we respond fast. No call-out fee during business hours, every day including public holidays.",
   },
   {
-    title: "Blocked Drains",
-    href: "/services/blocked-drains",
-    desc: "CCTV drain camera inspection to find the exact cause, followed by hydro jet clearing. We fix the root cause — not just the symptom. Tree-root intrusion specialists for older and heritage suburbs.",
+    title: "Water Mains",
+    href: "/services/water-mains",
+    desc: "Repair, replacement and installation of water main supply lines. From burst mains to new connections, we restore your water supply fast with minimal disruption across all 11 regions.",
   },
   {
     title: "Hot Water Systems",
@@ -81,14 +81,14 @@ const SERVICE_COLUMNS = [
     desc: "Licensed gas plumbers for all gas fitting, gas leak detection, gas appliance installation, and gas line repairs across all 11 regions. Certificate of Compliance provided on every job.",
   },
   {
-    title: "Pipe Relining",
-    href: "/services/pipe-relining",
-    desc: "No-dig pipe relining repairs damaged sewer and drain pipes from the inside. No excavation, no disruption to gardens or driveways. Ideal for older clay pipe systems.",
+    title: "Drainage",
+    href: "/services/drainage",
+    desc: "Complete drainage solutions — drain clearing, repairs and new drain installation. We diagnose the root cause and fix it for good, from blocked stormwater to collapsed sewer lines in older suburbs.",
   },
   {
-    title: "Leak Detection",
-    href: "/services/leak-detection",
-    desc: "Advanced electronic leak detection finds hidden water leaks in walls, slabs, and underground pipes without destructive searching. Stop water damage before it becomes a major repair.",
+    title: "Kitchen Tap Mixer",
+    href: "/services/kitchen-tap-mixer",
+    desc: "Supply, repair and replacement of kitchen taps and mixer taps. From dripping washers to full mixer upgrades, we install quality tapware that lasts — no leaks, no fuss.",
   },
 ];
 

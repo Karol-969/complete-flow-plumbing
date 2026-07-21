@@ -16,6 +16,7 @@ import {
   ShieldCheck,
   Clock,
   BadgeCheck,
+  Filter,
 } from "lucide-react";
 
 export const iconMap: { [key: string]: React.ComponentType<{ className?: string }> } = {
@@ -28,6 +29,7 @@ export const iconMap: { [key: string]: React.ComponentType<{ className?: string 
   Fuel,
   Search,
   Bath,
+  Filter,
 };
 
 // True, non-fabricated trust points sourced from BUSINESS_INFO.

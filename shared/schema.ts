@@ -225,13 +225,13 @@ export const WORK_IMAGES = [
 // Services data
 export const SERVICES: Service[] = [
   { id: "1", slug: "emergency-plumber", title: "Emergency Plumber (24/7)", shortDescription: "Immediate response for urgent plumbing emergencies, available around the clock.", icon: "Siren", category: "emergency" },
-  { id: "2", slug: "blocked-drains", title: "Blocked Drains & Drain Cleaning", shortDescription: "Fast, effective drain clearing using the latest equipment.", icon: "PipeSolid", category: "drainage" },
+  { id: "2", slug: "water-mains", title: "Water mains", shortDescription: "Repair, replacement & installation of water main supply lines.", icon: "Droplets", category: "drainage" },
   { id: "3", slug: "hydro-jetting", title: "Hydro Jetting", shortDescription: "High-pressure water jetting to clear stubborn blockages.", icon: "Droplets", category: "drainage" },
-  { id: "4", slug: "cctv-drain-inspection", title: "CCTV Drain Camera Inspection", shortDescription: "See exactly what's happening inside your pipes.", icon: "Camera", category: "drainage" },
-  { id: "5", slug: "pipe-relining", title: "Pipe Relining", shortDescription: "No-dig pipe repair that saves your property from excavation.", icon: "Wrench", category: "drainage" },
+  { id: "4", slug: "water-filter", title: "Water Filter", shortDescription: "Supply & installation of clean drinking water filtration systems.", icon: "Filter", category: "drainage" },
+  { id: "5", slug: "drainage", title: "Drainage", shortDescription: "Complete drainage solutions — clearing, repairs & new drain installation.", icon: "PipeSolid", category: "drainage" },
   { id: "6", slug: "hot-water-systems", title: "Hot Water Systems", shortDescription: "Repair, replacement & installation of all hot water system types.", icon: "Flame", category: "hot-water" },
   { id: "7", slug: "gas-fitting", title: "Gas Fitting & Gas Plumbing", shortDescription: "Licensed gas fitters for safe installation and repairs.", icon: "Fuel", category: "gas" },
-  { id: "8", slug: "leak-detection", title: "Leak Detection & Repair", shortDescription: "Find and fix hidden leaks before they cause damage.", icon: "Search", category: "leak-detection" },
+  { id: "8", slug: "kitchen-tap-mixer", title: "Kitchen Tap Mixer", shortDescription: "Supply, repair & replacement of kitchen taps and mixer taps.", icon: "Droplets", category: "leak-detection" },
   { id: "9", slug: "toilet-repair", title: "Toilet Repair & Unblock", shortDescription: "Quick fixes for blocked, running, or leaking toilets.", icon: "Bath", category: "leak-detection" },
 ];
 
