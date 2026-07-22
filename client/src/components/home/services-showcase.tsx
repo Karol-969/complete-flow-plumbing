@@ -15,7 +15,7 @@ import { Search, ArrowRight, MapPin, Wrench } from "lucide-react";
 // Real job photos chosen to MATCH each service.
 import imgEmergency from "@assets/cfp-gallery-18.jpeg";
 import imgDrains from "@assets/cfp-gallery-01.jpeg";
-import imgHydro from "@assets/cfp-gallery-07.jpeg";
+import imgHydro from "@assets/cfp-gallery-05.jpeg";
 import imgCctv from "@assets/cfp-gallery-23.jpeg";
 import imgRelining from "@assets/cfp-gallery-04.jpeg";
 import imgHotWater from "@assets/cfp-gallery-08.jpeg";
