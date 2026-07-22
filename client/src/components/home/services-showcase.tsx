@@ -26,13 +26,13 @@ import imgToilet from "@assets/cfp-gallery-20.jpeg";
 // Map each service slug to a photo that actually depicts that work.
 const PHOTO_BY_SLUG: Record<string, string> = {
   "emergency-plumber": imgEmergency,
-  "blocked-drains": imgDrains,
+  "water-mains": imgDrains,
   "hydro-jetting": imgHydro,
-  "cctv-drain-inspection": imgCctv,
-  "pipe-relining": imgRelining,
+  "water-filter": imgCctv,
+  "drainage": imgRelining,
   "hot-water-systems": imgHotWater,
   "gas-fitting": imgGas,
-  "leak-detection": imgLeak,
+  "kitchen-tap-mixer": imgLeak,
   "toilet-repair": imgToilet,
 };
 
