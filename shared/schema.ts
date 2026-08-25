@@ -65,7 +65,6 @@ export interface Location {
     | "eastern-suburbs"
     | "wollongong-illawarra"
     | "blue-mountains"
-    | "western-sydney"
     | "goulburn-southern-tablelands";
   postcode?: string;
   nearby?: string[];
@@ -445,29 +444,6 @@ export const REGIONS: Region[] = [
     ],
   },
   {
-    slug: "western-sydney",
-    name: "Western Sydney",
-    displayName: "Western Sydney",
-    theName: "Western Sydney",
-    blurb:
-      "Western Sydney plumbers across Parramatta, Blacktown, Penrith and Liverpool — emergency plumbing, blocked drains, hot water and gas fitting for homes and businesses.",
-    localAngle:
-      "Vast Western Sydney. Established suburbs with ageing pipework and fast-growing corridors (Rouse Hill, Kellyville); reactive clay soils drive tree-root drain blockages and high demand for hot water and gas work.",
-    commonIssues: [
-      "Tree-root blocked drains",
-      "Hot water system replacements",
-      "Gas fitting and compliance",
-      "Burst pipes and leak detection",
-    ],
-    targetKeywords: [
-      "plumber Western Sydney",
-      "plumber Parramatta",
-      "plumber Penrith",
-      "emergency plumber Blacktown",
-      "blocked drains Liverpool",
-    ],
-  },
-  {
     slug: "goulburn-southern-tablelands",
     name: "Goulburn & Southern Tablelands",
     displayName: "Goulburn & Southern Tablelands",
@@ -497,18 +473,17 @@ export const SOUTHERN_HIGHLANDS_SUBURBS: Location[] = [
   { id: "sh1", slug: "bowral", name: "Bowral", region: "southern-highlands", postcode: "2576", nearby: ["mittagong", "burradoo", "moss-vale"] },
   { id: "sh2", slug: "mittagong", name: "Mittagong", region: "southern-highlands", postcode: "2575", nearby: ["bowral", "welby", "colo-vale"] },
   { id: "sh3", slug: "moss-vale", name: "Moss Vale", region: "southern-highlands", postcode: "2577", nearby: ["bowral", "sutton-forest", "burradoo"] },
-  { id: "sh4", slug: "bundanoon", name: "Bundanoon", region: "southern-highlands", postcode: "2578", nearby: ["penrose", "exeter", "sutton-forest"] },
+  { id: "sh4", slug: "bundanoon", name: "Bundanoon", region: "southern-highlands", postcode: "2578", nearby: ["exeter", "sutton-forest"] },
   { id: "sh5", slug: "robertson", name: "Robertson", region: "southern-highlands", postcode: "2577", nearby: ["burrawang", "moss-vale"] },
   { id: "sh6", slug: "berrima", name: "Berrima", region: "southern-highlands", postcode: "2577", nearby: ["moss-vale", "mittagong", "sutton-forest"] },
   { id: "sh7", slug: "burradoo", name: "Burradoo", region: "southern-highlands", postcode: "2576", nearby: ["bowral", "moss-vale", "mittagong"] },
   { id: "sh8", slug: "colo-vale", name: "Colo Vale", region: "southern-highlands", postcode: "2575", nearby: ["mittagong", "hill-top", "yerrinbool"] },
   { id: "sh9", slug: "sutton-forest", name: "Sutton Forest", region: "southern-highlands", postcode: "2577", nearby: ["moss-vale", "berrima", "exeter"] },
-  { id: "sh10", slug: "exeter", name: "Exeter", region: "southern-highlands", postcode: "2579", nearby: ["bundanoon", "sutton-forest", "penrose"] },
+  { id: "sh10", slug: "exeter", name: "Exeter", region: "southern-highlands", postcode: "2579", nearby: ["bundanoon", "sutton-forest"] },
   { id: "sh11", slug: "hill-top", name: "Hill Top", region: "southern-highlands", postcode: "2575", nearby: ["colo-vale", "yerrinbool", "mittagong"] },
   { id: "sh12", slug: "yerrinbool", name: "Yerrinbool", region: "southern-highlands", postcode: "2575", nearby: ["hill-top", "colo-vale", "mittagong"] },
   { id: "sh13", slug: "welby", name: "Welby", region: "southern-highlands", postcode: "2575", nearby: ["mittagong", "bowral", "colo-vale"] },
   { id: "sh14", slug: "burrawang", name: "Burrawang", region: "southern-highlands", postcode: "2577", nearby: ["robertson", "moss-vale"] },
-  { id: "sh15", slug: "penrose", name: "Penrose", region: "southern-highlands", postcode: "2579", nearby: ["bundanoon", "exeter"] },
 ];
 
 // Wollondilly suburbs
@@ -661,25 +636,6 @@ export const BLUE_MOUNTAINS_SUBURBS: Location[] = [
   { id: "bm14", slug: "mount-victoria", name: "Mount Victoria", region: "blue-mountains", postcode: "2786", nearby: ["blackheath", "katoomba"] },
 ];
 
-// Western Sydney suburbs
-export const WESTERN_SYDNEY_SUBURBS: Location[] = [
-  { id: "ws1", slug: "parramatta", name: "Parramatta", region: "western-sydney", postcode: "2150", nearby: ["granville", "merrylands", "auburn"] },
-  { id: "ws2", slug: "blacktown", name: "Blacktown", region: "western-sydney", postcode: "2148", nearby: ["mount-druitt", "quakers-hill", "kellyville"] },
-  { id: "ws3", slug: "penrith", name: "Penrith", region: "western-sydney", postcode: "2750", nearby: ["st-marys", "mount-druitt"] },
-  { id: "ws4", slug: "liverpool", name: "Liverpool", region: "western-sydney", postcode: "2170", nearby: ["fairfield", "merrylands"] },
-  { id: "ws5", slug: "fairfield", name: "Fairfield", region: "western-sydney", postcode: "2165", nearby: ["liverpool", "merrylands", "granville"] },
-  { id: "ws6", slug: "mount-druitt", name: "Mount Druitt", region: "western-sydney", postcode: "2770", nearby: ["st-marys", "blacktown", "quakers-hill"] },
-  { id: "ws7", slug: "merrylands", name: "Merrylands", region: "western-sydney", postcode: "2160", nearby: ["granville", "parramatta", "fairfield"] },
-  { id: "ws8", slug: "auburn", name: "Auburn", region: "western-sydney", postcode: "2144", nearby: ["granville", "parramatta", "merrylands"] },
-  { id: "ws9", slug: "granville", name: "Granville", region: "western-sydney", postcode: "2142", nearby: ["parramatta", "merrylands", "auburn"] },
-  { id: "ws10", slug: "st-marys", name: "St Marys", region: "western-sydney", postcode: "2760", nearby: ["mount-druitt", "penrith"] },
-  { id: "ws11", slug: "castle-hill", name: "Castle Hill", region: "western-sydney", postcode: "2154", nearby: ["baulkham-hills", "kellyville", "rouse-hill"] },
-  { id: "ws12", slug: "baulkham-hills", name: "Baulkham Hills", region: "western-sydney", postcode: "2153", nearby: ["castle-hill", "kellyville", "parramatta"] },
-  { id: "ws13", slug: "kellyville", name: "Kellyville", region: "western-sydney", postcode: "2155", nearby: ["rouse-hill", "castle-hill", "baulkham-hills"] },
-  { id: "ws14", slug: "quakers-hill", name: "Quakers Hill", region: "western-sydney", postcode: "2763", nearby: ["blacktown", "rouse-hill", "mount-druitt"] },
-  { id: "ws15", slug: "rouse-hill", name: "Rouse Hill", region: "western-sydney", postcode: "2155", nearby: ["kellyville", "quakers-hill", "castle-hill"] },
-];
-
 // Goulburn & Southern Tablelands suburbs
 export const GOULBURN_SOUTHERN_TABLELANDS_SUBURBS: Location[] = [
   { id: "gt1", slug: "goulburn", name: "Goulburn", region: "goulburn-southern-tablelands", postcode: "2580", nearby: ["marulan", "towrang", "taralga"] },
@@ -710,7 +666,6 @@ export const ALL_LOCATIONS: Location[] = [
   ...EASTERN_SUBURBS_LIST,
   ...WOLLONGONG_ILLAWARRA_SUBURBS,
   ...BLUE_MOUNTAINS_SUBURBS,
-  ...WESTERN_SYDNEY_SUBURBS,
   ...GOULBURN_SOUTHERN_TABLELANDS_SUBURBS,
 ];
 
@@ -735,11 +690,11 @@ export const TESTIMONIALS: Testimonial[] = [
 
 // Home page FAQs
 export const HOME_FAQS: FAQ[] = [
-  { question: "Do you offer 24/7 emergency plumbing services?", answer: "Yes! Complete Flow Plumbing proudly services the Southern Highlands, Wollondilly, Macarthur, the Sutherland Shire, St George, Bayside, the Eastern Suburbs, Wollongong & Illawarra, the Blue Mountains, Western Sydney, and Goulburn & the Southern Tablelands. We understand that plumbing emergencies don't wait for business hours, so neither do we." },
+  { question: "Do you offer 24/7 emergency plumbing services?", answer: "Yes! Complete Flow Plumbing proudly services the Southern Highlands, Wollondilly, Macarthur, the Sutherland Shire, St George, Bayside, the Eastern Suburbs, Wollongong & Illawarra, the Blue Mountains and Goulburn & the Southern Tablelands. We understand that plumbing emergencies don't wait for business hours, so neither do we." },
   { question: "How quickly can you respond to an emergency?", answer: "For emergency call-outs, we aim to arrive within 60 minutes in our primary service areas. Our team is strategically located to provide fast response times across all suburbs we service." },
   { question: "Do you provide free quotes?", answer: "Yes, we provide free, no-obligation quotes for all plumbing work. For most jobs, we can give you an upfront fixed price before any work begins, so there are no surprises." },
   { question: "Are your plumbers licensed and insured?", answer: "Absolutely. All our plumbers are fully licensed, insured, and undergo regular training. We hold all required NSW trade licences and comprehensive insurance coverage." },
-  { question: "What areas do you service?", answer: "Complete Flow Plumbing proudly services the Southern Highlands, Wollondilly, Macarthur, the Sutherland Shire, St George, Bayside, the Eastern Suburbs, Wollongong & Illawarra, the Blue Mountains, Western Sydney, and Goulburn & the Southern Tablelands." },
+  { question: "What areas do you service?", answer: "Complete Flow Plumbing proudly services the Southern Highlands, Wollondilly, Macarthur, the Sutherland Shire, St George, Bayside, the Eastern Suburbs, Wollongong & Illawarra, the Blue Mountains and Goulburn & the Southern Tablelands." },
   { question: "Do you charge a call-out fee?", answer: "No call-out fee for standard service calls during business hours. Emergency after-hours calls may incur a small surcharge, which we always communicate upfront." },
   { question: "What payment methods do you accept?", answer: "We accept cash, EFTPOS, credit cards (Visa, Mastercard, Amex), and bank transfer. Payment is due upon completion of work." },
   { question: "Do you offer any guarantees on your work?", answer: "Yes, all our workmanship comes with a guarantee. We stand behind the quality of our work and will return to fix any issues at no additional cost within the guarantee period." },

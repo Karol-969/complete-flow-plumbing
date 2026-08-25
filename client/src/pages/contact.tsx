@@ -84,7 +84,7 @@ const contactCards = [
     icon: MapPin,
     title: "Service Area",
     primary: BUSINESS_INFO.address,
-    sub: "11 regions across greater Sydney, the Illawarra & Southern Highlands",
+    sub: "10 regions across greater Sydney, the Illawarra & Southern Highlands",
     href: undefined,
     testid: "contact-area",
   },
@@ -414,7 +414,7 @@ export default function Contact() {
             Where We Work
           </h2>
           <p className="text-muted-foreground mt-1">
-            Proudly servicing 11 regions across greater Sydney, the Illawarra &amp;
+            Proudly servicing 10 regions across greater Sydney, the Illawarra &amp;
             Southern Highlands
           </p>
         </div>

@@ -24,7 +24,7 @@ export default function Terms() {
           {BUSINESS_INFO.name} provides residential and commercial plumbing
           services across the Southern Highlands, Wollondilly, Macarthur, the
           Sutherland Shire, St George, Bayside, the Eastern Suburbs, Wollongong &
-          Illawarra, the Blue Mountains, Western Sydney, and Goulburn & the
+          Illawarra, the Blue Mountains and Goulburn & the
           Southern Tablelands. Service availability can depend on location,
           scheduling and the nature of the work.
         </p>

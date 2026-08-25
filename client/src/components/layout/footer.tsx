@@ -90,7 +90,7 @@ export function Footer() {
               Complete Flow Plumbing proudly services the Southern Highlands,
               Wollondilly, Macarthur, the Sutherland Shire, St George, Bayside,
               the Eastern Suburbs, Wollongong &amp; Illawarra, the Blue
-              Mountains, Western Sydney, and Goulburn &amp; the Southern
+              Mountains and Goulburn &amp; the Southern
               Tablelands.
             </p>
             <div className="flex flex-wrap gap-x-4 gap-y-2 mb-6">

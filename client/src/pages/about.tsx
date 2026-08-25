@@ -41,11 +41,11 @@ const values = [
 
 // Only verifiable facts here — no invented experience years, job counts or
 // satisfaction figures. Rating/review count come straight from the Google
-// profile; 11 is our real number of service regions.
+// profile; 10 is our real number of service regions.
 const stats = [
   { value: BUSINESS_INFO.googleRating, label: "Google Rating" },
   { value: `${BUSINESS_INFO.googleReviewCount}`, label: "5-Star Reviews" },
-  { value: "11", label: "Regions Serviced" },
+  { value: "10", label: "Regions Serviced" },
   { value: "24/7", label: "Emergency Service" },
 ];
 
@@ -59,7 +59,7 @@ export default function About() {
             About Complete Flow Plumbing
           </h1>
           <p className="text-xl text-white/90 max-w-3xl mx-auto">
-            Your trusted local plumbers serving the Southern Highlands, Wollondilly, Macarthur, the Sutherland Shire, St George, Bayside, the Eastern Suburbs, Wollongong &amp; Illawarra, the Blue Mountains, Western Sydney, and Goulburn &amp; the Southern Tablelands
+            Your trusted local plumbers serving the Southern Highlands, Wollondilly, Macarthur, the Sutherland Shire, St George, Bayside, the Eastern Suburbs, Wollongong &amp; Illawarra, the Blue Mountains and Goulburn &amp; the Southern Tablelands
             with professional, reliable plumbing you can count on.
           </p>
         </div>
@@ -96,7 +96,7 @@ export default function About() {
                 <p>
                   Complete Flow Plumbing is a locally owned, fully licensed plumbing
                   business serving homes and businesses across the Southern Highlands,
-                  Wollondilly, Macarthur, the Sutherland Shire, St George, Bayside, the Eastern Suburbs, Wollongong &amp; Illawarra, the Blue Mountains, Western Sydney, and Goulburn &amp; the Southern Tablelands.
+                  Wollondilly, Macarthur, the Sutherland Shire, St George, Bayside, the Eastern Suburbs, Wollongong &amp; Illawarra, the Blue Mountains and Goulburn &amp; the Southern Tablelands.
                 </p>
                 <p>
                   We've built our reputation on reliability, honest pricing, and workmanship 

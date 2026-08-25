@@ -27,7 +27,7 @@ const CARDS: Card[] = [
     photo: p1,
     alt: "Complete Flow Plumbing plumber on a job in Sydney",
     title: "Same-Day Response",
-    desc: "Local plumbers on the way today across all 11 regions.",
+    desc: "Local plumbers on the way today across all 10 regions.",
     cta: { label: "Book Now", icon: CalendarCheck, to: "/contact" },
   },
   {

@@ -23,7 +23,7 @@ const WHY_US = [
   },
   {
     title: "24/7 Emergency Response",
-    desc: "For genuine plumbing emergencies across all 11 regions we service, we respond fast — day or night. Our vans are stocked with common parts for same-visit repairs.",
+    desc: "For genuine plumbing emergencies across all 10 regions we service, we respond fast — day or night. Our vans are stocked with common parts for same-visit repairs.",
   },
   {
     title: BUSINESS_INFO.guarantee,
@@ -63,12 +63,12 @@ const SERVICE_COLUMNS = [
   {
     title: "Emergency Plumber",
     href: "/services/emergency-plumbing",
-    desc: "24/7 emergency plumbing across all 11 regions. Burst pipes, flooding, sewage overflow — we respond fast. No call-out fee during business hours, every day including public holidays.",
+    desc: "24/7 emergency plumbing across all 10 regions. Burst pipes, flooding, sewage overflow — we respond fast. No call-out fee during business hours, every day including public holidays.",
   },
   {
     title: "Water Mains",
     href: "/services/water-mains",
-    desc: "Repair, replacement and installation of water main supply lines. From burst mains to new connections, we restore your water supply fast with minimal disruption across all 11 regions.",
+    desc: "Repair, replacement and installation of water main supply lines. From burst mains to new connections, we restore your water supply fast with minimal disruption across all 10 regions.",
   },
   {
     title: "Hot Water Systems",
@@ -78,7 +78,7 @@ const SERVICE_COLUMNS = [
   {
     title: "Gas Plumber",
     href: "/services/gas-fitting",
-    desc: "Licensed gas plumbers for all gas fitting, gas leak detection, gas appliance installation, and gas line repairs across all 11 regions. Certificate of Compliance provided on every job.",
+    desc: "Licensed gas plumbers for all gas fitting, gas leak detection, gas appliance installation, and gas line repairs across all 10 regions. Certificate of Compliance provided on every job.",
   },
   {
     title: "Drainage",
@@ -158,14 +158,14 @@ export function SeoContent() {
                 className="text-3xl md:text-5xl font-bold tracking-tight text-foreground mb-6"
                 variants={fadeUp}
               >
-                Trusted Across 11 Regions — Serving{" "}
+                Trusted Across 10 Regions — Serving{" "}
                 <span className="text-primary">90+ Suburbs</span>
               </motion.h2>
               <div className="prose prose-invert max-w-none prose-p:text-muted-foreground prose-p:leading-relaxed prose-a:text-sky-400 prose-a:no-underline hover:prose-a:text-sky-300 hover:prose-a:underline prose-strong:text-foreground">
                 <motion.p className="!text-lg !leading-relaxed" variants={fadeUp}>
                   {BUSINESS_INFO.name} proudly services the Southern Highlands, Wollondilly,
                   Macarthur, the Sutherland Shire, St George, Bayside, the Eastern Suburbs,
-                  Wollongong &amp; Illawarra, the Blue Mountains, Western Sydney, and Goulburn
+                  Wollongong &amp; Illawarra, the Blue Mountains and Goulburn
                   &amp; the Southern Tablelands.
                   Whether you need an emergency plumber in Cronulla at 2am, a blocked drain
                   cleared in Picton, a hot water system replaced in Wollongong, or gas
@@ -191,7 +191,7 @@ export function SeoContent() {
                 whileInView="show"
                 viewport={{ once: true, margin: "-80px" }}
               >
-                Complete Plumbing Services Across All 11 Regions
+                Complete Plumbing Services Across All 10 Regions
               </motion.h2>
               <motion.div
                 className="grid grid-cols-1 sm:grid-cols-2 gap-6"
@@ -269,7 +269,7 @@ export function SeoContent() {
                 className="text-2xl md:text-3xl font-bold tracking-tight text-foreground mb-4"
                 variants={fadeUp}
               >
-                Plumbing Services Across Our 11 Regions — All Suburbs
+                Plumbing Services Across Our 10 Regions — All Suburbs
               </motion.h2>
               <motion.p
                 className="text-muted-foreground text-sm mb-6 max-w-prose leading-relaxed"
@@ -277,7 +277,7 @@ export function SeoContent() {
               >
                 We service suburbs and towns across the Southern Highlands, Wollondilly,
                 Macarthur, the Sutherland Shire, St George, Bayside, the Eastern Suburbs,
-                Wollongong &amp; Illawarra, the Blue Mountains, Western Sydney, and Goulburn
+                Wollongong &amp; Illawarra, the Blue Mountains and Goulburn
                 &amp; the Southern Tablelands:
               </motion.p>
               <motion.div

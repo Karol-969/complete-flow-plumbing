@@ -95,7 +95,7 @@ export function HeroFullBleed() {
               </defs>
               <text className="fill-current text-[19px] font-black uppercase tracking-[0.18em]">
                 <textPath href="#cfp-badge-arc" startOffset="0%">
-                  NOW SERVICING · 11 REGIONS ·
+                  NOW SERVICING · 10 REGIONS ·
                 </textPath>
               </text>
             </svg>
@@ -134,7 +134,7 @@ export function HeroFullBleed() {
             className="mt-6 max-w-xl text-lg md:text-xl text-white/90"
           >
             Licensed, local NSW plumbers handling emergencies, blocked drains,
-            hot water and gas fitting across 11 regions — from the Southern
+            hot water and gas fitting across 10 regions — from the Southern
             Highlands to the Eastern Suburbs.
           </motion.p>
 
