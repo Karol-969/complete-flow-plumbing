@@ -3,7 +3,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { BUSINESS_INFO } from "@shared/schema";
 import { Phone, Star, CheckCircle2, ArrowRight } from "lucide-react";
-import bgImg from "@assets/cfp-truck-hero.jpeg";
+import bgImg from "@assets/cfp-team-hero.png";
 
 function GoogleG({ className }: { className?: string }) {
   return (
@@ -62,7 +62,7 @@ export function HeroFullBleed() {
       {/* ===== FULL-BLEED PHOTO BACKGROUND ===== */}
       <img
         src={bgImg}
-        alt="Complete Flow Plumbing — licensed Sydney plumber on the job"
+        alt="The Complete Flow Plumbing team with their branded Hilux utes"
         className="absolute inset-0 h-full w-full object-cover"
       />
 
