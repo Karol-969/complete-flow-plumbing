@@ -5,7 +5,6 @@ import { ServicesShowcase } from "@/components/home/services-showcase";
 import { HighlightCircles } from "@/components/home/highlight-circles";
 import { HowItWorks } from "@/components/home/how-it-works";
 import { WorkGallery } from "@/components/home/work-gallery";
-import { PromiseBand } from "@/components/home/promise-band";
 import { ServiceAreaMap } from "@/components/home/service-area-map";
 import { GoogleReviews } from "@/components/home/google-reviews";
 import { FAQSection } from "@/components/home/faq-section";
@@ -58,7 +57,6 @@ export default function Home() {
       <HowItWorks />
       <ServicesShowcase />
       <WorkGallery />
-      <PromiseBand />
       <ServiceAreaMap />
       <GoogleReviews />
       <FAQSection />

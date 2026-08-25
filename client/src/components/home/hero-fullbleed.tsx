@@ -124,8 +124,8 @@ export function HeroFullBleed() {
             variants={item}
             className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tight leading-[1.03]"
           >
-            Your Local Plumber — Sydney to the{" "}
-            <span className="text-[#7fe0ff]">Southern Highlands</span>
+            Your Local Plumber — Southern Highlands &{" "}
+            <span className="text-[#7fe0ff]">South Coast</span>
           </motion.h1>
 
           {/* Subtext */}
@@ -133,9 +133,8 @@ export function HeroFullBleed() {
             variants={item}
             className="mt-6 max-w-xl text-lg md:text-xl text-white/90"
           >
-            Licensed, local NSW plumbers handling emergencies, blocked drains,
-            hot water and gas fitting across 10 regions — from the Southern
-            Highlands to the Eastern Suburbs.
+            Your licensed local New South Wales plumber handling emergencies,
+            blocked drains, hot water systems and gas.
           </motion.p>
 
           {/* Value-prop row */}

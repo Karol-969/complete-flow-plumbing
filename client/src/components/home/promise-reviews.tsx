@@ -239,7 +239,7 @@ export function PromiseReviews() {
             })}
           </motion.div>
 
-          {/* RIGHT: real Google rating card — 5.0 from 48 verified reviews. */}
+          {/* RIGHT: real Google rating card — 5.0 from 67 verified reviews. */}
           <motion.div
             variants={v(fadeRight)}
             initial="hidden"
