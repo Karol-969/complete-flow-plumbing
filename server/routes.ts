@@ -6,6 +6,57 @@ import { z } from "zod";
 import { generateSitemap } from "./sitemap";
 import { sendLeadEmail } from "./email";
 
+const RETIRED_LOCATION_SLUGS = [
+  "penrose",
+  "parramatta",
+  "blacktown",
+  "penrith",
+  "liverpool",
+  "fairfield",
+  "mount-druitt",
+  "merrylands",
+  "auburn",
+  "granville",
+  "st-marys",
+  "castle-hill",
+  "baulkham-hills",
+  "kellyville",
+  "quakers-hill",
+  "rouse-hill",
+] as const;
+
+const RETIRED_LOCATION_PATHS = [
+  "/locations/region/western-sydney",
+  "/locations/western-sydney",
+  "/western-sydney",
+  ...RETIRED_LOCATION_SLUGS.flatMap((slug) => [
+    `/${slug}`,
+    `/locations/${slug}`,
+  ]),
+];
+
+function sendRetiredLocationResponse(res: Response) {
+  return res
+    .status(410)
+    .set("X-Robots-Tag", "noindex, nofollow")
+    .set("Cache-Control", "public, max-age=3600")
+    .type("html")
+    .send(`<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Service area removed | Complete Flow Plumbing</title>
+  </head>
+  <body>
+    <main>
+      <h1>This service-area page has been removed.</h1>
+      <p>Visit <a href="/locations">our current service areas</a>.</p>
+    </main>
+  </body>
+</html>`);
+}
+
 declare module "express-session" {
   interface SessionData {
     isAdmin: boolean;
@@ -21,6 +72,12 @@ export async function registerRoutes(
   httpServer: Server,
   app: Express
 ): Promise<Server> {
+
+  // These locations were explicitly retired by the client. Returning 410
+  // prevents the SPA fallback from keeping stale pages indexed by Google.
+  app.get(RETIRED_LOCATION_PATHS, (_req, res) => {
+    return sendRetiredLocationResponse(res);
+  });
 
   // www → non-www redirect
   app.use((req, res, next) => {
