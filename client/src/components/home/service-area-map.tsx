@@ -1,7 +1,7 @@
 import { Link } from "wouter";
 import { motion, useReducedMotion, type Variants } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { REGIONS, BUSINESS_INFO } from "@shared/schema";
+import { BUSINESS_INFO } from "@shared/schema";
 import { MapPin, Phone, ArrowRight } from "lucide-react";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -10,6 +10,14 @@ const EASE = [0.22, 1, 0.36, 1] as const;
 const POP_SPRING = { type: "spring", stiffness: 240, damping: 15, mass: 0.7 } as const;
 // Snappy bounce for interactive taps/hovers.
 const TAP_SPRING = { type: "spring", stiffness: 400, damping: 17 } as const;
+
+const FOCUS_AREAS = [
+  { name: "Southern Highlands", href: "/locations/region/southern-highlands" },
+  { name: "South Coast & Illawarra", href: "/locations/region/wollongong-illawarra" },
+  { name: "Picton", href: "/locations/picton" },
+  { name: "Nowra", href: "/locations/nowra" },
+  { name: "Goulburn", href: "/locations/goulburn" },
+] as const;
 
 export function ServiceAreaMap() {
   const reduce = useReducedMotion();
@@ -85,12 +93,12 @@ export function ServiceAreaMap() {
             className="text-3xl md:text-5xl font-bold tracking-tight text-foreground"
             variants={fadeUp}
           >
-            Sutherland Shire to the{" "}
-            <span className="text-primary">Southern Tablelands</span>
+            Southern Highlands &{" "}
+            <span className="text-primary">South Coast</span>
           </motion.h2>
           <motion.p className="mt-5 text-lg text-muted-foreground" variants={fadeUp}>
-            {BUSINESS_INFO.name} provides fast, reliable plumbing across{" "}
-            {REGIONS.length} regions — from the coast to the highlands.
+            {BUSINESS_INFO.name} provides fast, reliable plumbing around Bowral,
+            Picton, Wollongong, Nowra and Goulburn.
           </motion.p>
         </motion.div>
 
@@ -124,7 +132,7 @@ export function ServiceAreaMap() {
             whileInView="show"
             viewport={{ once: true, margin: "-80px" }}
           >
-            Regions We Service
+            Key Areas We Service
           </motion.h3>
           <motion.div
             className="flex flex-wrap justify-center gap-3 md:gap-4"
@@ -133,20 +141,20 @@ export function ServiceAreaMap() {
             whileInView="show"
             viewport={{ once: true, margin: "-80px" }}
           >
-            {REGIONS.map((region, index) => (
+            {FOCUS_AREAS.map((area, index) => (
               <motion.div
-                key={region.slug}
+                key={area.name}
                 /* Alternate the entry direction left / right for visual interest */
                 variants={index % 2 === 0 ? fadeLeft : fadeRight}
                 whileHover={hoverPill}
               >
                 <Link
-                  href={`/locations/region/${region.slug}`}
+                  href={area.href}
                   className="group flex items-center gap-2 rounded-full border border-border/60 bg-card px-5 py-2.5 text-sm font-medium text-foreground transition-all hover:border-primary/40 hover:shadow-glow"
-                  data-testid={`region-chip-${region.slug}`}
+                  data-testid={`region-chip-${area.name.toLowerCase().replaceAll(" ", "-")}`}
                 >
                   <MapPin className="h-4 w-4 text-primary transition-transform group-hover:scale-110" />
-                  {region.displayName}
+                  {area.name}
                 </Link>
               </motion.div>
             ))}

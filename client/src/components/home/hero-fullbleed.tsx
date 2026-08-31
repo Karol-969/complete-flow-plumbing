@@ -63,7 +63,7 @@ export function HeroFullBleed() {
       <img
         src={bgImg}
         alt="The Complete Flow Plumbing team with their branded Hilux utes"
-        className="absolute inset-0 h-full w-full object-cover"
+        className="absolute inset-0 h-full w-full object-cover object-[58%_center] sm:object-center"
       />
 
       {/* Dark legibility gradient over the photo */}
@@ -95,7 +95,7 @@ export function HeroFullBleed() {
               </defs>
               <text className="fill-current text-[19px] font-black uppercase tracking-[0.18em]">
                 <textPath href="#cfp-badge-arc" startOffset="0%">
-                  NOW SERVICING · 10 REGIONS ·
+                  HIGHLANDS · SOUTH COAST · 24/7 ·
                 </textPath>
               </text>
             </svg>
@@ -134,7 +134,7 @@ export function HeroFullBleed() {
             className="mt-6 max-w-xl text-lg md:text-xl text-white/90"
           >
             Your licensed local New South Wales plumber handling emergencies,
-            blocked drains, hot water systems and gas.
+            blocked drains, hot water systems and general plumbing.
           </motion.p>
 
           {/* Value-prop row */}

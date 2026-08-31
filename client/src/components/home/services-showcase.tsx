@@ -12,29 +12,30 @@ import {
 import { SERVICES, REGIONS } from "@shared/schema";
 import { Search, ArrowRight, MapPin, Wrench } from "lucide-react";
 
-// Real job photos chosen to MATCH each service.
-import imgEmergency from "@assets/cfp-gallery-18.jpeg";
-import imgDrains from "@assets/cfp-gallery-01.jpeg";
-import imgHydro from "@assets/cfp-gallery-05.jpeg";
-import imgCctv from "@assets/cfp-gallery-23.jpeg";
-import imgRelining from "@assets/cfp-gallery-04.jpeg";
-import imgHotWater from "@assets/cfp-gallery-08.jpeg";
-import imgGas from "@assets/cfp-gallery-03.jpeg";
-import imgLeak from "@assets/cfp-gallery-11.jpeg";
-import imgToilet from "@assets/cfp-gallery-20.jpeg";
+// Current client-supplied photos, matched to the four core services.
+import imgEmergency from "@assets/cfp-gallery-30.jpeg";
+import imgDrains from "@assets/cfp-gallery-37.jpeg";
+import imgHotWater from "@assets/cfp-gallery-27.jpeg";
+import imgGeneral from "@assets/cfp-gallery-29.jpeg";
 
 // Map each service slug to a photo that actually depicts that work.
 const PHOTO_BY_SLUG: Record<string, string> = {
   "emergency-plumber": imgEmergency,
-  "water-mains": imgDrains,
-  "hydro-jetting": imgHydro,
-  "water-filter": imgCctv,
-  "drainage": imgRelining,
+  "drainage": imgDrains,
   "hot-water-systems": imgHotWater,
-  "gas-fitting": imgGas,
-  "kitchen-tap-mixer": imgLeak,
-  "toilet-repair": imgToilet,
+  "general-plumbing": imgGeneral,
 };
+
+const PRIMARY_SERVICE_SLUGS = [
+  "drainage",
+  "hot-water-systems",
+  "emergency-plumber",
+  "general-plumbing",
+] as const;
+
+const PRIMARY_SERVICES = PRIMARY_SERVICE_SLUGS.map((slug) =>
+  SERVICES.find((item) => item.slug === slug),
+).filter((item): item is (typeof SERVICES)[number] => Boolean(item));
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -116,14 +117,14 @@ export function ServicesShowcase() {
             variants={headerItem}
             className="text-3xl md:text-5xl font-bold tracking-tight text-foreground mb-5"
           >
-            We Specialise In The Following Plumbing Services
+            The Four Plumbing Services We Specialise In
           </motion.h2>
           <motion.p
             variants={headerItem}
             className="text-lg md:text-xl text-muted-foreground leading-relaxed"
           >
-            Pick a service and your area to find the right local plumber fast,
-            or browse our full range of work below.
+            Hot water, emergencies, blocked drains and dependable general
+            plumbing across the Southern Highlands and South Coast.
           </motion.p>
         </motion.div>
 
@@ -148,7 +149,7 @@ export function ServicesShowcase() {
                 </span>
               </SelectTrigger>
               <SelectContent>
-                {SERVICES.map((s) => (
+                {PRIMARY_SERVICES.map((s) => (
                   <SelectItem key={s.slug} value={s.slug}>
                     {s.title}
                   </SelectItem>
@@ -197,9 +198,9 @@ export function ServicesShowcase() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-80px" }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+          className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-5xl mx-auto"
         >
-          {SERVICES.map((s) => {
+          {PRIMARY_SERVICES.map((s) => {
             const photo = PHOTO_BY_SLUG[s.slug] ?? imgEmergency;
             return (
               <motion.div key={s.id} variants={cardVariants} className="h-full">
@@ -213,7 +214,7 @@ export function ServicesShowcase() {
                     src={photo}
                     alt={s.title}
                     loading="lazy"
-                    className="h-56 w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                    className="h-64 w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
                   />
 
                   {/* Bottom gradient overlay */}

@@ -59,6 +59,12 @@ const serviceCategories = [
     services: SERVICES.filter(s => s.category === "leak-detection"),
     color: "primary",
   },
+  {
+    title: "General Plumbing",
+    description: "Everyday plumbing repairs, maintenance and installations",
+    services: SERVICES.filter(s => s.category === "general"),
+    color: "primary",
+  },
 ];
 
 export default function Services() {

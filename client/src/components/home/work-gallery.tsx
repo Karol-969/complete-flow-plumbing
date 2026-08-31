@@ -68,13 +68,9 @@ type GalleryImage = {
   alt: string;
 };
 
-// The first 26 images are the existing portfolio. Images 27–40 are the
-// WhatsApp job photos supplied by the client on 25–26 August 2026.
+// Lead with the current WhatsApp job photos supplied by the client on
+// 25–26 August 2026, followed by the existing portfolio.
 const GALLERY_IMAGES: GalleryImage[] = [
-  ...[
-    g1, g2, g3, g4, g5, g6, g7, g8, g9, g10, g11, g12, g13,
-    g14, g15, g16, g17, g18, g19, g20, g21, g22, g23, g24, g25, g26,
-  ].map((src) => ({ src, alt: ALT_TEXT })),
   { src: g27, alt: "Plumber beside a Rinnai Enviroflo hot-water system" },
   { src: g28, alt: "Plumber beside a completed hot-water installation" },
   { src: g29, alt: "Complete Flow Plumbing roof installation work" },
@@ -89,6 +85,10 @@ const GALLERY_IMAGES: GalleryImage[] = [
   { src: g38, alt: "Installed electric storage hot-water system" },
   { src: g39, alt: "Installed Vulcan Duomax hot-water system" },
   { src: g40, alt: "Old hot-water tank prepared for replacement" },
+  ...[
+    g1, g2, g3, g4, g5, g6, g7, g8, g9, g10, g11, g12, g13,
+    g14, g15, g16, g17, g18, g19, g20, g21, g22, g23, g24, g25, g26,
+  ].map((src) => ({ src, alt: ALT_TEXT })),
 ];
 
 // Each slide card width per breakpoint (shrink-0 so they sit in a scroll row).

@@ -47,7 +47,7 @@ export interface Service {
   title: string;
   shortDescription: string;
   icon: string;
-  category: "drainage" | "hot-water" | "gas" | "leak-detection" | "emergency";
+  category: "drainage" | "hot-water" | "gas" | "leak-detection" | "emergency" | "general";
 }
 
 // Location/suburb type
@@ -193,7 +193,7 @@ export const BUSINESS_INFO = {
   email: "info@completeflowplumbing.com.au",
   abn: "45 685 684 020",
   licence: "395338C",
-  address: "Southern Highlands to the Eastern Suburbs, NSW",
+  address: "Southern Highlands & South Coast, NSW",
   serviceHours: "24/7 Emergency Service",
   googleReviewLink: "https://share.google/MlV4FnguDrFbQd3mm",
   googleRating: "5.0",
@@ -227,11 +227,12 @@ export const SERVICES: Service[] = [
   { id: "2", slug: "water-mains", title: "Water mains", shortDescription: "Repair, replacement & installation of water main supply lines.", icon: "Droplets", category: "drainage" },
   { id: "3", slug: "hydro-jetting", title: "Hydro Jetting", shortDescription: "High-pressure water jetting to clear stubborn blockages.", icon: "Droplets", category: "drainage" },
   { id: "4", slug: "water-filter", title: "Water Filter", shortDescription: "Supply & installation of clean drinking water filtration systems.", icon: "Filter", category: "drainage" },
-  { id: "5", slug: "drainage", title: "Drainage", shortDescription: "Complete drainage solutions — clearing, repairs & new drain installation.", icon: "PipeSolid", category: "drainage" },
+  { id: "5", slug: "drainage", title: "Drainage & Blocked Drains", shortDescription: "Complete drainage solutions — clearing, repairs & new drain installation.", icon: "PipeSolid", category: "drainage" },
   { id: "6", slug: "hot-water-systems", title: "Hot Water Systems", shortDescription: "Repair, replacement & installation of all hot water system types.", icon: "Flame", category: "hot-water" },
   { id: "7", slug: "gas-fitting", title: "Gas Fitting & Gas Plumbing", shortDescription: "Licensed gas fitters for safe installation and repairs.", icon: "Fuel", category: "gas" },
   { id: "8", slug: "kitchen-tap-mixer", title: "Kitchen Tap Mixer", shortDescription: "Supply, repair & replacement of kitchen taps and mixer taps.", icon: "Droplets", category: "leak-detection" },
   { id: "9", slug: "toilet-repair", title: "Toilet Repair & Unblock", shortDescription: "Quick fixes for blocked, running, or leaking toilets.", icon: "Bath", category: "leak-detection" },
+  { id: "10", slug: "general-plumbing", title: "General Plumbing", shortDescription: "Reliable repairs, maintenance and installations for homes and businesses.", icon: "Wrench", category: "general" },
 ];
 
 // Service regions
@@ -352,29 +353,6 @@ export const REGIONS: Region[] = [
     ],
   },
   {
-    slug: "bayside",
-    name: "Bayside",
-    displayName: "Bayside",
-    theName: "the Bayside area",
-    blurb:
-      "Bayside plumbers from Mascot to Brighton-Le-Sands — high-rise and strata plumbing, blocked drains, hot water and gas across the Botany Bay corridor.",
-    localAngle:
-      "Bayside airport and Botany Bay corridor. High-rise unit and strata plumbing (Mascot, Wolli Creek), salt-air corrosion near the bay, older Rockdale and Brighton-Le-Sands homes.",
-    commonIssues: [
-      "High-rise and strata plumbing",
-      "Salt-corroded coastal pipework",
-      "Blocked drains and stormwater",
-      "Hot water and gas installation",
-    ],
-    targetKeywords: [
-      "plumber Bayside",
-      "plumber Mascot",
-      "plumber Rockdale",
-      "emergency plumber Brighton-Le-Sands",
-      "blocked drains Botany",
-    ],
-  },
-  {
     slug: "eastern-suburbs",
     name: "Eastern Suburbs",
     displayName: "Eastern Suburbs",
@@ -399,11 +377,11 @@ export const REGIONS: Region[] = [
   },
   {
     slug: "wollongong-illawarra",
-    name: "Wollongong & Illawarra",
-    displayName: "Wollongong & Illawarra",
-    theName: "Wollongong & the Illawarra",
+    name: "South Coast & Illawarra",
+    displayName: "South Coast & Illawarra",
+    theName: "the South Coast & Illawarra",
     blurb:
-      "Plumbers across Wollongong and the Illawarra coast — blocked drains, burst pipes, hot water and emergency callouts from Helensburgh to Kiama.",
+      "Plumbers across Wollongong, the Illawarra and South Coast — blocked drains, burst pipes, hot water and emergency callouts from Helensburgh to Nowra.",
     localAngle:
       "Coastal Illawarra between escarpment and sea. A mix of high-rise units and houses, escarpment stormwater runoff, salt corrosion on the coast, and new estates around Shell Cove and Albion Park.",
     commonIssues: [
@@ -418,29 +396,6 @@ export const REGIONS: Region[] = [
       "emergency plumber Shellharbour",
       "blocked drains Corrimal",
       "plumber Kiama",
-    ],
-  },
-  {
-    slug: "blue-mountains",
-    name: "Blue Mountains",
-    displayName: "Blue Mountains",
-    theName: "the Blue Mountains",
-    blurb:
-      "Blue Mountains plumbers from Glenbrook to Katoomba — winter burst pipes, rainwater tanks, blocked drains, hot water and gas heating across the mountains.",
-    localAngle:
-      "Cool-climate mountains. Winter frozen and burst pipes, older homes with clay pipes, rainwater tanks on the upper mountains, and bushfire-zone properties.",
-    commonIssues: [
-      "Frozen and burst pipes in winter",
-      "Rainwater tank systems",
-      "Tree-root drain blockages",
-      "Hot water and gas heating",
-    ],
-    targetKeywords: [
-      "plumber Blue Mountains",
-      "plumber Katoomba",
-      "emergency plumber Springwood",
-      "blocked drains Glenbrook",
-      "plumber Leura",
     ],
   },
   {
@@ -616,6 +571,7 @@ export const WOLLONGONG_ILLAWARRA_SUBURBS: Location[] = [
   { id: "wi16", slug: "kiama", name: "Kiama", region: "wollongong-illawarra", postcode: "2533", nearby: ["gerringong", "shell-cove", "shellharbour"] },
   { id: "wi17", slug: "shell-cove", name: "Shell Cove", region: "wollongong-illawarra", postcode: "2529", nearby: ["shellharbour", "oak-flats", "kiama"] },
   { id: "wi18", slug: "gerringong", name: "Gerringong", region: "wollongong-illawarra", postcode: "2534", nearby: ["kiama", "shell-cove"] },
+  { id: "wi19", slug: "nowra", name: "Nowra", region: "wollongong-illawarra", postcode: "2541", nearby: ["gerringong", "kiama"] },
 ];
 
 // Blue Mountains suburbs
@@ -662,10 +618,8 @@ export const ALL_LOCATIONS: Location[] = [
   ...MACARTHUR_SUBURBS,
   ...SUTHERLAND_SHIRE_SUBURBS,
   ...ST_GEORGE_SUBURBS,
-  ...BAYSIDE_SUBURBS,
   ...EASTERN_SUBURBS_LIST,
   ...WOLLONGONG_ILLAWARRA_SUBURBS,
-  ...BLUE_MOUNTAINS_SUBURBS,
   ...GOULBURN_SOUTHERN_TABLELANDS_SUBURBS,
 ];
 
@@ -690,11 +644,11 @@ export const TESTIMONIALS: Testimonial[] = [
 
 // Home page FAQs
 export const HOME_FAQS: FAQ[] = [
-  { question: "Do you offer 24/7 emergency plumbing services?", answer: "Yes! Complete Flow Plumbing proudly services the Southern Highlands, Wollondilly, Macarthur, the Sutherland Shire, St George, Bayside, the Eastern Suburbs, Wollongong & Illawarra, the Blue Mountains and Goulburn & the Southern Tablelands. We understand that plumbing emergencies don't wait for business hours, so neither do we." },
+  { question: "Do you offer 24/7 emergency plumbing services?", answer: "Yes! Complete Flow Plumbing proudly services the Southern Highlands, Wollondilly, Macarthur, the Sutherland Shire, St George, the Eastern Suburbs, the South Coast & Illawarra, and Goulburn & the Southern Tablelands. We understand that plumbing emergencies don't wait for business hours, so neither do we." },
   { question: "How quickly can you respond to an emergency?", answer: "For emergency call-outs, we aim to arrive within 60 minutes in our primary service areas. Our team is strategically located to provide fast response times across all suburbs we service." },
   { question: "Do you provide free quotes?", answer: "Yes, we provide free, no-obligation quotes for all plumbing work. For most jobs, we can give you an upfront fixed price before any work begins, so there are no surprises." },
   { question: "Are your plumbers licensed and insured?", answer: "Absolutely. All our plumbers are fully licensed, insured, and undergo regular training. We hold all required NSW trade licences and comprehensive insurance coverage." },
-  { question: "What areas do you service?", answer: "Complete Flow Plumbing proudly services the Southern Highlands, Wollondilly, Macarthur, the Sutherland Shire, St George, Bayside, the Eastern Suburbs, Wollongong & Illawarra, the Blue Mountains and Goulburn & the Southern Tablelands." },
+  { question: "What areas do you service?", answer: "Complete Flow Plumbing proudly services the Southern Highlands, Wollondilly, Macarthur, the Sutherland Shire, St George, the Eastern Suburbs, the South Coast & Illawarra, and Goulburn & the Southern Tablelands." },
   { question: "Do you charge a call-out fee?", answer: "No call-out fee for standard service calls during business hours. Emergency after-hours calls may incur a small surcharge, which we always communicate upfront." },
   { question: "What payment methods do you accept?", answer: "We accept cash, EFTPOS, credit cards (Visa, Mastercard, Amex), and bank transfer. Payment is due upon completion of work." },
   { question: "Do you offer any guarantees on your work?", answer: "Yes, all our workmanship comes with a guarantee. We stand behind the quality of our work and will return to fix any issues at no additional cost within the guarantee period." },

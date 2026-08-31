@@ -17,6 +17,17 @@ import {
 
 const telHref = `tel:${BUSINESS_INFO.phoneTel}`;
 
+const CORE_SERVICE_SLUGS = [
+  "drainage",
+  "hot-water-systems",
+  "emergency-plumber",
+  "general-plumbing",
+];
+
+const coreServices = CORE_SERVICE_SLUGS.map((slug) =>
+  SERVICES.find((service) => service.slug === slug),
+).filter((service): service is (typeof SERVICES)[number] => Boolean(service));
+
 const quickLinks = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About Us" },
@@ -87,11 +98,9 @@ export function Footer() {
               />
             </Link>
             <p className="text-white/85 text-sm leading-relaxed mb-5 max-w-md">
-              Complete Flow Plumbing proudly services the Southern Highlands,
-              Wollondilly, Macarthur, the Sutherland Shire, St George, Bayside,
-              the Eastern Suburbs, Wollongong &amp; Illawarra, the Blue
-              Mountains and Goulburn &amp; the Southern
-              Tablelands.
+              Complete Flow Plumbing proudly services the Southern Highlands
+              and South Coast, including Bowral, Picton, Wollongong, Nowra and
+              Goulburn.
             </p>
             <div className="flex flex-wrap gap-x-4 gap-y-2 mb-6">
               <span className="inline-flex items-center gap-1.5 text-xs font-medium text-white/90">
@@ -130,7 +139,7 @@ export function Footer() {
               Our Services
             </h3>
             <ul className="space-y-3 text-sm">
-              {SERVICES.slice(0, 4).map((s) => (
+              {coreServices.map((s) => (
                 <FooterLink key={s.id} href={`/services/${s.slug}`} label={s.title} />
               ))}
               <FooterLink href="/services" label="View all services" />

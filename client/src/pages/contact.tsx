@@ -84,7 +84,7 @@ const contactCards = [
     icon: MapPin,
     title: "Service Area",
     primary: BUSINESS_INFO.address,
-    sub: "10 regions across greater Sydney, the Illawarra & Southern Highlands",
+    sub: "Southern Highlands, South Coast and surrounding areas",
     href: undefined,
     testid: "contact-area",
   },
@@ -378,8 +378,7 @@ export default function Contact() {
               </p>
               <p className="text-lg text-muted-foreground leading-relaxed mb-8">
                 When you call, you talk to the people who actually do the work —
-                across the Southern Highlands, the Illawarra, the Sutherland
-                Shire and right through to the Eastern Suburbs. No surprises, no
+                across the Southern Highlands and South Coast. No surprises, no
                 pressure, just plumbing done right.
               </p>
               <div className="flex flex-wrap items-center gap-4">
@@ -414,8 +413,7 @@ export default function Contact() {
             Where We Work
           </h2>
           <p className="text-muted-foreground mt-1">
-            Proudly servicing 10 regions across greater Sydney, the Illawarra &amp;
-            Southern Highlands
+            Proudly servicing the Southern Highlands, South Coast and surrounding areas
           </p>
         </div>
         <iframe

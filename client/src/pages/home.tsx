@@ -2,7 +2,6 @@ import { Layout } from "@/components/layout/layout";
 import { HeroFullBleed } from "@/components/home/hero-fullbleed";
 import { TrustBand } from "@/components/home/trust-band";
 import { ServicesShowcase } from "@/components/home/services-showcase";
-import { HighlightCircles } from "@/components/home/highlight-circles";
 import { HowItWorks } from "@/components/home/how-it-works";
 import { WorkGallery } from "@/components/home/work-gallery";
 import { ServiceAreaMap } from "@/components/home/service-area-map";
@@ -42,7 +41,7 @@ export default function Home() {
     <Layout>
       <SEOHead
         title="Local Plumber | Southern Highlands & South Coast | Complete Flow Plumbing"
-        description="Complete Flow Plumbing proudly services the Southern Highlands, Wollondilly, Macarthur, the Sutherland Shire, St George, Bayside, the Eastern Suburbs, Wollongong & Illawarra, the Blue Mountains and Goulburn & the Southern Tablelands. 24/7 emergency plumbing, blocked drains, hot water & gas fitting. No call-out fee — call 0468 723 029."
+        description="Your local plumber for the Southern Highlands and South Coast, including Bowral, Picton, Wollongong, Nowra and Goulburn. Emergency plumbing, blocked drains, hot water and general plumbing. No call-out fee — call 0468 723 029."
         canonical="/"
         keywords={seoKeywords}
       />
@@ -53,7 +52,6 @@ export default function Home() {
 
       <HeroFullBleed />
       <TrustBand />
-      <HighlightCircles />
       <HowItWorks />
       <ServicesShowcase />
       <WorkGallery />

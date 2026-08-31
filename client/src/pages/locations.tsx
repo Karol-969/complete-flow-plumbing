@@ -182,7 +182,7 @@ export default function Locations() {
   };
 
   const serviceAreaSentence =
-    "Complete Flow Plumbing proudly services the Southern Highlands, Wollondilly, Macarthur, the Sutherland Shire, St George, Bayside, the Eastern Suburbs, Wollongong & Illawarra, the Blue Mountains and Goulburn & the Southern Tablelands.";
+    "Complete Flow Plumbing proudly services the Southern Highlands and South Coast, including Bowral, Picton, Wollongong, Nowra and Goulburn.";
 
   return (
     <Layout>
@@ -292,7 +292,7 @@ export default function Locations() {
             >
               {filtered.length} {filtered.length === 1 ? "suburb" : "suburbs"}{" "}
               available
-              {activeRegionData ? ` in ${activeRegionData.displayName}` : " across 10 regions"}
+              {activeRegionData ? ` in ${activeRegionData.displayName}` : ` across ${REGIONS.length} regions`}
             </motion.p>
           </motion.div>
         </div>

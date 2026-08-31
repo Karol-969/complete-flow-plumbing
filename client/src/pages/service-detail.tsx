@@ -93,7 +93,7 @@ export default function ServiceDetail() {
     <Layout>
       <SEOHead
         title={`${service.title} | Licensed Same-Day | Complete Flow Plumbing`}
-        description={`${service.shortDescription} Trusted ${service.title.toLowerCase()} across the Southern Highlands, Wollondilly, Macarthur, the Sutherland Shire, St George, Bayside, the Eastern Suburbs, Wollongong & Illawarra, the Blue Mountains and Goulburn & the Southern Tablelands. No call-out fee, upfront pricing, fast emergency response. Call 0468 723 029.`}
+        description={`${service.shortDescription} Trusted ${service.title.toLowerCase()} across the Southern Highlands and South Coast, including Bowral, Picton, Wollongong, Nowra and Goulburn. No call-out fee, upfront pricing, fast emergency response. Call 0468 723 029.`}
         canonical={`/services/${service.slug}`}
         keywords={seoKeywords}
       />
@@ -163,7 +163,7 @@ export default function ServiceDetail() {
                 <div className="prose prose-gray dark:prose-invert max-w-none">
                   <p>
                     At Complete Flow Plumbing, we provide professional {service.title.toLowerCase()}
-                    services to homes and businesses across the Southern Highlands, Wollondilly, Macarthur, the Sutherland Shire, St George, Bayside, the Eastern Suburbs, Wollongong &amp; Illawarra, the Blue Mountains and Goulburn &amp; the Southern Tablelands.
+                    services to homes and businesses across the Southern Highlands and South Coast, including Bowral, Picton, Wollongong, Nowra and Goulburn.
                     Our licensed plumbers use the latest equipment and techniques to deliver
                     fast, effective solutions.
                   </p>
@@ -247,7 +247,7 @@ export default function ServiceDetail() {
                   {service.title} in Your Area
                 </h2>
                 <p className="text-muted-foreground mb-4">
-                  We provide {service.title.toLowerCase()} services across the Southern Highlands, Wollondilly, Macarthur, the Sutherland Shire, St George, Bayside, the Eastern Suburbs, Wollongong &amp; Illawarra, the Blue Mountains and Goulburn &amp; the Southern Tablelands, including:
+                  We provide {service.title.toLowerCase()} services across the Southern Highlands and South Coast, including:
                 </p>
                 <div className="flex flex-wrap gap-3">
                   {featuredSuburbs.map((suburb) => (
