@@ -528,7 +528,7 @@ export default function AdminDashboard() {
                   <Card className="p-4 space-y-2 text-sm">
                     {[
                       { label: "Phone", value: "0468 723 029" },
-                      { label: "Email", value: "completeflowplumbing@gmail.com" },
+                      { label: "Email", value: "info@completeflowplumbing.com.au" },
                       { label: "ABN", value: "45 685 684 020" },
                       { label: "Licence", value: "395338C (NSW Fair Trading)" },
                       { label: "Domain", value: "completeflowplumbing.com.au" },

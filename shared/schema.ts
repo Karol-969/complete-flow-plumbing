@@ -190,7 +190,7 @@ export const BUSINESS_INFO = {
   name: "Complete Flow Plumbing",
   phone: "0468 723 029",
   phoneTel: "0468723029",
-  email: "completeflowplumbing@gmail.com",
+  email: "info@completeflowplumbing.com.au",
   abn: "45 685 684 020",
   licence: "395338C",
   address: "Southern Highlands to the Eastern Suburbs, NSW",

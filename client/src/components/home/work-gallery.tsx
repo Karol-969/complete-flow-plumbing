@@ -45,16 +45,51 @@ import g23 from "@assets/cfp-gallery-23.jpeg";
 import g24 from "@assets/cfp-gallery-24.jpeg";
 import g25 from "@assets/cfp-gallery-25.jpeg";
 import g26 from "@assets/cfp-gallery-26.jpeg";
+import g27 from "@assets/cfp-gallery-27.jpeg";
+import g28 from "@assets/cfp-gallery-28.jpeg";
+import g29 from "@assets/cfp-gallery-29.jpeg";
+import g30 from "@assets/cfp-gallery-30.jpeg";
+import g31 from "@assets/cfp-gallery-31.jpeg";
+import g32 from "@assets/cfp-gallery-32.jpeg";
+import g33 from "@assets/cfp-gallery-33.jpeg";
+import g34 from "@assets/cfp-gallery-34.jpeg";
+import g35 from "@assets/cfp-gallery-35.jpeg";
+import g36 from "@assets/cfp-gallery-36.jpeg";
+import g37 from "@assets/cfp-gallery-37.jpeg";
+import g38 from "@assets/cfp-gallery-38.jpeg";
+import g39 from "@assets/cfp-gallery-39.jpeg";
+import g40 from "@assets/cfp-gallery-40.jpeg";
 import workVideo from "@assets/cfp-work-video.mp4";
 
-// Array of all 26 resolved image URLs, in order.
-const GALLERY_IMAGES: string[] = [
-  g1, g2, g3, g4, g5, g6, g7, g8, g9, g10, g11, g12, g13,
-  g14, g15, g16, g17, g18, g19, g20, g21, g22, g23, g24, g25, g26,
-];
-
-// Generic, truthful alt text — no invented details, names or counts.
 const ALT_TEXT = `Completed plumbing job by ${BUSINESS_INFO.name}`;
+
+type GalleryImage = {
+  src: string;
+  alt: string;
+};
+
+// The first 26 images are the existing portfolio. Images 27–40 are the
+// WhatsApp job photos supplied by the client on 25–26 August 2026.
+const GALLERY_IMAGES: GalleryImage[] = [
+  ...[
+    g1, g2, g3, g4, g5, g6, g7, g8, g9, g10, g11, g12, g13,
+    g14, g15, g16, g17, g18, g19, g20, g21, g22, g23, g24, g25, g26,
+  ].map((src) => ({ src, alt: ALT_TEXT })),
+  { src: g27, alt: "Plumber beside a Rinnai Enviroflo hot-water system" },
+  { src: g28, alt: "Plumber beside a completed hot-water installation" },
+  { src: g29, alt: "Complete Flow Plumbing roof installation work" },
+  { src: g30, alt: "Complete Flow Plumbing team with two branded utes" },
+  { src: g31, alt: "Installed corrugated rainwater tank beside a home" },
+  { src: g32, alt: "Completed channel drain and downpipe installation" },
+  { src: g33, alt: "Rheem heat-pump hot-water system and pipework" },
+  { src: g34, alt: "Copper plumbing installed inside a wall opening" },
+  { src: g35, alt: "Completed outdoor drainage and inspection points" },
+  { src: g36, alt: "New PVC and copper plumbing installed in a trench" },
+  { src: g37, alt: "Drain-cleaning work with removed debris" },
+  { src: g38, alt: "Installed electric storage hot-water system" },
+  { src: g39, alt: "Installed Vulcan Duomax hot-water system" },
+  { src: g40, alt: "Old hot-water tank prepared for replacement" },
+];
 
 // Each slide card width per breakpoint (shrink-0 so they sit in a scroll row).
 const SLIDE_WIDTH =
@@ -277,7 +312,7 @@ export function WorkGallery() {
             </motion.div>
 
             {/* Photo slides */}
-            {GALLERY_IMAGES.map((src, index) => (
+            {GALLERY_IMAGES.map(({ src, alt }, index) => (
               <motion.button
                 key={src}
                 type="button"
@@ -287,12 +322,12 @@ export function WorkGallery() {
                 whileTap={slideTap}
                 className={`group relative block ${SLIDE_WIDTH} overflow-hidden rounded-2xl border border-border/60 bg-card shadow-card text-left transition-[border-color,box-shadow] duration-300 hover:border-primary/40 hover:shadow-glow`}
                 data-testid={`gallery-image-${index + 1}`}
-                aria-label={`View photo ${index + 1}: ${ALT_TEXT}`}
+                aria-label={`View photo ${index + 1}: ${alt}`}
               >
                 <div className="relative aspect-[4/3] overflow-hidden">
                   <img
                     src={src}
-                    alt={ALT_TEXT}
+                    alt={alt}
                     loading="lazy"
                     className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
@@ -426,12 +461,12 @@ export function WorkGallery() {
               className="relative flex max-h-full max-w-5xl flex-col items-center"
             >
               <img
-                src={GALLERY_IMAGES[activeIndex]}
-                alt={ALT_TEXT}
+                src={GALLERY_IMAGES[activeIndex].src}
+                alt={GALLERY_IMAGES[activeIndex].alt}
                 className="max-h-[82vh] w-auto max-w-full rounded-xl object-contain shadow-2xl"
               />
               <p className="mt-4 text-sm text-white/70">
-                {ALT_TEXT} · {activeIndex + 1} / {total}
+                {GALLERY_IMAGES[activeIndex].alt} · {activeIndex + 1} / {total}
               </p>
             </motion.div>
           </motion.div>

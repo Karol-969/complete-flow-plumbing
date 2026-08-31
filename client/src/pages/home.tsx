@@ -41,7 +41,7 @@ export default function Home() {
   return (
     <Layout>
       <SEOHead
-        title="Plumber Sutherland Shire to Southern Highlands | Complete Flow Plumbing"
+        title="Local Plumber | Southern Highlands & South Coast | Complete Flow Plumbing"
         description="Complete Flow Plumbing proudly services the Southern Highlands, Wollondilly, Macarthur, the Sutherland Shire, St George, Bayside, the Eastern Suburbs, Wollongong & Illawarra, the Blue Mountains and Goulburn & the Southern Tablelands. 24/7 emergency plumbing, blocked drains, hot water & gas fitting. No call-out fee — call 0468 723 029."
         canonical="/"
         keywords={seoKeywords}

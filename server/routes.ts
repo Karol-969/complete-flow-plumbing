@@ -39,8 +39,8 @@ export async function registerRoutes(
       const data = quoteRequestSchema.parse(req.body);
       const quote = await storage.createQuote(data);
       console.log("New quote:", { name: quote.name, suburb: quote.suburb, service: quote.serviceType });
-      // Email the lead to the business inbox (best-effort; never blocks the response).
-      void sendLeadEmail(`New Quote Request — ${quote.name} (${quote.suburb})`, {
+      // Do not report success unless the business inbox accepts the message.
+      const emailSent = await sendLeadEmail(`New Quote Request — ${quote.name} (${quote.suburb})`, {
         Name: quote.name,
         Phone: quote.phone,
         Email: quote.email || "(not provided)",
@@ -49,6 +49,12 @@ export async function registerRoutes(
         Urgency: quote.urgency,
         Message: quote.message || "(none)",
       });
+      if (!emailSent) {
+        return res.status(503).json({
+          success: false,
+          message: "We could not deliver your request. Please call 0468 723 029.",
+        });
+      }
       res.status(201).json({ success: true, message: "Quote submitted", id: quote.id });
     } catch (error) {
       if (error instanceof z.ZodError) {
@@ -65,12 +71,18 @@ export async function registerRoutes(
       const data = contactFormSchema.parse(req.body);
       const contact = await storage.createContact(data);
       console.log("New contact:", { name: contact.name, email: contact.email });
-      void sendLeadEmail(`New Contact Message — ${contact.name}`, {
+      const emailSent = await sendLeadEmail(`New Contact Message — ${contact.name}`, {
         Name: contact.name,
         Phone: contact.phone,
         Email: contact.email,
         Message: contact.message,
       });
+      if (!emailSent) {
+        return res.status(503).json({
+          success: false,
+          message: "We could not deliver your message. Please call 0468 723 029.",
+        });
+      }
       res.status(201).json({ success: true, message: "Message sent", id: contact.id });
     } catch (error) {
       if (error instanceof z.ZodError) {

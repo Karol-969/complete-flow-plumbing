@@ -149,7 +149,7 @@ Uses shadcn/ui components:
 
 ## Business Info
 - **Phone**: 0468 723 029
-- **Email**: completeflowplumbing@gmail.com
+- **Email**: info@completeflowplumbing.com.au
 - **ABN**: 45 685 684 020
 - **Licence**: 395338C (NSW Fair Trading)
 - **Address**: Sydney & Southern Highlands, NSW (update with physical address when available)

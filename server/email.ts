@@ -4,10 +4,10 @@ import nodemailer, { type Transporter } from "nodemailer";
 // the repo. Set these in Render → Environment:
 //   MAIL_USER = completeflowplumbing@gmail.com
 //   MAIL_PASS = <Gmail App Password (NOT your normal password)>
-//   MAIL_TO   = (optional) inbox to receive leads; defaults to MAIL_USER
+// Website leads are always delivered to the client-requested business inbox.
 const MAIL_USER = process.env.MAIL_USER;
 const MAIL_PASS = process.env.MAIL_PASS;
-const MAIL_TO = process.env.MAIL_TO;
+const WEBSITE_LEAD_RECIPIENT = "info@completeflowplumbing.com.au";
 
 let transporter: Transporter | null = null;
 
@@ -24,20 +24,20 @@ function getTransporter(): Transporter | null {
 
 /**
  * Emails a website lead (quote/contact) to the business inbox via Gmail.
- * Best-effort: never throws — if email isn't configured or fails, the lead is
- * still saved server-side and the API response is unaffected.
+ * Returns whether SMTP accepted the message so the form can show an honest
+ * success or failure state to the customer.
  */
 export async function sendLeadEmail(
   subject: string,
   fields: Record<string, string>,
-): Promise<void> {
+): Promise<boolean> {
   const t = getTransporter();
   if (!t) {
     console.log(
       "[email] MAIL_USER/MAIL_PASS not set — skipping email. Lead:",
       JSON.stringify(fields),
     );
-    return;
+    return false;
   }
 
   const text = Object.entries(fields)
@@ -63,14 +63,16 @@ export async function sendLeadEmail(
   try {
     await t.sendMail({
       from: `"Complete Flow Plumbing Website" <${MAIL_USER}>`,
-      to: MAIL_TO || MAIL_USER,
+      to: WEBSITE_LEAD_RECIPIENT,
       replyTo,
       subject,
       text,
       html,
     });
     console.log("[email] sent:", subject);
+    return true;
   } catch (err) {
     console.error("[email] send failed:", err);
+    return false;
   }
 }
