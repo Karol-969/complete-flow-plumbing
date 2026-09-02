@@ -41,7 +41,7 @@ export default function Home() {
     <Layout>
       <SEOHead
         title="Local Plumber | Southern Highlands & South Coast | Complete Flow Plumbing"
-        description="Your local plumber for the Southern Highlands and South Coast, including Bowral, Picton, Wollongong, Nowra and Goulburn. Emergency plumbing, blocked drains, hot water and general plumbing. No call-out fee — call 0468 723 029."
+        description="Hot water, blocked drains and emergency plumbing across the Southern Highlands and South Coast — Bowral, Picton, Wollongong, Nowra and Goulburn. Licensed local plumber, no call-out fee. Call 0468 723 029."
         canonical="/"
         keywords={seoKeywords}
       />
