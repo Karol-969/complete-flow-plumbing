@@ -121,6 +121,7 @@ export function WorkGallery() {
   const isOpen = activeIndex !== null;
   const total = GALLERY_IMAGES.length;
   const trackRef = useRef<HTMLDivElement>(null);
+  const autoPausedRef = useRef(false);
   const reduce = useReducedMotion();
 
   // When reduced motion is requested, fall back to a plain opacity fade.
@@ -172,6 +173,34 @@ export function WorkGallery() {
     const el = trackRef.current;
     if (!el) return;
     el.scrollBy({ left: dir * el.clientWidth * 0.85, behavior: "smooth" });
+  }, []);
+
+  // Gentle continuous auto-scroll (marquee). Pauses on hover/touch/focus and
+  // while the lightbox is open, and is disabled entirely for reduced motion.
+  useEffect(() => {
+    const el = trackRef.current;
+    if (!el || reduce || isOpen) return;
+    let raf = 0;
+    const SPEED = 0.5; // px per frame ≈ 30px/s at 60fps
+    const step = () => {
+      if (!autoPausedRef.current) {
+        const max = el.scrollWidth - el.clientWidth;
+        if (max > 0) {
+          const next = el.scrollLeft + SPEED;
+          el.scrollLeft = next >= max - 0.5 ? 0 : next;
+        }
+      }
+      raf = requestAnimationFrame(step);
+    };
+    raf = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(raf);
+  }, [reduce, isOpen]);
+
+  const pauseAuto = useCallback(() => {
+    autoPausedRef.current = true;
+  }, []);
+  const resumeAuto = useCallback(() => {
+    autoPausedRef.current = false;
   }, []);
 
   // Keyboard: Escape closes, arrows navigate while the lightbox is open.
@@ -263,12 +292,18 @@ export function WorkGallery() {
           {/* Scroll track — cards stagger in, each lifts on hover */}
           <motion.div
             ref={trackRef}
-            className="flex gap-4 md:gap-5 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-4 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+            className="flex gap-4 md:gap-5 overflow-x-auto pb-4 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
             data-testid="gallery-track"
             variants={trackContainer}
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, margin: "-60px" }}
+            onMouseEnter={pauseAuto}
+            onMouseLeave={resumeAuto}
+            onTouchStart={pauseAuto}
+            onTouchEnd={resumeAuto}
+            onFocusCapture={pauseAuto}
+            onBlurCapture={resumeAuto}
           >
             {/* Featured video slide */}
             <motion.div
