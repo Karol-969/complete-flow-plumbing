@@ -47,13 +47,17 @@ import g26 from "@assets/cfp-gallery-26.jpeg";
 import g31 from "@assets/cfp-gallery-31.jpeg";
 import g32 from "@assets/cfp-gallery-32.jpeg";
 import g33 from "@assets/cfp-gallery-33.jpeg";
-import g34 from "@assets/cfp-gallery-34.jpeg";
 import g35 from "@assets/cfp-gallery-35.jpeg";
 import g36 from "@assets/cfp-gallery-36.jpeg";
-import g37 from "@assets/cfp-gallery-37.jpeg";
-import g38 from "@assets/cfp-gallery-38.jpeg";
 import g39 from "@assets/cfp-gallery-39.jpeg";
 import g40 from "@assets/cfp-gallery-40.jpeg";
+import g41 from "@assets/cfp-gallery-41.jpeg";
+import g42 from "@assets/cfp-gallery-42.jpeg";
+import g43 from "@assets/cfp-gallery-43.jpeg";
+import g44 from "@assets/cfp-gallery-44.jpeg";
+import g45 from "@assets/cfp-gallery-45.jpeg";
+import g46 from "@assets/cfp-gallery-46.jpeg";
+import g47 from "@assets/cfp-gallery-47.jpeg";
 import workVideo from "@assets/cfp-work-video.mp4";
 
 const ALT_TEXT = `Completed plumbing job by ${BUSINESS_INFO.name}`;
@@ -67,14 +71,18 @@ type GalleryImage = {
 // 25–26 August 2026, followed by the existing portfolio.
 // NOTE: photos showing people's faces are intentionally excluded per the client.
 const GALLERY_IMAGES: GalleryImage[] = [
+  { src: g41, alt: "Rheem gas storage hot-water system installed against a brick wall" },
+  { src: g42, alt: "Complete Flow Plumbing branded service ute loaded for a job" },
+  { src: g43, alt: "Rinnai electric storage hot-water system installation" },
+  { src: g44, alt: "Thermann electric storage hot-water system installed outdoors" },
+  { src: g45, alt: "Copper pipework and backflow prevention valve installation" },
+  { src: g46, alt: "Mini excavator loaded and ready for a drainage excavation job" },
+  { src: g47, alt: "Excavated trench with new stormwater pipe and drainage works" },
   { src: g31, alt: "Installed corrugated rainwater tank beside a home" },
   { src: g32, alt: "Completed channel drain and downpipe installation" },
   { src: g33, alt: "Rheem heat-pump hot-water system and pipework" },
-  { src: g34, alt: "Copper plumbing installed inside a wall opening" },
   { src: g35, alt: "Completed outdoor drainage and inspection points" },
   { src: g36, alt: "New PVC and copper plumbing installed in a trench" },
-  { src: g37, alt: "Drain-cleaning work with removed debris" },
-  { src: g38, alt: "Installed electric storage hot-water system" },
   { src: g39, alt: "Installed Vulcan Duomax hot-water system" },
   { src: g40, alt: "Old hot-water tank prepared for replacement" },
   ...[
