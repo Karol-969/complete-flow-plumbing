@@ -36,7 +36,6 @@ import g14 from "@assets/cfp-gallery-14.jpeg";
 import g15 from "@assets/cfp-gallery-15.jpeg";
 import g16 from "@assets/cfp-gallery-16.jpeg";
 import g17 from "@assets/cfp-gallery-17.jpeg";
-import g18 from "@assets/cfp-gallery-18.jpeg";
 import g19 from "@assets/cfp-gallery-19.jpeg";
 import g20 from "@assets/cfp-gallery-20.jpeg";
 import g21 from "@assets/cfp-gallery-21.jpeg";
@@ -45,10 +44,6 @@ import g23 from "@assets/cfp-gallery-23.jpeg";
 import g24 from "@assets/cfp-gallery-24.jpeg";
 import g25 from "@assets/cfp-gallery-25.jpeg";
 import g26 from "@assets/cfp-gallery-26.jpeg";
-import g27 from "@assets/cfp-gallery-27.jpeg";
-import g28 from "@assets/cfp-gallery-28.jpeg";
-import g29 from "@assets/cfp-gallery-29.jpeg";
-import g30 from "@assets/cfp-gallery-30.jpeg";
 import g31 from "@assets/cfp-gallery-31.jpeg";
 import g32 from "@assets/cfp-gallery-32.jpeg";
 import g33 from "@assets/cfp-gallery-33.jpeg";
@@ -70,11 +65,8 @@ type GalleryImage = {
 
 // Lead with the current WhatsApp job photos supplied by the client on
 // 25–26 August 2026, followed by the existing portfolio.
+// NOTE: photos showing people's faces are intentionally excluded per the client.
 const GALLERY_IMAGES: GalleryImage[] = [
-  { src: g27, alt: "Plumber beside a Rinnai Enviroflo hot-water system" },
-  { src: g28, alt: "Plumber beside a completed hot-water installation" },
-  { src: g29, alt: "Complete Flow Plumbing roof installation work" },
-  { src: g30, alt: "Complete Flow Plumbing team with two branded utes" },
   { src: g31, alt: "Installed corrugated rainwater tank beside a home" },
   { src: g32, alt: "Completed channel drain and downpipe installation" },
   { src: g33, alt: "Rheem heat-pump hot-water system and pipework" },
@@ -87,7 +79,7 @@ const GALLERY_IMAGES: GalleryImage[] = [
   { src: g40, alt: "Old hot-water tank prepared for replacement" },
   ...[
     g1, g2, g3, g4, g5, g6, g7, g8, g9, g10, g11, g12, g13,
-    g14, g15, g16, g17, g18, g19, g20, g21, g22, g23, g24, g25, g26,
+    g14, g15, g16, g17, g19, g20, g21, g22, g23, g24, g25, g26,
   ].map((src) => ({ src, alt: ALT_TEXT })),
 ];
 
