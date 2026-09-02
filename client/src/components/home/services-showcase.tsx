@@ -12,11 +12,11 @@ import {
 import { SERVICES, REGIONS } from "@shared/schema";
 import { Search, ArrowRight, MapPin, Wrench } from "lucide-react";
 
-// Current client-supplied photos, matched to the four core services.
-import imgEmergency from "@assets/cfp-gallery-30.jpeg";
-import imgDrains from "@assets/cfp-gallery-37.jpeg";
-import imgHotWater from "@assets/cfp-gallery-27.jpeg";
-import imgGeneral from "@assets/cfp-gallery-29.jpeg";
+// Face-free job photos, each matched to the service its card describes.
+import imgEmergency from "@assets/cfp-gallery-47.jpeg";
+import imgDrains from "@assets/cfp-gallery-32.jpeg";
+import imgHotWater from "@assets/cfp-gallery-41.jpeg";
+import imgGeneral from "@assets/cfp-gallery-45.jpeg";
 
 // Map each service slug to a photo that actually depicts that work.
 const PHOTO_BY_SLUG: Record<string, string> = {
