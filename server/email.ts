@@ -7,7 +7,7 @@ import nodemailer, { type Transporter } from "nodemailer";
 // Website leads are always delivered to the client-requested business inbox.
 const MAIL_USER = process.env.MAIL_USER;
 const MAIL_PASS = process.env.MAIL_PASS;
-const WEBSITE_LEAD_RECIPIENT = "info@completeflowplumbing.com.au";
+const WEBSITE_LEAD_RECIPIENT = "info@completeflowplumbing.com";
 
 let transporter: Transporter | null = null;
 
