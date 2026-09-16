@@ -7,10 +7,12 @@ import nodemailer, { type Transporter } from "nodemailer";
 // Website leads are always delivered to the client-requested business inbox.
 const MAIL_USER = process.env.MAIL_USER;
 const MAIL_PASS = process.env.MAIL_PASS;
-// IMPORTANT: the recipient must be a different mailbox than the MAIL_USER
-// account — Gmail files self-addressed mail under Sent only, skipping the
-// inbox, so leads would be invisible.
-const WEBSITE_LEAD_RECIPIENT = "david@completeflowplumbing.com.au";
+// info@ auto-forwards to sam@ and david@ (configured in Google Admin), so
+// it is the single distribution point for leads. IMPORTANT: MAIL_USER must
+// NOT be sam@ or david@ — Gmail suppresses the forwarded copy of a message
+// the same account sent (files it under Sent only), so that person would
+// never see leads in their inbox. Use a dedicated sender like website@.
+const WEBSITE_LEAD_RECIPIENT = "info@completeflowplumbing.com.au";
 // Leads appear to come from the business domain. Note: Gmail only honours
 // this From address if the authenticated MAIL_USER account has it verified
 // under Settings → Accounts → "Send mail as"; otherwise Gmail rewrites the
