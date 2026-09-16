@@ -8,6 +8,11 @@ import nodemailer, { type Transporter } from "nodemailer";
 const MAIL_USER = process.env.MAIL_USER;
 const MAIL_PASS = process.env.MAIL_PASS;
 const WEBSITE_LEAD_RECIPIENT = "info@completeflowplumbing.com.au";
+// Leads appear to come from the business domain. Note: Gmail only honours
+// this From address if the authenticated MAIL_USER account has it verified
+// under Settings → Accounts → "Send mail as"; otherwise Gmail rewrites the
+// From back to MAIL_USER.
+const WEBSITE_SENDER = "website@completeflowplumbing.com.au";
 
 let transporter: Transporter | null = null;
 
@@ -62,7 +67,7 @@ export async function sendLeadEmail(
 
   try {
     await t.sendMail({
-      from: `"Complete Flow Plumbing Website" <${MAIL_USER}>`,
+      from: `"Complete Flow Plumbing Website" <${WEBSITE_SENDER}>`,
       to: WEBSITE_LEAD_RECIPIENT,
       replyTo,
       subject,
